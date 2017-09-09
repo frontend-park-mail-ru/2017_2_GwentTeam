@@ -1,0 +1,13 @@
+{
+  "name": "Gwent",
+  "version": "1.0.0",
+  "description": "Study Project, Gwent game",
+  "scripts": {
+    "start": "node server/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.4"
+  }
+}
