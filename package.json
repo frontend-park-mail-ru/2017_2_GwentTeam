@@ -1,13 +1,22 @@
 {
-  "name": "Gwent",
+  "name": "gwent",
   "version": "1.0.0",
   "description": "Study Project, Gwent game",
   "scripts": {
     "start": "node server/index.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "gwentteam",
+  "license": "MIT",
   "dependencies": {
     "express": "^4.15.4"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frontend-park-mail-ru/2017_2_GwentTeam.git"
+  },
+  "bugs": {
+    "url": "https://github.com/frontend-park-mail-ru/2017_2_GwentTeam/issues"
+  },
+  "homepage": "https://github.com/frontend-park-mail-ru/2017_2_GwentTeam#readme"
 }
