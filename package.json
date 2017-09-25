@@ -2,13 +2,21 @@
   "name": "Gwent",
   "version": "1.0.0",
   "description": "Gwent game",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "lint": "eslint ."
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.15.4"
+    "body-parser": "^1.18.1",
+    "cookie-parser": "^1.4.3",
+    "eslint": "^4.7.2",
+    "express": "^4.15.4",
+    "morgan": "^1.8.2",
+    "path": "^0.12.7",
+    "pug": "^2.0.0-rc.4",
+    "uuid": "^3.1.0"
   }
 }
