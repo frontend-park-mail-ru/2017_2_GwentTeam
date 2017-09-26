@@ -1,8 +1,16 @@
-//(function () {
 'use strict';
 
 const signupFields = [
     {
+        attrs: {
+            type: 'text',
+            name: 'login',
+            placeholder: 'Введите ваш Login',
+            required: 'required',
+        },
+    },
+    {
+
         attrs: {
             type: 'email',
             name: 'email',
@@ -14,9 +22,9 @@ const signupFields = [
         attrs: {
             type: 'password',
             name: 'password',
-            placeholder: 'Придумайте пароль длиннее 4 символов',
+            placeholder: 'Введите пароль',//В информации об ошибке выводиться требование паттерна (пароль > n символов)?
             required: 'required',
-            pattern: '^\\S{4,}$',
+            pattern: '^\\S{2,}$',
         },
     },
     {
@@ -27,4 +35,4 @@ const signupFields = [
     },
 ];
 export default signupFields;
-//})();
+

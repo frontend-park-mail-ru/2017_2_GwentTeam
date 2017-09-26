@@ -1,4 +1,3 @@
-//(function () {
 'use strict';
 
 /**
@@ -72,7 +71,7 @@ export default class Block {
      * @return {Block}
      */
     append(block) {
-        this.el.appendChild(block.el);
+        this.el.appendChild(block.el);//к родительской HTML добавляет на одну ступень ниже(block.el < this.el)
         return this;
     }
 
@@ -88,8 +87,5 @@ export default class Block {
             this.el.removeEventListener(event, callback);
         }.bind(this);
     }
-};
+}
 
-//window.Block = Block;
-
-//})();

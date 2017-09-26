@@ -17,9 +17,7 @@ class Form extends Block {
             e.preventDefault();
             const formdata = {};
             const elements = this.el.elements;
-            console.log(elements);
             for (let name in elements) {
-                console.log(name);
                 formdata[name] = elements[name].value;
             }
 

@@ -2,13 +2,8 @@
 import Block from '../block/index.js';
 //import {scoreboardTemplate} from "./scoreboard.pug.js";
 'use strict';
-// const compiledFunction = compileFile('scoreboard.pug');
-// console.log(compiledFunction({
-//     name: 'Timothy'
-// }));
 
-//const Block = window.Block;
-//const ScoreboardTemplate = scoreboardTemplate;
+const ScoreboardTemplate = window.scoreboardTemplate;
 
 class Scoreboard extends Block {
     constructor() {
@@ -19,9 +14,9 @@ class Scoreboard extends Block {
     update(users = []) {
         this.clear();
 
-        this.el.innerHTML = ({users});
+        this.el.innerHTML = ScoreboardTemplate({users});
     }
 }
 export default Scoreboard;
-//window.Scoreboard = Scoreboard;
+
 

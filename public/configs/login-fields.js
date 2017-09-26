@@ -1,7 +1,6 @@
-//(function () {
 'use strict';
 
-const cssBlock = 'login__';
+//const cssBlock = 'login__';
 
 const loginFields = [
     {
@@ -11,7 +10,7 @@ const loginFields = [
             placeholder: 'Введите ваш E-Mail',
             required: 'required',
         },
-        classes: [cssBlock+'input']
+        //classes: [cssBlock+'input']
     },
     {
         attrs: {
@@ -20,7 +19,7 @@ const loginFields = [
             placeholder: 'Введите пароль',
             required: 'required',
         },
-        classes: [cssBlock+'input']
+        //classes: [cssBlock+'input']
     },
     {
         attrs: {
@@ -30,4 +29,3 @@ const loginFields = [
     },
 ];
 export default loginFields;
-//})();

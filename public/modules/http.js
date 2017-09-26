@@ -1,4 +1,3 @@
-//(function () {
 'use strict';
 
 
@@ -60,6 +59,3 @@ export default class Http {
     }
 }
 
-//	window.Http = Http;
-
-//)();

@@ -1,1 +1,10 @@
-p #{name}'s config is working
+thead
+    tr
+        th Email
+        th Scores
+
+tbody
+    each user in users
+        tr
+            th #{user.email}
+            th #{user.score}

@@ -1,9 +1,8 @@
-//(function () {
 'use strict';
 
 //const Http = window.Http;
-import Http from '../modules/http.js'
-
+import Http from '../modules/http.js';
+const url = 'https://technogwent-api-010.herokuapp.com/api';
 /**
  * Сервис для работы с юзерами
  * @module UserService
@@ -20,8 +19,8 @@ class UserService {
      * @param {string} password
      * @param {Function} callback
      */
-    signup(email, password, callback) {
-        Http.Post('/signup', {email, password}, callback);
+    signup(login, email, password, callback) {
+        Http.Post(url + '/join', {login, email, password}, callback);
     }
 
     /**
@@ -31,7 +30,7 @@ class UserService {
      * @param {Function} callback
      */
     login(email, password, callback) {
-        Http.Post('/login', {email, password}, callback);
+        Http.Post(url + '/auth', {email, password}, callback);
     }
 
     /**
@@ -52,7 +51,7 @@ class UserService {
             return callback(null, this.user);
         }
 
-        Http.Get('/me', function (err, userdata) {
+        Http.Get(url + '/auth', function (err, userdata) {
             if (err) {
                 return callback(err, userdata);
             }
@@ -67,7 +66,7 @@ class UserService {
      * @param callback
      */
     loadUsersList(callback) {
-        Http.Get('/users', function (err, users) {
+        Http.Get(url + '/users', function (err, users) {
             if (err) {
                 return callback(err, users);
             }
@@ -89,6 +88,3 @@ class UserService {
 }
 
 export default UserService;
-//window.UserService = UserService;
-
-//})();
