@@ -20,8 +20,8 @@ class UserService {
      * @param {string} password
      * @param {Function} callback
      */
-    signup(email, password, callback) {
-        Http.Post('/signup', {email, password}, callback);
+    signup(email, password) {
+        Http.Post('/signup', {email, password});
     }
 
     /**
@@ -30,8 +30,8 @@ class UserService {
      * @param {string} password
      * @param {Function} callback
      */
-    login(email, password, callback) {
-        Http.Post('/login', {email, password}, callback);
+    login(email, password) {
+        Http.Post('/login', {email, password});
     }
 
     /**
@@ -47,19 +47,17 @@ class UserService {
      * @param {Function} callback
      * @param {boolean} [force=false] - игнорировать ли кэш?
      */
-    getData(callback, force = false) {
-        if (this.isLoggedIn() && !force) {
-            return callback(null, this.user);
-        }
+    getData(force = false) {
+      if (this.isLoggedIn() && !force) {
+				return Promise.resolve(this.user);
+			}
 
-        Http.Get('/me', function (err, userdata) {
-            if (err) {
-                return callback(err, userdata);
-            }
+			return Http.Get('/me')
+				.then(function (userdata) {
+					this.user = userdata;
+					return userdata;
+				}.bind(this));
 
-            this.user = userdata;
-            callback(null, userdata);
-        }.bind(this));
     }
 
     /**
@@ -67,24 +65,19 @@ class UserService {
      * @param callback
      */
     loadUsersList(callback) {
-        Http.Get('/users', function (err, users) {
-            if (err) {
-                return callback(err, users);
-            }
+      return Http.Get('/users')
+      .then(function (users) {
+        this.users = users;
 
-            this.users = users;
+        if (this.isLoggedIn()) {
+          this.users = this.users.map(function (user) {
+            user.me = user.email === this.user.email;
+            return user;
+          }.bind(this));
+        }
 
-            if (this.isLoggedIn()) {
-                this.users = this.users.map(user => {
-                    if (user.email === this.user.email) {
-                        user.me = true;
-                    }
-                    return user;
-                });
-            }
-
-            callback(null, this.users);
-        }.bind(this));
+        return this.users;
+      }.bind(this));
     }
 }
 

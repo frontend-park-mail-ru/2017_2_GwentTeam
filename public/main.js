@@ -25,23 +25,7 @@ const sections = {
     //scores: Block.Create('section', {}, ['scores-section']),
     profile: Block.Create('section', {}, ['profile-section']),
 };
-//app.
-    // .append(title)
-    // .append(sections.menu)
-    // .append(sections.login)
-    // //.append(sections.play)
-    // //.append(sections.about)
-    // .append(sections.signup)
-    // // .append(sections.scores)
-// hide() {
-//     this.menu.hide();
-//     //this.play.hide();
-//     //this.about.hide();
-//     this.login.hide();
-//     this.signup.hide();
-//     //this.scores.hide();
-//     this.profile.hide();
-// };
+
 
 function sectionsHide() {
     Object.keys(sections).forEach((sectionKey) => {
@@ -59,10 +43,25 @@ Object.keys(sections).forEach((sectionKey) => {
 sectionsHide();
 sections.menu.show();
 
+function onSubmitLoginForm(formdata) {
+  return userService
+    .login(formdata.email, formdata.password)
+    .then(function () {
+      return userService.getData(true);
+    })
+    .then(function () {
+      sections.login.loginform.reset();
+      openMenu();
+    })
+    .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
+
+
+	}
+
 function openLogin() {
     if (!sections.login.ready) {
         sections.login.loginform = new Form(loginFields);
-        sections.login.loginform.onSubmit(function (formdata) {
+        /*sections.login.loginform.onSubmit(function (formdata) {
             userService.login(formdata.email, formdata.password, function (err, resp) {
                 if (err) {
                     alert(`Some error ${err.status}: ${err.responseText}`);
@@ -70,14 +69,15 @@ function openLogin() {
                 }
 
                 sections.login.loginform.reset();
-                userService.getData(function (err /*,resp*/) {
+                userService.getData(function (err) {
                     if (err) {
                         return;
                     }
                     openMenu();
                 }, true);
             });
-        });
+        });*/
+        sections.login.loginform.onSubmit(onSubmitLoginForm);
         sections.login
             .append(Block.Create('h2', {}, [], 'Войдите'))
             .append(sections.login.loginform);
@@ -165,8 +165,8 @@ function openMenu() {
         sections.menu.items = {
             login: Block.Create('button', {'data-section': 'login'}, [], 'Вход'),
             signup: Block.Create('button', {'data-section': 'signup'}, [], 'Регистрация'),
-            scores: Block.Create('button', {'data-section': 'scores'}, [], 'Открыть таблицу лидеров'),
-            profile: Block.Create('button', {'data-section': 'profile'}, [], 'Посмотреть мой профиль'),
+            scores: Block.Create('button', {'data-section': 'scores'}, [], 'Таблица лидеров'),
+            profile: Block.Create('button', {'data-section': 'profile'}, [], 'Профиль'),
         };
         sections.menu.on('click', function (event) {
             event.preventDefault();
@@ -188,7 +188,6 @@ function openMenu() {
             }
         });
         sections.menu
-            .append(Block.Create('h2', {}, [], 'Меню'))
             .append(sections.menu.items.login)
             .append(sections.menu.items.signup)
             .append(sections.menu.items.scores)
@@ -214,9 +213,10 @@ function openMenu() {
 //title.on('click', openMenu);
 openMenu();
 
-userService.getData(function (err/*, resp*/) {
-    if (err) {
-        return;
-    }
-    openMenu();
-}, true);
+userService.getData()
+		.then(function () {
+			openMenu();
+		})
+		.catch(function (error) {
+			// ignore this error
+		});

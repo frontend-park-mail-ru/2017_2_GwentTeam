@@ -13,10 +13,13 @@
     display: block;
     margin: 10px auto;
     width: 100px;
-    /*height: 40px;
     /*border-radius: 25px;*/
     background-color: #595;
     color: #111;
+    height: 40px;
+    border-width: 0;
+    opacity: 0.9;
+    box-shadow: 0 0 15px;
 }
 
 .main__menu button[hidden] {
@@ -33,7 +36,7 @@
     background-repeat: no-repeat;
     background-image: url(./images/background.jpg);
     background-size: cover;
-    
+
 }
 
 form {
