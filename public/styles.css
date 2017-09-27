@@ -9,9 +9,6 @@ h1 {
 h2 {
     color:lightseagreen;
 }
-/*.menu__bar {*/
-    /*position: absolute;*/
-/*}*/
 
 .main__menu button {
     display: block;
@@ -27,15 +24,6 @@ h2 {
     display: none;
 }
 
-.login-section {
-    width: 200px;
-    margin: auto;
-}
-
-.signup-section {
-    width: 200px;
-    margin: auto;
-}
 .profile-section {
     width: 200px;
     margin: auto;
@@ -56,6 +44,31 @@ input {
     padding-top: 0px;
     padding-left: 10%;
 }
+
+.background__img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-image: url(./images/background.jpg);
+    background-size: cover;
+
+}
+
+.app__logo {
+    background-repeat: no-repeat;
+    background-image: url(./images/logo.png);
+    background-position: center center;
+    background-size: contain;
+    width: 500px;
+    margin: auto;
+    height: 320px;
+    cursor: pointer;
+}
+
 
 /*.logo__img {*/
 /*width: 400px;*/

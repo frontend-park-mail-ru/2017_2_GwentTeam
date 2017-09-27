@@ -56,6 +56,7 @@ class UserService {
                 return callback(err, userdata);
             }
 
+            console.log('2', this);
             this.user = userdata;
             callback(null, userdata);
         }.bind(this));

@@ -13,6 +13,7 @@ class Form extends Block {
     }
 
     onSubmit(callback) {
+
         this.el.addEventListener('submit', function (e) {
             e.preventDefault();
             const formdata = {};
