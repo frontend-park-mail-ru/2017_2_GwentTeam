@@ -1,11 +1,26 @@
+
+
 .main__menu {
-    margin-top: 0;
-    margin-left: 37%;
+    width: 400px;
+    margin: auto;
 }
 
-.menu__bar {
-    position: absolute;
-    padding-left: 10%;
+/*.menu__bar {*/
+    /*position: absolute;*/
+/*}*/
+
+.main__menu button {
+    display: block;
+    margin: 10px auto;
+    width: 100px;
+    /*height: 40px;
+    /*border-radius: 25px;*/
+    background-color: #595;
+    color: #111;
+}
+
+.main__menu button[hidden] {
+    display: none;
 }
 
 .background__img {
@@ -16,33 +31,50 @@
     right: 0;
     background-position: center bottom;
     background-repeat: no-repeat;
-    background-image: url(./cover-table-1920.37.jpg);
+    background-image: url(./images/background.jpg);
     background-size: cover;
     
+}
+
+form {
+    background-color: red;
+    display: block;
+    margin: 10px auto;
+}
+.app__logo {
+    background-repeat: no-repeat;
+    background-image: url(./images/logo.png);
+    background-position: center center;
+    background-size: contain;
+    /*background-size: 50%;*/
+    /*width: 848px;*/
+    height: 350px;
 }
 
 .logo__img {
     width: 400px;
     height: 400px;
 }
-.button {
-    margin-right: 5px;
-    width: 100px;
-    height: 40px;
-}
 
-.top__bar {
-    padding-top: 10px;
-    height: 40px;
-}
-.bar_buttons {
-    position: absolute;
-    right: 5px;
-    width: 250px;
-    height: 30px;
-}
+/*.button {*/
+    /*margin-right: 5px;*/
+    /*width: 100px;*/
+    /*height: 40px;*/
+/*}*/
+
+/*.top__bar {*/
+    /*padding-top: 10px;*/
+    /*height: 40px;*/
+/*}*/
+/*.bar_buttons {*/
+    /*position: absolute;*/
+    /*right: 5px;*/
+    /*width: 250px;*/
+    /*height: 30px;*/
+/*}*/
 
 .login__input {
+    display: block;
     padding-top: 0px;
     padding-left: 10%;
 }
@@ -82,4 +114,9 @@
     height: 50px;
     padding-top: 3%;
     padding-left: 5%;
+}
+
+section {
+  position: relative;
+  color: white;
 }
