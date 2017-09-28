@@ -36,6 +36,7 @@ class UserService {
      * Логаут пользователя
      */
     logout() {
+        this.user = null;
         return Http.Delete(url + '/auth');
     }
 

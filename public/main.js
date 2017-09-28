@@ -68,7 +68,7 @@ function onSubmitLoginForm(formdata) {
             sections.login.loginform.reset();
             openMenu();
         })
-        .catch((err) => alert(`Some error ${err.status}: ${err.message}`));
+        .catch((err) => alert(`Some error ${err.status}: ${err.statusText}`));
 
 
 }
@@ -96,7 +96,7 @@ function onSubmitSingUpForm (formdata) {
             sections.signup.signupform.reset();
             openMenu();
         })
-        .catch((err) => alert(`Some error ${err.status}: ${err.message}`));
+        .catch((err) => alert(`Some error ${err.status}: ${err.statusText}`));
 }
 
 function openSignup() {
@@ -132,20 +132,20 @@ function openProfile() {
             sections.profile.profile.update(user);
             sections.profile.show();
         })
-        .catch((err) => alert(`Some error ${err.status}: ${err.message}`));
+        .catch((err) => alert(`Some error ${err.status}: ${err.statusText}`));
 }
 
 function openLogout() {
     userService
         .logout()
-        .then(function () {
-            userService.getData(true);
-        })
-        .then(function () {
-            console.log('openmenu');
-            return openMenu();
-        })
-        .catch((err) => alert(`Some error ${err.status}: ${err.message}`));
+        // .then(function () {
+        //     userService.getData(true);
+        // })
+        // .then(function () {
+        //     console.log('openmenu');
+        //     return openMenu();
+        //})
+        .catch((err) => alert(`Some error ${err.status}: ${err.statusText}`));
     if (!userService.isLoggedIn()) {
         console.log('ne log');
         return openMenu();
