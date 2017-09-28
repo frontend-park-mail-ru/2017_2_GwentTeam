@@ -164,9 +164,9 @@ function openProfile() {
 function openLogout() {
     return userService
         .logout()
-        .then(function () {
-            return userService.getData(false);
-        })
+        // .then(function () {
+        //     return userService.getData(false);
+        // })
         .then(function () {
             openMenu();
         })
