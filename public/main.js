@@ -94,9 +94,9 @@ function openLogin() {
 function onSubmitSingUpForm (formdata) {
     return userService
         .signup(formdata.login, formdata.email, formdata.password)
-        .then(function () {
-            return userService.getData(true);
-        })
+        // .then(function () {
+        //     return userService.getData(true);
+        // })
         .then(function(){
             sections.signup.signupform.reset();
             openMenu();
