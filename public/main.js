@@ -164,12 +164,12 @@ function openProfile() {
 function openLogout() {
     return userService
         .logout()
-        // .then(function () {
-        //     return userService.getData(false);
-        // })
         .then(function () {
-            return openMenu();
+            return userService.getData(true);
         })
+        // .then(function () {
+        //     return openMenu();
+        // })
         .catch((err) => alert(`Some error ${err.status}: ${err.message}`));
 }
 
