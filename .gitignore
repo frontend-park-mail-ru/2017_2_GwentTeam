@@ -1,4 +1,9 @@
+#JetBrains
+.idea/
 
-node_modules
-.idea
+# Node.js
+node_modules/
 package-lock.json
+
+#Pug
+*.pug.js

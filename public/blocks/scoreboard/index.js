@@ -1,7 +1,6 @@
+'use strict';
 
 import Block from '../block/index.js';
-//import {scoreboardTemplate} from "./scoreboard.pug.js";
-'use strict';
 
 const ScoreboardTemplate = window.scoreboardTemplate;
 
@@ -17,6 +16,5 @@ class Scoreboard extends Block {
         this.el.innerHTML = ScoreboardTemplate({users});
     }
 }
+
 export default Scoreboard;
-
-
