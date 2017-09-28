@@ -138,9 +138,9 @@ function openProfile() {
 function openLogout() {
     userService
         .logout()
-        // .then(function () {
-        //     return userService.getData(true);
-        // })
+        .then(function () {
+            userService.getData(true);
+        })
         .then(function () {
             console.log('openmenu');
             return openMenu();
@@ -162,7 +162,7 @@ function openMenu() {
             signup: Block.Create('button', {'data-section': 'signup'}, [], 'Регистрация'),
             about: Block.Create('button', {'data-section': 'about'}, [], 'Об игре'),
             profile: Block.Create('button', {'data-section': 'profile'}, [], 'Посмотреть мой профиль'),
-            logout: Block.Create('button', {'data-section': 'logout'}, [], ['Выйти'])
+            logout: Block.Create('button', {'data-section': 'logout'}, [], 'Выйти')
         };
         sections.menu.on('click', function (event) {
             event.preventDefault();
@@ -209,6 +209,7 @@ function openMenu() {
         sections.menu.items.profile.show();
         sections.menu.items.logout.show();
     } else {
+        console.log('neavt');
         sections.menu.items.login.show();
         sections.menu.items.signup.show();
         sections.menu.items.about.show();
