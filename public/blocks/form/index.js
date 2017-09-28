@@ -1,5 +1,5 @@
-import Block from '../block/index.js';
 'use strict';
+import Block from '../block/index.js';
 
 class Form extends Block {
     constructor(fields = []) {
