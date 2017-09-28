@@ -252,5 +252,5 @@ userService.getData()
     .then(function () {
         openMenu();
     })
-    .catch(function (error) {
+    .catch(function (/*error*/) {
     });
