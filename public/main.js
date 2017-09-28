@@ -168,7 +168,7 @@ function openLogout() {
         //     return userService.getData(false);
         // })
         .then(function () {
-            openMenu();
+            return openMenu();
         })
         .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
 }
