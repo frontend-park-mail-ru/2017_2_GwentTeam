@@ -147,6 +147,7 @@ function openLogout() {
         })
         .catch((err) => alert(`Some error ${err.status}: ${err.message}`));
     if (!userService.isLoggedIn()) {
+        console.log('ne log');
         return openMenu();
     }
 
@@ -199,6 +200,7 @@ function openMenu() {
     }
 
     sectionsHide();
+    console.log('hide');
     if (userService.isLoggedIn()) {
         sections.menu.items.login.hide();
         sections.menu.items.signup.hide();
