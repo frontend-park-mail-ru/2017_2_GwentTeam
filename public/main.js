@@ -139,7 +139,7 @@ function openLogout() {
     return userService
         .logout()
         .then(function () {
-            return openMenu();
+            return userService.getData(true);
         })
         .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
 }
@@ -152,7 +152,6 @@ function openMenu() {
             game: Block.Create('button', {'data-section': 'game'}, [], 'Играть'),
             signup: Block.Create('button', {'data-section': 'signup'}, [], 'Регистрация'),
             about: Block.Create('button', {'data-section': 'about'}, [], 'Об игре'),
-            //scores: Block.Create('button', {'data-section': 'scores'}, [], 'Открыть таблицу лидеров'),
             profile: Block.Create('button', {'data-section': 'profile'}, [], 'Посмотреть мой профиль'),
             logout: Block.Create('button', {'data-section': 'logout'}, [], ['Выйти'])
         };
