@@ -34,7 +34,7 @@ class UserService {
     }
 
     logout() {
-        Http.Delete(url + '/logout');
+        return Http.Delete(url + '/auth');
     }
 
     /**

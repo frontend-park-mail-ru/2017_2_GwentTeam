@@ -19,7 +19,7 @@ const sections = {
     about: Block.Create('section', {}, ['about-section']),
     //scores: Block.Create('section', {}, ['scores-section']),
     profile: Block.Create('section', {}, ['profile-section']),
-    logout: Block.Create('section', {}, []),
+    logout: Block.Create('section', {}, ['logout-section']),
 };
 
 function sectionsHide() {
@@ -150,19 +150,15 @@ function openProfile() {
         sections.profile.ready = true;
     }
     sectionsHide();
-    if (userService.isLoggedIn()) {
-        userService.getData(function (err, user) {
-            if (err) {
-                alert(`Some error ${err.status}: ${err.responseText}`);
-                return openMenu();
-            }
-
+    if (!userService.isLoggedIn()) {
+        return openMenu();
+    }
+    userService.getData()
+        .then(function (user) {
             sections.profile.profile.update(user);
             sections.profile.show();
-        }, true);
-        return;
-    }
-    return openMenu();
+        })
+        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
 }
 
 function openLogout() {
