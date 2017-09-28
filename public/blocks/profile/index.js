@@ -10,11 +10,10 @@ class Profile extends Block {
 
     }
 
-    update(user) {//почему тут нет bind?
+    update(user) {
         this.clear();
 
         this.el.innerHTML = ProfileTemplate({user});
     }
 }
 export default Profile;
-

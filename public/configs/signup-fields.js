@@ -22,7 +22,7 @@ const signupFields = [
         attrs: {
             type: 'password',
             name: 'password',
-            placeholder: 'Введите пароль',//В информации об ошибке выводиться требование паттерна (пароль > n символов)?
+            placeholder: 'Введите пароль',
             required: 'required',
             pattern: '^\\S{2,}$',
         },
@@ -35,4 +35,3 @@ const signupFields = [
     },
 ];
 export default signupFields;
-
