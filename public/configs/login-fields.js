@@ -5,12 +5,11 @@
 const loginFields = [
     {
         attrs: {
-            type: 'email',
-            name: 'email',
-            placeholder: 'Введите ваш E-Mail',
+            type: 'text',
+            name: 'login',
+            placeholder: 'Введите ваш Login',
             required: 'required',
         },
-        //classes: [cssBlock+'input']
     },
     {
         attrs: {

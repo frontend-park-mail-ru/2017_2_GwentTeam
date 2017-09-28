@@ -9,53 +9,63 @@ export default class Http {
     /**
      * Выполняет GET-запрос по указанному адресу
      * @param {string} address - адрес запроса
-     * @param {Function} callback - функция-коллбек
      */
-    static Get(address, callback) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', address, true);
-        xhr.withCredentials = true;
+    static Get(address) {
+        //const url = (Http.BaseUrl || baseUrl) + address;
+        return fetch(address, {
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'include'
+        })
+            .then(function (response) {
+                if (response.status >= 400) {
+                    throw response;
+                }
 
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState !== 4) return;
-            if (+xhr.status >= 400) {
-                return callback(xhr, null);
-            }
-
-            const response = JSON.parse(xhr.responseText);
-            callback(null, response);
-        };
-
-        xhr.send();
+                return response.json();
+            });
     }
+
+    static Delete(address) {
+        //const url = (Http.BaseUrl || baseUrl) + address;
+        return fetch(address, {
+            method: 'DELETE',
+            mode: 'cors',
+            credentials: 'include'
+        })
+            .then(function (response) {
+                if (response.status >= 400) {
+                    throw response;
+                }
+
+                return response.json();
+            });
+    }
+
 
     /**
      * Выполняет POST-запрос по указанному адресу
      * @param {string} address - адрес запроса
      * @param {*} body - тело запроса (объект)
-     * @param {Function} callback - функция-коллбек
      */
-    static Post(address, body, callback) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', address, true);
-        xhr.withCredentials = true;
-        xhr.setRequestHeader('Content-Type', 'application/json; charset=utf8');
 
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState !== 4) {
-                console.log(xhr.readyState);
-                return;
+    static Post(address, body) {
+        return fetch(address, {
+            method: 'POST',
+            mode: 'cors',
+            credentials: 'include',
+            body: JSON.stringify(body),
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
             }
-            if (+xhr.status >= 400) {
-                console.log(xhr.status);
-                return callback(xhr, null);
-            }
+        })
+            .then(function (response) {
+                if (response.status >= 400) {
+                    throw response;
+                }
 
-            const response = JSON.parse(xhr.responseText);
-            callback(null, response);
-        };
-
-        xhr.send(JSON.stringify(body));
+                return response.json();
+            });
     }
 }
 

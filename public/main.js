@@ -19,6 +19,7 @@ const sections = {
     about: Block.Create('section', {}, ['about-section']),
     scores: Block.Create('section', {}, ['scores-section']),
     profile: Block.Create('section', {}, ['profile-section']),
+    logout: Block.Create('section', {}, []),
 };
 
 function sectionsHide() {
@@ -64,7 +65,7 @@ function openLogin() {
         console.log('ready');
         sections.login.loginform = new Form(loginFields);
         sections.login.loginform.onSubmit(function (formdata) {
-            userService.login(formdata.email, formdata.password, function (err/*, resp*/) {
+            userService.login(formdata.login, formdata.password, function (err/*, resp*/) {
                 if (err) {
                     alert(`Some error ${err.status}: ${err.responseText}`);
                     return;
@@ -162,6 +163,18 @@ function openProfile() {
     return openMenu();
 }
 
+function openLogout() {
+    return userService
+        .logout()
+        .then(function () {
+            return userService.getData(false);
+        })
+        .then(function () {
+            openMenu();
+        })
+        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
+}
+
 function openMenu() {
     if (!sections.menu.ready) {
 
@@ -172,6 +185,7 @@ function openMenu() {
             about: Block.Create('button', {'data-section': 'about'}, [], 'Об игре'),
             scores: Block.Create('button', {'data-section': 'scores'}, [], 'Открыть таблицу лидеров'),
             profile: Block.Create('button', {'data-section': 'profile'}, [], 'Посмотреть мой профиль'),
+            logout: Block.Create('button', {'data-section': 'logout'}, [], ['Выйти'])
         };
         sections.menu.on('click', function (event) {
             event.preventDefault();
@@ -196,6 +210,9 @@ function openMenu() {
                 case 'profile':
                     openProfile();
                     break;
+                case 'logout':
+                    openLogout();
+                    break;
             }
         });
         sections.menu
@@ -204,7 +221,8 @@ function openMenu() {
             .append(sections.menu.items.game)
             .append(sections.menu.items.about)
             .append(sections.menu.items.scores)
-            .append(sections.menu.items.profile);
+            .append(sections.menu.items.profile)
+            .append(sections.menu.items.logout);
         sections.menu.ready = true;
     }
 
@@ -216,6 +234,7 @@ function openMenu() {
         sections.menu.items.about.show();
         sections.menu.items.scores.show();
         sections.menu.items.profile.show();
+        sections.menu.items.logout.show();
     } else {
         sections.menu.items.login.show();
         sections.menu.items.signup.show();
@@ -223,6 +242,7 @@ function openMenu() {
         sections.menu.items.about.show();
         sections.menu.items.profile.hide();
         sections.menu.items.game.hide();
+        sections.menu.items.logout.hide();
     }
     sections.menu.show();
 }

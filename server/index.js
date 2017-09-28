@@ -1,10 +1,10 @@
 'use strict';
 
 const express = require('express');
-// const body = require('body-parser');
-// const cookie = require('cookie-parser');
-// const morgan = require('morgan');
-// const uuid = require('uuid/v4');
+//const body = require('body-parser');
+//const cookie = require('cookie-parser');
+//const morgan = require('morgan');
+//const uuid = require('uuid/v4');
 const app = express();
 
 //app.use(morgan('dev'));
@@ -32,8 +32,9 @@ const users = {
 };
 // const ids = {};
 //
-// app.post('/signup', function (req, res) {
+// app.post('/join', function (req, res) {
 //     const password = req.body.password;
+//     const login = req.body.login;
 //     const email = req.body.email;
 //     //const age = req.body.age;
 //     if (
@@ -50,32 +51,33 @@ const users = {
 //     }
 //
 //     const id = uuid();
-//     const user = {password, email, score: 0};
-//     ids[id] = email;
-//     users[email] = user;
+//     const user = {login, password, email, score: 0};
+//     ids[id] = login;
+//     users[login] = user;
 //
 //     res.cookie('podvorot', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
 //     res.status(201).json({id});
 // });
 //
-// app.post('/login', function (req, res) {
+// app.post('/auth', function (req, res) {
+//     const login = req.body.login;
 //     const password = req.body.password;
-//     const email = req.body.email;
-//     if (!password || !email) {
+//
+//     if (!password || !login) {
 //         return res.status(400).json({error: 'Не указан E-Mail или пароль'});
 //     }
-//     if (!users[email] || users[email].password !== password) {
+//     if (!users[login] || users[login].password !== password) {
 //         return res.status(400).json({error: 'Не верный E-Mail и/или пароль'});
 //     }
 //
 //     const id = uuid();
-//     ids[id] = email;
+//     ids[id] = login;
 //
 //     res.cookie('podvorot', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
 //     res.status(201).json({id});
 // });
 //
-// app.get('/me', function (req, res) {
+// app.get('/auth', function (req, res) {
 //     const id = req.cookies['podvorot'];
 //     const email = ids[id];
 //     if (!email || !users[email]) {
@@ -86,19 +88,19 @@ const users = {
 //
 //     res.json(users[email]);
 // });
-//
-// app.get('/users', function (req, res) {
-//     const scorelist = Object.values(users)
-//         .sort((l, r) => r.score - l.score)
-//         .map(user => {
-//             return {
-//                 email: user.email,
-//                 score: user.score,
-//             };
-//         });
-//
-//     res.json(scorelist);
-// });
+
+app.get('/users', function (req, res) {
+    const scorelist = Object.values(users)
+        .sort((l, r) => r.score - l.score)
+        .map(user => {
+            return {
+                login: user.login,
+                score: user.score,
+            };
+        });
+
+    res.json(scorelist);
+});
 
 const port = process.env.PORT || 8000;
 
