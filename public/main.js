@@ -70,7 +70,7 @@ function onSubmitLoginForm(formdata) {
             sections.login.loginform.reset();
             openMenu();
         })
-        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
+        .catch((err) => alert(`Some error ${err.status}: ${err.message}`));
 
 
 }
@@ -101,7 +101,7 @@ function onSubmitSingUpForm (formdata) {
             sections.signup.signupform.reset();
             openMenu();
         })
-        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
+        .catch((err) => alert(`Some error ${err.status}: ${err.message}`));
 }
 
 function openSignup() {
@@ -158,7 +158,7 @@ function openProfile() {
             sections.profile.profile.update(user);
             sections.profile.show();
         })
-        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
+        .catch((err) => alert(`Some error ${err.status}: ${err.message}`));
 }
 
 function openLogout() {
@@ -170,7 +170,7 @@ function openLogout() {
         .then(function () {
             return openMenu();
         })
-        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
+        .catch((err) => alert(`Some error ${err.status}: ${err.message}`));
 }
 
 function openMenu() {
