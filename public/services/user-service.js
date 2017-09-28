@@ -25,14 +25,16 @@ class UserService {
 
     /**
      * Авторизация пользователя
-     * @param {string} email
+     * @param {string} login
      * @param {string} password
      */
 
     login(login, password) {
         return Http.Post(url + '/auth', {login, password});
     }
-
+    /**
+     * Логаут пользователя
+     */
     logout() {
         return Http.Delete(url + '/auth');
     }
@@ -62,25 +64,6 @@ class UserService {
             }.bind(this));
     }
 
-    /**
-     * Загружает список всех пользователей
-     * @param callback
-     */
-//     loadUsersList(callback) {
-//         return Http.Get('/users')
-//             .then(function (users) {
-//                 this.users = users;
-//
-//                 if (this.isLoggedIn()) {
-//                     this.users = this.users.map(function (user) {
-//                         user.me = user.email === this.user.email;
-//                         return user;
-//                     }.bind(this));
-//                 }
-//
-//                 return this.users;
-//             }.bind(this));
-//     }
 }
 
 export default UserService;

@@ -2,7 +2,6 @@
 
 import Block from '/blocks/block/index.js';
 import Form from '/blocks/form/index.js';
-//import Scoreboard from '/blocks/scoreboard/index.js';
 import Profile from '/blocks/profile/index.js';
 import UserService from '/services/user-service.js';
 import loginFields from '/configs/login-fields.js';
@@ -17,7 +16,6 @@ const sections = {
     game:  Block.Create('section', {}, ['game-section']),
     signup: Block.Create('section', {}, ['signup-section']),
     about: Block.Create('section', {}, ['about-section']),
-    //scores: Block.Create('section', {}, ['scores-section']),
     profile: Block.Create('section', {}, ['profile-section']),
     logout: Block.Create('section', {}, ['logout-section']),
 };
@@ -94,9 +92,6 @@ function openLogin() {
 function onSubmitSingUpForm (formdata) {
     return userService
         .signup(formdata.login, formdata.email, formdata.password)
-        // .then(function () {
-        //     return userService.getData(true);
-        // })
         .then(function(){
             sections.signup.signupform.reset();
             openMenu();
@@ -119,27 +114,6 @@ function openSignup() {
     }
     sections.signup.show();
 }
-
-// function openScores() {
-//     if (!sections.scores.ready) {
-//
-//         sections.scores.scoreboard = new Scoreboard();
-//         sections.scores
-//             .append(Block.Create('h2', {}, [], 'Список лидеров'))
-//             .append(sections.scores.scoreboard);
-//         sections.scores.ready = true;
-//     }
-//     sectionsHide();
-//     userService.loadUsersList(function (err, users) {
-//         if (err) {
-//             alert(`Some error ${err.status}: ${err.responseText}`);
-//             return openMenu();
-//         }
-//
-//         sections.scores.scoreboard.update(users);
-//         sections.scores.show();
-//     }, true);
-// }
 
 function openProfile() {
     if (!sections.profile.ready) {
@@ -202,9 +176,6 @@ function openMenu() {
                 case 'about':
                     openAbout();
                     break;
-                // case 'scores':
-                //     openScores();
-                //     break;
                 case 'profile':
                     openProfile();
                     break;
@@ -218,7 +189,6 @@ function openMenu() {
             .append(sections.menu.items.signup)
             .append(sections.menu.items.game)
             .append(sections.menu.items.about)
-            //.append(sections.menu.items.scores)
             .append(sections.menu.items.profile)
             .append(sections.menu.items.logout);
         sections.menu.ready = true;
@@ -230,13 +200,11 @@ function openMenu() {
         sections.menu.items.signup.hide();
         sections.menu.items.game.show();
         sections.menu.items.about.show();
-        //sections.menu.items.scores.show();
         sections.menu.items.profile.show();
         sections.menu.items.logout.show();
     } else {
         sections.menu.items.login.show();
         sections.menu.items.signup.show();
-        //sections.menu.items.scores.show();
         sections.menu.items.about.show();
         sections.menu.items.profile.hide();
         sections.menu.items.game.hide();

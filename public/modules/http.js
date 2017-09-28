@@ -24,6 +24,11 @@ export default class Http {
             });
     }
 
+    /**
+     * Выполняет DELETE-запрос по указанному адресу
+     * @param {string} address - адрес запроса
+     */
+
     static Delete(address) {
         return fetch(address, {
             method: 'DELETE',
@@ -65,4 +70,3 @@ export default class Http {
             });
     }
 }
-

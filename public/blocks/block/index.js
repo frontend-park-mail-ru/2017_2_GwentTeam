@@ -71,7 +71,7 @@ export default class Block {
      * @return {Block}
      */
     append(block) {
-        this.el.appendChild(block.el);//к родительской HTML добавляет на одну ступень ниже(block.el < this.el)
+        this.el.appendChild(block.el);
         return this;
     }
 
@@ -88,4 +88,3 @@ export default class Block {
         }.bind(this);
     }
 }
-
