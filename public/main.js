@@ -222,7 +222,7 @@ function openMenu() {
             .append(sections.menu.items.signup)
             .append(sections.menu.items.game)
             .append(sections.menu.items.about)
-            .append(sections.menu.items.scores)
+            //.append(sections.menu.items.scores)
             .append(sections.menu.items.profile)
             .append(sections.menu.items.logout);
         sections.menu.ready = true;
@@ -256,5 +256,5 @@ userService.getData()
     .then(function () {
         openMenu();
     })
-    .catch(function (/*error*/) {
+    .catch(function (error) {
     });

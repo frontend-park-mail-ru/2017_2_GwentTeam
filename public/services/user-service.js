@@ -66,21 +66,21 @@ class UserService {
      * Загружает список всех пользователей
      * @param callback
      */
-    loadUsersList(/*callback*/) {
-        return Http.Get('/users')
-            .then(function (users) {
-                this.users = users;
-
-                if (this.isLoggedIn()) {
-                    this.users = this.users.map(function (user) {
-                        user.me = user.email === this.user.email;
-                        return user;
-                    }.bind(this));
-                }
-
-                return this.users;
-            }.bind(this));
-    }
+//     loadUsersList(callback) {
+//         return Http.Get('/users')
+//             .then(function (users) {
+//                 this.users = users;
+//
+//                 if (this.isLoggedIn()) {
+//                     this.users = this.users.map(function (user) {
+//                         user.me = user.email === this.user.email;
+//                         return user;
+//                     }.bind(this));
+//                 }
+//
+//                 return this.users;
+//             }.bind(this));
+//     }
 }
 
 export default UserService;
