@@ -136,15 +136,20 @@ function openProfile() {
 }
 
 function openLogout() {
-    return userService
+    userService
         .logout()
-        .then(function () {
-            return userService.getData(true);
-        })
         // .then(function () {
-        //     return openMenu();
+        //     return userService.getData(true);
         // })
+        .then(function () {
+            console.log('openmenu');
+            return openMenu();
+        })
         .catch((err) => alert(`Some error ${err.status}: ${err.message}`));
+    if (!userService.isLoggedIn()) {
+        return openMenu();
+    }
+
 }
 
 function openMenu() {
