@@ -1,4 +1,3 @@
-//(function () {
 'use strict';
 
 
@@ -12,19 +11,32 @@ export default class Http {
      * @param {string} address - адрес запроса
      */
     static Get(address) {
-      //const url = (Http.BaseUrl || baseUrl) + address;
-   			return fetch(address, {
-   				method: 'GET',
-   				mode: 'cors',
-   				credentials: 'include'
-   			})
-   				.then(function (response) {
-   					if (response.status >= 400) {
-   						throw response;
-   					}
+        return fetch(address, {
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'include'
+        })
+            .then(function (response) {
+                if (response.status >= 400) {
+                    throw response;
+                }
+                return response.json();
+            });
+    }
 
-   					return response.json();
-   				});
+    static Delete(address) {
+        return fetch(address, {
+            method: 'DELETE',
+            mode: 'cors',
+            credentials: 'include'
+        })
+            .then(function (response) {
+                if (response.status >= 400) {
+                    throw response;
+                }
+
+                return response.json();
+            });
     }
 
 
@@ -33,27 +45,24 @@ export default class Http {
      * @param {string} address - адрес запроса
      * @param {*} body - тело запроса (объект)
      */
-     
-    static Post(address, body) {
-      return fetch(address, {
-      method: 'POST',
-      mode: 'cors',
-      credentials: 'include',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8'
-      }
-    })
-     .then(function (response) {
-        if (response.status >= 400) {
-          throw response;
-        }
 
-        return response.json();
-      });
+    static Post(address, body) {
+        return fetch(address, {
+            method: 'POST',
+            mode: 'cors',
+            credentials: 'include',
+            body: JSON.stringify(body),
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        })
+            .then(function (response) {
+                if (response.status >= 400) {
+                    throw response;
+                }
+
+                return response.json();
+            });
     }
 }
 
-//	window.Http = Http;
-
-//)();

@@ -4,7 +4,8 @@
   "description": "Gwent game",
   "main": "main.js",
   "scripts": {
-    "start": "node server/index.js",
+    "start": "npm run compile-pug && node server/index.js",
+    "compile-pug": "pug -c --extension 'pug.js' --name-after-file ./public/blocks/",
     "lint": "eslint ."
   },
   "author": "",
@@ -17,6 +18,8 @@
     "morgan": "^1.8.2",
     "path": "^0.12.7",
     "pug": "^2.0.0-rc.4",
+    "pug-cli": "^1.0.0-alpha6",
+    "pug-loader": "^2.3.0",
     "uuid": "^3.1.0"
   }
 }

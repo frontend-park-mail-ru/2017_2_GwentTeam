@@ -2,30 +2,25 @@
 
 import Block from '/blocks/block/index.js';
 import Form from '/blocks/form/index.js';
-import Scoreboard from '/blocks/scoreboard/index.js';
+//import Scoreboard from '/blocks/scoreboard/index.js';
 import Profile from '/blocks/profile/index.js';
 import UserService from '/services/user-service.js';
 import loginFields from '/configs/login-fields.js';
 import signupFields from '/configs/signup-fields.js';
 
 const userService = new UserService();
-const app = new Block(document.getElementById('application'));//вставить картинку class="background__img"
-//const image = Block.Create('img', {}, ['logo__img main__menu']);
-//image.src('/logo.png');
-//console.log(image);
-//const title = Block.Create('a', {}, ['application-header'], 'Frontend-sample application');
+const app = new Block(document.getElementById('application'));
 const title =  Block.Create('div', {}, ['app__logo']);
 const sections = {
-
     menu: Block.Create('section', {}, ['main__menu']),
     login: Block.Create('section', {}, ['login-section']),
-    //play: Block.Create('section', {}, ['play-section']),
-    //about: Block.Create('section', {}, ['about-section']),
+    game:  Block.Create('section', {}, ['game-section']),
     signup: Block.Create('section', {}, ['signup-section']),
+    about: Block.Create('section', {}, ['about-section']),
     //scores: Block.Create('section', {}, ['scores-section']),
     profile: Block.Create('section', {}, ['profile-section']),
+    logout: Block.Create('section', {}, []),
 };
-
 
 function sectionsHide() {
     Object.keys(sections).forEach((sectionKey) => {
@@ -37,33 +32,55 @@ function sectionsHide() {
 app.append(title);
 Object.keys(sections).forEach((sectionKey) => {
     const section = sections[sectionKey];
-    console.log('section =', section);
     app.append(section);
 });
 sectionsHide();
 sections.menu.show();
 
+function openGame() {
+    if (!sections.game.ready) {
+        sections.game.gamefield = Block.Create('h1', {}, ['main__menu'], 'В разработке');
+        sections.game
+            .append(sections.game.gamefield);
+    }
+    sectionsHide();
+    sections.game.show();
+
+    sections.game.ready = true;
+}
+
+function openAbout() {
+    if (!sections.about.ready) {
+        sections.about.aboutfield = Block.Create('h1', {}, ['main__menu'], 'Правила игры, разработчики');
+        sections.about
+            .append(sections.about.aboutfield);
+        sections.about.ready = true;
+    }
+    sectionsHide();
+    sections.about.show();
+}
+
 function onSubmitLoginForm(formdata) {
-  return userService
-    .login(formdata.email, formdata.password)
-    .then(function () {
-      return userService.getData(true);
-    })
-    .then(function () {
-      sections.login.loginform.reset();
-      openMenu();
-    })
-    .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
+    return userService
+        .login(formdata.login, formdata.password)
+        .then(function () {
+            return userService.getData(true);
+        })
+        .then(function () {
+            sections.login.loginform.reset();
+            openMenu();
+        })
+        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
 
 
-	}
+}
 
 function openLogin() {
     if (!sections.login.ready) {
         sections.login.loginform = new Form(loginFields);
         sections.login.loginform.onSubmit(onSubmitLoginForm);
         sections.login
-            .append(Block.Create('h2', {}, [], 'Войдите'))
+            .append(Block.Create('h2', {}, [], 'Вход'))
             .append(sections.login.loginform);
         sections.login.ready = true;
     }
@@ -75,16 +92,16 @@ function openLogin() {
 }
 
 function onSubmitSingUpForm (formdata) {
-  return userService
-    .signup(formdata.email, formdata.password)
-    .then(function () {
-      return userService.getData(true);
-    })
-    .then(function(){
-      sections.signup.signupform.reset();
-      openMenu();
-    })
-    .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
+    return userService
+        .signup(formdata.login, formdata.email, formdata.password)
+        .then(function () {
+            return userService.getData(true);
+        })
+        .then(function(){
+            sections.signup.signupform.reset();
+            openMenu();
+        })
+        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
 }
 
 function openSignup() {
@@ -92,7 +109,7 @@ function openSignup() {
         sections.signup.signupform = new Form(signupFields);
         sections.signup.signupform.onSubmit(onSubmitSingUpForm);
         sections.signup
-            .append(Block.Create('h2', {}, [], 'Зарегистрируйтесь'))
+            .append(Block.Create('h2', {}, [], 'Регистрация'))
             .append(sections.signup.signupform);
         sections.signup.ready = true;
     }
@@ -103,25 +120,26 @@ function openSignup() {
     sections.signup.show();
 }
 
-function openScores() {
-    if (!sections.scores.ready) {
-        sections.scores.scoreboard = new Scoreboard();
-        sections.scores
-            .append(Block.Create('h2', {}, [], 'Список лидеров'))
-            .append(sections.scores.scoreboard);
-        sections.scores.ready = true;
-    }
-    sectionsHide();
-    userService.loadUsersList(function (err, users) {
-        if (err) {
-            alert(`Some error ${err.status}: ${err.responseText}`);
-            return openMenu();
-        }
-
-        sections.scores.scoreboard.update(users);
-        sections.scores.show();
-    }, true);
-}
+// function openScores() {
+//     if (!sections.scores.ready) {
+//
+//         sections.scores.scoreboard = new Scoreboard();
+//         sections.scores
+//             .append(Block.Create('h2', {}, [], 'Список лидеров'))
+//             .append(sections.scores.scoreboard);
+//         sections.scores.ready = true;
+//     }
+//     sectionsHide();
+//     userService.loadUsersList(function (err, users) {
+//         if (err) {
+//             alert(`Some error ${err.status}: ${err.responseText}`);
+//             return openMenu();
+//         }
+//
+//         sections.scores.scoreboard.update(users);
+//         sections.scores.show();
+//     }, true);
+// }
 
 function openProfile() {
     if (!sections.profile.ready) {
@@ -147,13 +165,29 @@ function openProfile() {
     return openMenu();
 }
 
+function openLogout() {
+    return userService
+        .logout()
+        .then(function () {
+            return userService.getData(false);
+        })
+        .then(function () {
+            openMenu();
+        })
+        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
+}
+
 function openMenu() {
     if (!sections.menu.ready) {
+
         sections.menu.items = {
             login: Block.Create('button', {'data-section': 'login'}, [], 'Вход'),
+            game: Block.Create('button', {'data-section': 'game'}, [], 'Играть'),
             signup: Block.Create('button', {'data-section': 'signup'}, [], 'Регистрация'),
-            scores: Block.Create('button', {'data-section': 'scores'}, [], 'Таблица лидеров'),
-            profile: Block.Create('button', {'data-section': 'profile'}, [], 'Профиль'),
+            about: Block.Create('button', {'data-section': 'about'}, [], 'Об игре'),
+            //scores: Block.Create('button', {'data-section': 'scores'}, [], 'Открыть таблицу лидеров'),
+            profile: Block.Create('button', {'data-section': 'profile'}, [], 'Посмотреть мой профиль'),
+            logout: Block.Create('button', {'data-section': 'logout'}, [], ['Выйти'])
         };
         sections.menu.on('click', function (event) {
             event.preventDefault();
@@ -163,22 +197,34 @@ function openMenu() {
                 case 'login':
                     openLogin();
                     break;
+                case 'game':
+                    openGame();
+                    break;
                 case 'signup':
                     openSignup();
                     break;
-                case 'scores':
-                    openScores();
+                case 'about':
+                    openAbout();
                     break;
+                // case 'scores':
+                //     openScores();
+                //     break;
                 case 'profile':
                     openProfile();
+                    break;
+                case 'logout':
+                    openLogout();
                     break;
             }
         });
         sections.menu
             .append(sections.menu.items.login)
             .append(sections.menu.items.signup)
+            .append(sections.menu.items.game)
+            .append(sections.menu.items.about)
             .append(sections.menu.items.scores)
-            .append(sections.menu.items.profile);
+            .append(sections.menu.items.profile)
+            .append(sections.menu.items.logout);
         sections.menu.ready = true;
     }
 
@@ -186,24 +232,29 @@ function openMenu() {
     if (userService.isLoggedIn()) {
         sections.menu.items.login.hide();
         sections.menu.items.signup.hide();
-        sections.menu.items.scores.show();
+        sections.menu.items.game.show();
+        sections.menu.items.about.show();
+        //sections.menu.items.scores.show();
         sections.menu.items.profile.show();
+        sections.menu.items.logout.show();
     } else {
         sections.menu.items.login.show();
         sections.menu.items.signup.show();
-        sections.menu.items.scores.show();
+        //sections.menu.items.scores.show();
+        sections.menu.items.about.show();
         sections.menu.items.profile.hide();
+        sections.menu.items.game.hide();
+        sections.menu.items.logout.hide();
     }
     sections.menu.show();
 }
 
-//title.on('click', openMenu);
+title.on('click', openMenu);
 openMenu();
 
 userService.getData()
-		.then(function () {
-			openMenu();
-		})
-		.catch(function (error) {
-			// ignore this error
-		});
+    .then(function () {
+        openMenu();
+    })
+    .catch(function (/*error*/) {
+    });

@@ -13,13 +13,12 @@ class Form extends Block {
     }
 
     onSubmit(callback) {
+
         this.el.addEventListener('submit', function (e) {
             e.preventDefault();
             const formdata = {};
             const elements = this.el.elements;
-            console.log(elements);
             for (let name in elements) {
-                console.log(name);
                 formdata[name] = elements[name].value;
             }
 

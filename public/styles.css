@@ -1,21 +1,7 @@
-
-
 .main__menu {
     width: 400px;
     margin: auto;
 }
-
-/*.menu__bar {*/
-    /*position: absolute;*/
-/*}*/
-
-h1 {
-    color:lightseagreen;
-}
-h2 {
-    color:lightseagreen;
-}
-
 
 .main__menu button {
     display: block;
@@ -24,14 +10,32 @@ h2 {
     /*border-radius: 25px;*/
     background-color: #595;
     color: #111;
-    height: 40px;
+    height: 50px;
     border-width: 0;
     opacity: 0.9;
     box-shadow: 0 0 15px;
+    cursor: pointer;
 }
 
 .main__menu button[hidden] {
     display: none;
+}
+
+h1 {
+    color:lightseagreen;
+}
+h2 {
+    color:lightseagreen;
+}
+
+input {
+    margin: 5px auto;
+}
+
+.login__input {
+    display: block;
+    padding-top: 0px;
+    padding-left: 10%;
 }
 
 .background__img {
@@ -44,27 +48,24 @@ h2 {
     background-repeat: no-repeat;
     background-image: url(./images/background.jpg);
     background-size: cover;
-
 }
 
-form {
-    display: block;
-    margin: 10px auto;
-}
 .app__logo {
     background-repeat: no-repeat;
     background-image: url(./images/logo.png);
     background-position: center center;
     background-size: contain;
-    /*background-size: 50%;*/
-    /*width: 848px;*/
-    height: 350px;
+    width: 500px;
+    margin: auto;
+    height: 320px;
+    cursor: pointer;
 }
 
-.logo__img {
-    width: 400px;
-    height: 400px;
-}
+
+/*.logo__img {*/
+/*width: 400px;*/
+/*height: 400px;*/
+/*}*/
 
 /*.button {*/
     /*margin-right: 5px;*/
@@ -83,65 +84,45 @@ form {
     /*height: 30px;*/
 /*}*/
 
-.login__input {
-    display: block;
-    padding-top: 0px;
-    padding-left: 10%;
-    /*height: 20px;*/
-}
+/*.tableTop {*/
+    /*position: absolute;*/
+    /*padding-top: 10%;*/
+    /*padding-left: 40%;*/
+/*}*/
 
-input {
-    margin: 5px auto;
-}
+/*.tableProp {*/
+    /*width: 100%; !* Ширина таблицы *!*/
+    /*background: white; !* Цвет фона таблицы *!*/
+    /*color: black; !* Цвет текста *!*/
+    /*border-spacing: 10px; !* Расстояние между ячейками *!*/
+/*}*/
 
-.tableTop {
-    position: absolute;
-    padding-top: 10%;
-    padding-left: 40%;
-}
+/*.left__menu {*/
+    /*position: absolute;*/
+    /*padding-left: 5%;*/
+    /*padding-top: 10%;*/
+/*}*/
 
-.tableProp {
-    width: 100%; /* Ширина таблицы */
-    background: white; /* Цвет фона таблицы */
-    color: black; /* Цвет текста */
-    border-spacing: 10px; /* Расстояние между ячейками */
-}
+/*.game__field {*/
+    /*padding-top: 3%;*/
+    /*padding-left: 35%;*/
+    /*width: 50%;*/
+/*}*/
 
-.left__menu {
-    position: absolute;
-    padding-left: 5%;
-    padding-top: 10%;
-}
+/*.user__content {*/
+    /*position: relative;*/
+    /*padding-left: 37%;*/
+/*}*/
 
-.game__field {
-    padding-top: 3%;
-    padding-left: 35%;
-    width: 50%;
-}
+/*.user__avatar {*/
+    /*width: 50px;*/
+    /*height: 50px;*/
+    /*padding-top: 3%;*/
+    /*padding-left: 5%;*/
+/*}*/
 
-.user__content {
-    position: relative;
-    padding-left: 37%;
-}
+/*section {*/
+  /*position: relative;*/
+  /*color: white;*/
+/*}*/
 
-.user__avatar {
-    width: 50px;
-    height: 50px;
-    padding-top: 3%;
-    padding-left: 5%;
-}
-
-section {
-  position: relative;
-  color: white;
-}
-
-.login-section {
-    width: 200px;
-    margin: auto;
-}
-
-.signup-section {
-    width: 200px;
-    margin: auto;
-}

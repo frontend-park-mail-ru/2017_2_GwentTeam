@@ -1,9 +1,7 @@
-//(function () {
 'use strict';
 
-//const Http = window.Http;
-import Http from '../modules/http.js'
-
+import Http from '../modules/http.js';
+const url = 'https://technogwent-api-010.herokuapp.com/api';
 /**
  * Сервис для работы с юзерами
  * @module UserService
@@ -16,11 +14,13 @@ class UserService {
 
     /**
      * Регистрирует нового пользователя
+     * @param {string} login
      * @param {string} email
      * @param {string} password
      */
-    signup(email, password) {
-        return Http.Post('/signup', {email, password});
+
+    signup(login, email, password) {
+        return Http.Post(url + '/join', {login, email, password});
     }
 
     /**
@@ -28,8 +28,13 @@ class UserService {
      * @param {string} email
      * @param {string} password
      */
-    login(email, password) {
-        return Http.Post('/login', {email, password});
+
+    login(login, password) {
+        return Http.Post(url + '/auth', {login, password});
+    }
+
+    logout() {
+        Http.Delete(url + '/logout');
     }
 
     /**
@@ -42,44 +47,40 @@ class UserService {
 
     /**
      * Загружает данные о текущем пользователе
-     * @param {Function} callback
      * @param {boolean} [force=false] - игнорировать ли кэш?
      */
     getData(force = false) {
-      if (this.isLoggedIn() && !force) {
-				return Promise.resolve(this.user);
-			}
 
-			return Http.Get('/me')
-				.then(function (userdata) {
-					this.user = userdata;
-					return userdata;
-				}.bind(this));
+        if (this.isLoggedIn() && !force) {
+            return Promise.resolve(this.user);
+        }
 
+        return Http.Get(url + '/auth')
+            .then(function (userdata) {
+                this.user = userdata;
+                return userdata;
+            }.bind(this));
     }
 
     /**
      * Загружает список всех пользователей
      * @param callback
      */
-    loadUsersList(callback) {
-      return Http.Get('/users')
-      .then(function (users) {
-        this.users = users;
+    loadUsersList(/*callback*/) {
+        return Http.Get('/users')
+            .then(function (users) {
+                this.users = users;
 
-        if (this.isLoggedIn()) {
-          this.users = this.users.map(function (user) {
-            user.me = user.email === this.user.email;
-            return user;
-          }.bind(this));
-        }
+                if (this.isLoggedIn()) {
+                    this.users = this.users.map(function (user) {
+                        user.me = user.email === this.user.email;
+                        return user;
+                    }.bind(this));
+                }
 
-        return this.users;
-      }.bind(this));
+                return this.users;
+            }.bind(this));
     }
 }
 
 export default UserService;
-//window.UserService = UserService;
-
-//})();
