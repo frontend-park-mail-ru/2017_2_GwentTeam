@@ -13,36 +13,21 @@ app.use(cookie());
 
 
 const users = {
-    'a.ostapenko@corp.mail.ru': {
-        email: 'a.ostapenko@corp.mail.ru',
-        password: 'password',
-        age: 20,
-        score: 72,
-    },
-    'd.dorofeev@corp.mail.ru': {
-        email: 'd.dorofeev@corp.mail.ru',
-        password: 'password',
-        age: 20,
-        score: 100500,
-    },
-    'a.udalov@corp.mail.ru': {
-        email: 'a.udalov@corp.mail.ru',
-        password: 'password',
-        age: 20,
-        score: 72,
-    },
-    'marina.titova@corp.mail.ru': {
-        email: 'marina.titova@corp.mail.ru',
-        password: 'password',
-        age: 20,
-        score: 72,
-    },
-    'a.tyuldyukov@corp.mail.ru': {
-        email: 'a.tyuldyukov@corp.mail.ru',
-        password: 'password',
-        age: 20,
-        score: 72,
-    },
+  'vasya@mail.ru': {
+      email: 'vasya@mail.ru',
+      password: 'password',
+      score: 10,
+  },
+  'petya@mail.ru': {
+      email: 'petya@mail.ru',
+      password: 'password',
+      score: 1000,
+  },
+  'nika@mail.ru': {
+      email: 'nika@mail.ru',
+      password: 'password',
+      score: 500000,
+  }
 };
 const ids = {};
 

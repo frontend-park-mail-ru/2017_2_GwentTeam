@@ -9,6 +9,14 @@
     /*position: absolute;*/
 /*}*/
 
+h1 {
+    color:lightseagreen;
+}
+h2 {
+    color:lightseagreen;
+}
+
+
 .main__menu button {
     display: block;
     margin: 10px auto;
@@ -40,7 +48,6 @@
 }
 
 form {
-    background-color: red;
     display: block;
     margin: 10px auto;
 }
@@ -80,6 +87,11 @@ form {
     display: block;
     padding-top: 0px;
     padding-left: 10%;
+    /*height: 20px;*/
+}
+
+input {
+    margin: 5px auto;
 }
 
 .tableTop {
@@ -122,4 +134,14 @@ form {
 section {
   position: relative;
   color: white;
+}
+
+.login-section {
+    width: 200px;
+    margin: auto;
+}
+
+.signup-section {
+    width: 200px;
+    margin: auto;
 }

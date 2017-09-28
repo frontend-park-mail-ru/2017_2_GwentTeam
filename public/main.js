@@ -61,22 +61,6 @@ function onSubmitLoginForm(formdata) {
 function openLogin() {
     if (!sections.login.ready) {
         sections.login.loginform = new Form(loginFields);
-        /*sections.login.loginform.onSubmit(function (formdata) {
-            userService.login(formdata.email, formdata.password, function (err, resp) {
-                if (err) {
-                    alert(`Some error ${err.status}: ${err.responseText}`);
-                    return;
-                }
-
-                sections.login.loginform.reset();
-                userService.getData(function (err) {
-                    if (err) {
-                        return;
-                    }
-                    openMenu();
-                }, true);
-            });
-        });*/
         sections.login.loginform.onSubmit(onSubmitLoginForm);
         sections.login
             .append(Block.Create('h2', {}, [], 'Войдите'))
@@ -90,20 +74,23 @@ function openLogin() {
     sections.login.show();
 }
 
+function onSubmitSingUpForm (formdata) {
+  return userService
+    .signup(formdata.email, formdata.password)
+    .then(function () {
+      return userService.getData(true);
+    })
+    .then(function(){
+      sections.signup.signupform.reset();
+      openMenu();
+    })
+    .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
+}
+
 function openSignup() {
     if (!sections.signup.ready) {
         sections.signup.signupform = new Form(signupFields);
-        sections.signup.signupform.onSubmit(function (formdata) {
-            userService.signup(formdata.email, formdata.password, function (err, resp) {
-                if (err) {
-                    alert(`Some error ${err.status}: ${err.responseText}`);
-                    return;
-                }
-
-                sections.signup.signupform.reset();
-                openMenu();
-            });
-        });
+        sections.signup.signupform.onSubmit(onSubmitSingUpForm);
         sections.signup
             .append(Block.Create('h2', {}, [], 'Зарегистрируйтесь'))
             .append(sections.signup.signupform);

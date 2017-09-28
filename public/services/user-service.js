@@ -18,20 +18,18 @@ class UserService {
      * Регистрирует нового пользователя
      * @param {string} email
      * @param {string} password
-     * @param {Function} callback
      */
     signup(email, password) {
-        Http.Post('/signup', {email, password});
+        return Http.Post('/signup', {email, password});
     }
 
     /**
      * Авторизация пользователя
      * @param {string} email
      * @param {string} password
-     * @param {Function} callback
      */
     login(email, password) {
-        Http.Post('/login', {email, password});
+        return Http.Post('/login', {email, password});
     }
 
     /**

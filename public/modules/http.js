@@ -10,7 +10,6 @@ export default class Http {
     /**
      * Выполняет GET-запрос по указанному адресу
      * @param {string} address - адрес запроса
-     * @param {Function} callback - функция-коллбек
      */
     static Get(address) {
       //const url = (Http.BaseUrl || baseUrl) + address;
@@ -33,8 +32,8 @@ export default class Http {
      * Выполняет POST-запрос по указанному адресу
      * @param {string} address - адрес запроса
      * @param {*} body - тело запроса (объект)
-     * @param {Function} callback - функция-коллбек
      */
+     
     static Post(address, body) {
       return fetch(address, {
       method: 'POST',
