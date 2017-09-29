@@ -37,6 +37,7 @@ export default class Http {
         })
             .then(function (response) {
                 if (response.status >= 400) {
+                    console.log(response.responseText);
                     throw response;
                 }
 

@@ -68,7 +68,7 @@ function onSubmitLoginForm(formdata) {
             sections.login.loginform.reset();
             openMenu();
         })
-        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
+        .catch((err) => alert(`Some error ${err.status}: ${err.statusText}`));
 
 
 }
@@ -96,7 +96,7 @@ function onSubmitSingUpForm (formdata) {
             sections.signup.signupform.reset();
             openMenu();
         })
-        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
+        .catch((err) => alert(`Some error ${err.status}: ${err.statusText}`));
 }
 
 function openSignup() {
@@ -132,16 +132,18 @@ function openProfile() {
             sections.profile.profile.update(user);
             sections.profile.show();
         })
-        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
+        .catch((err) => alert(`Some error ${err.status}: ${err.statusText}`));
 }
 
 function openLogout() {
-    return userService
+    userService
         .logout()
-        .then(function () {
-            return userService.getData(true);
-        })
-        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
+        .catch((err) => alert(`Some error ${err.status}: ${err.statusText}`));
+    if (!userService.isLoggedIn()) {
+        console.log('ne log');
+        return openMenu();
+    }
+
 }
 
 function openMenu() {
@@ -153,7 +155,7 @@ function openMenu() {
             signup: Block.Create('button', {'data-section': 'signup'}, [], 'Регистрация'),
             about: Block.Create('button', {'data-section': 'about'}, [], 'Об игре'),
             profile: Block.Create('button', {'data-section': 'profile'}, [], 'Посмотреть мой профиль'),
-            logout: Block.Create('button', {'data-section': 'logout'}, [], ['Выйти'])
+            logout: Block.Create('button', {'data-section': 'logout'}, [], 'Выйти')
         };
         sections.menu.on('click', function (event) {
             event.preventDefault();
@@ -191,6 +193,7 @@ function openMenu() {
     }
 
     sectionsHide();
+    console.log('hide');
     if (userService.isLoggedIn()) {
         sections.menu.items.login.hide();
         sections.menu.items.signup.hide();
@@ -199,6 +202,7 @@ function openMenu() {
         sections.menu.items.profile.show();
         sections.menu.items.logout.show();
     } else {
+        console.log('neavt');
         sections.menu.items.login.show();
         sections.menu.items.signup.show();
         sections.menu.items.about.show();

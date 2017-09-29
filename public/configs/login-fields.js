@@ -1,6 +1,6 @@
 'use strict';
 
-//const cssBlock = 'login__';
+const cssBlock = 'login__';
 
 const loginFields = [
     {
@@ -18,12 +18,12 @@ const loginFields = [
             placeholder: 'Введите пароль',
             required: 'required',
         },
-        //classes: [cssBlock+'input']
     },
     {
         attrs: {
             type: 'submit',
             value: 'Войти',
+            classes: [cssBlock + 'input'],
         },
     },
 ];
