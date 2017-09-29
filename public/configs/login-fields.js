@@ -1,0 +1,30 @@
+'use strict';
+
+const cssBlock = 'login__';
+
+const loginFields = [
+    {
+        attrs: {
+            type: 'text',
+            name: 'login',
+            placeholder: 'Введите ваш Login',
+            required: 'required',
+        },
+    },
+    {
+        attrs: {
+            type: 'password',
+            name: 'password',
+            placeholder: 'Введите пароль',
+            required: 'required',
+        },
+    },
+    {
+        attrs: {
+            type: 'submit',
+            value: 'Войти',
+            class: [cssBlock + 'input'],
+        },
+    },
+];
+export default loginFields;
