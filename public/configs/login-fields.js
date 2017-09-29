@@ -23,7 +23,7 @@ const loginFields = [
         attrs: {
             type: 'submit',
             value: 'Войти',
-            classes: [cssBlock + 'input'],
+            class: [cssBlock + 'input'],
         },
     },
 ];

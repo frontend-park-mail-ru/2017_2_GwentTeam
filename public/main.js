@@ -69,8 +69,6 @@ function onSubmitLoginForm(formdata) {
             openMenu();
         })
         .catch((err) => alert(`Some error ${err.status}: ${err.statusText}`));
-
-
 }
 
 function openLogin() {
