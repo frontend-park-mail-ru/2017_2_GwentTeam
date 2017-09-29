@@ -18,7 +18,7 @@ export default class Http {
         })
             .then(function (response) {
                 if (response.status >= 400) {
-                    throw response.json;
+                    throw response;
                 }
                 return response.json();
             });
@@ -37,8 +37,7 @@ export default class Http {
         })
             .then(function (response) {
                 if (response.status >= 400) {
-                    console.log(response.responseText);
-                    throw response.json;
+                    throw response;
                 }
 
                 return response.json();
@@ -64,7 +63,7 @@ export default class Http {
         })
             .then(function (response) {
                 if (response.status >= 400) {
-                    throw response.json;
+                    throw response;
                 }
 
                 return response.json();

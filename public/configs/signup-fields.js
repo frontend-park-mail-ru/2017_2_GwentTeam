@@ -37,7 +37,7 @@ const signupFields = [
         attrs: {
             type: 'submit',
             value: 'Зарегистрироваться',
-            classes: [cssBlock + 'input'],
+            class: [cssBlock + 'input'],
         },
     },
 ];
