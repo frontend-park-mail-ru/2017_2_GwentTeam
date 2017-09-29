@@ -38,6 +38,8 @@ input {
     height: 30px;
     background-color: #595;
     width: 60px;
+    cursor: pointer;
+    opacity: 0.8;
 }
 
 .background__img {
@@ -67,4 +69,6 @@ input {
     height: 30px;
     background-color: #595;
     width: 150px;
+    cursor: pointer;
+    opacity: 0.9;
 }
