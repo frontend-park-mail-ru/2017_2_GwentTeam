@@ -68,7 +68,8 @@ function onSubmitLoginForm(formdata) {
             sections.login.loginform.reset();
             openMenu();
         })
-        .catch((err) => alert(`Some error ${err.status}: ${JSON.parse(err.responseText)}`));
+        .catch((err) => {console.log(err, err.message);
+            alert(`Some error ${err.status}: ${JSON.parse(err.message)}`);});
 
 
 }
@@ -96,7 +97,8 @@ function onSubmitSingUpForm (formdata) {
             sections.signup.signupform.reset();
             openMenu();
         })
-        .catch((err) => alert(`Some error ${err.status}: ${JSON.parse(err.message)}`));
+        .catch((err) => {console.log(err, err.message);
+            alert(`Some error ${err.status}: ${JSON.parse(err.message)}`);});
 }
 
 function openSignup() {
@@ -140,7 +142,6 @@ function openLogout() {
         .logout()
         .catch((err) => alert(`Some error ${err.status}: ${err.statusText}`));
     if (!userService.isLoggedIn()) {
-        console.log('ne log');
         return openMenu();
     }
 
@@ -193,7 +194,6 @@ function openMenu() {
     }
 
     sectionsHide();
-    console.log('hide');
     if (userService.isLoggedIn()) {
         sections.menu.items.login.hide();
         sections.menu.items.signup.hide();
@@ -202,7 +202,6 @@ function openMenu() {
         sections.menu.items.profile.show();
         sections.menu.items.logout.show();
     } else {
-        console.log('neavt');
         sections.menu.items.login.show();
         sections.menu.items.signup.show();
         sections.menu.items.about.show();
