@@ -138,13 +138,6 @@ function openProfile() {
 function openLogout() {
     userService
         .logout()
-        // .then(function () {
-        //     userService.getData(true);
-        // })
-        // .then(function () {
-        //     console.log('openmenu');
-        //     return openMenu();
-        //})
         .catch((err) => alert(`Some error ${err.status}: ${err.statusText}`));
     if (!userService.isLoggedIn()) {
         console.log('ne log');
