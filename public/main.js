@@ -68,7 +68,7 @@ function onSubmitLoginForm(formdata) {
             sections.login.loginform.reset();
             openMenu();
         })
-        .catch((err) => alert(`Some error ${err.status}: ${err.statusText}`));
+        .catch((err) => alert(`Some error ${err.status}: ${JSON.parse(err.responseText)}`));
 
 
 }
@@ -96,7 +96,7 @@ function onSubmitSingUpForm (formdata) {
             sections.signup.signupform.reset();
             openMenu();
         })
-        .catch((err) => alert(`Some error ${err.status}: ${err.statusText}`));
+        .catch((err) => alert(`Some error ${err.status}: ${JSON.parse(err.message)}`));
 }
 
 function openSignup() {
