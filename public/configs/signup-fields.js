@@ -1,5 +1,5 @@
 'use strict';
-const patternPassword = '^\\d{2,}\\w{2,}$';
+const patternPassword = '\\d{2,}\\w{2,}';
 const patternLogin = '^\\d{0,}\\w{1,}$';
 const signupFields = [
     {
