@@ -13,21 +13,21 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // console.log(devtool);
 // console.log();
 //
- const SRC_DIR = 'public';
- const BUILD_DIR = 'build';
+const SRC_DIR = 'public';
+const BUILD_DIR = 'build';
 
 const clientConfig = {
     target: 'web',
     // devtool,
-     entry: {
+    entry: {
         // react: ['react', 'react-dom'],
-         client: path.resolve(__dirname, SRC_DIR, 'main.js'),
-     },
-     output: {
-         path: path.join(__dirname, BUILD_DIR),
-         publicPath: '/',
-         filename: '[name].bundle.js',
-         //chunkFilename: '[id].chunk.js',
+        client: path.resolve(__dirname, SRC_DIR, 'main.js'),
+    },
+    output: {
+        path: path.join(__dirname, BUILD_DIR),
+        publicPath: '/',
+        filename: '[name].bundle.js',
+        //chunkFilename: '[id].chunk.js',
     },
     module: {
         loaders: [
@@ -46,8 +46,8 @@ const clientConfig = {
             }, {
                 test: /\.(jpe?g|png|gif|svg|)$/i,
                 loader: 'file-loader?name=img/[hash].[ext]'
-             }, {
-                 test: /\.html/,
+            }, {
+                test: /\.html/,
                 loader: 'html-loader',
             }, {
                 test: /\.pug/,
@@ -64,7 +64,7 @@ const clientConfig = {
             //favicon: path.resolve(__dirname, SRC_DIR, 'favicon.ico'),
             template: path.resolve(__dirname, SRC_DIR, 'index.html'),
         }),
-         new ExtractTextPlugin(path.join('css', '[name].css')),
+        new ExtractTextPlugin(path.join('css', '[name].css')),
     ],
 };
 

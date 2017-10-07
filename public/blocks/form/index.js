@@ -4,10 +4,10 @@ import './index.css';
 
 class Form extends Block {
 
-   /**
-   * @param {} fields - элементы формы
-   * @constructor
-   */
+    /**
+    * @param {} fields - элементы формы
+    * @constructor
+    */
     constructor(fields = []) {
         const el = document.createElement('form');
         super(el);
@@ -19,9 +19,9 @@ class Form extends Block {
     }
 
     /**
-     *
-     * @param {function} callback
-     */
+    *
+    * @param {function} callback
+    */
     onSubmit(callback) {
         this.el.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -36,8 +36,8 @@ class Form extends Block {
     }
 
     /**
-     * Выполняет сброс формы
-     */
+    * Выполняет сброс формы
+    */
     reset() {
         this.el.reset();
     }
