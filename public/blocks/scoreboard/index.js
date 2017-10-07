@@ -6,8 +6,8 @@ import './index.css';
 
 class Scoreboard extends Block {
     constructor() {
-        const el = document.createElement('table');
-        super(el);
+       // const el = document.createElement('table');
+        super('table');
     }
 
     update(users = []) {

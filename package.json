@@ -4,8 +4,6 @@
   "description": "Gwent game",
   "main": "main.js",
   "scripts": {
-    "start": "npm run compile-pug && node server/index.js",
-    "compile-pug": "pug -c --extension 'pug.js' --name-after-file ./public/blocks/",
     "lint": "eslint .",
     "test": "jest",
     "build": "webpack",

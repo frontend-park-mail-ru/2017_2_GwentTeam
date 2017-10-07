@@ -9,17 +9,18 @@ import signupFields from './configs/signup-fields';
 
 import './styles.css';
 
+
 const userService = new UserService();
 const app = new Block(document.getElementById('application'));
-const title =  Block.Create('div', {}, ['app__logo']);
+const title =  new Block('div', {}, ['app__logo']);
 const sections = {
-    menu: Block.Create('section', {}, ['main__menu']),
-    login: Block.Create('section', {}, ['login-section']),
-    game:  Block.Create('section', {}, ['game-section']),
-    signup: Block.Create('section', {}, ['signup-section']),
-    about: Block.Create('section', {}, ['about-section']),
-    profile: Block.Create('section', {}, ['profile-section']),
-    logout: Block.Create('section', {}, ['logout-section']),
+    menu: new Block('section', {}, ['main__menu']),
+    login: new Block('section', {}, ['login-section']),
+    game: new Block('section', {}, ['game-section']),
+    signup: new Block('section', {}, ['signup-section']),
+    about: new Block('section', {}, ['about-section']),
+    profile: new Block('section', {}, ['profile-section']),
+    logout: new Block('section', {}, ['logout-section']),
 };
 
 function sectionsHide() {
@@ -28,7 +29,6 @@ function sectionsHide() {
         section.hide();
     });
 }
-console.log(app);
 app.append(title);
 Object.keys(sections).forEach((sectionKey) => {
     const section = sections[sectionKey];
@@ -39,7 +39,7 @@ sections.menu.show();
 
 function openGame() {
     if (!sections.game.ready) {
-        sections.game.gamefield = Block.Create('h1', {}, ['main__menu'], 'В разработке');
+        sections.game.gamefield = new Block('h1', {}, ['main__menu'], 'В разработке');
         sections.game
             .append(sections.game.gamefield);
     }
@@ -51,7 +51,7 @@ function openGame() {
 
 function openAbout() {
     if (!sections.about.ready) {
-        sections.about.aboutfield = Block.Create('h1', {}, ['main__menu'], 'Правила игры, разработчики');
+        sections.about.aboutfield = new Block('h1', {}, ['main__menu'], 'Правила игры, разработчики');
         sections.about
             .append(sections.about.aboutfield);
         sections.about.ready = true;
@@ -63,10 +63,8 @@ function openAbout() {
 function onSubmitLoginForm(formdata) {
     return userService
         .login(formdata.login, formdata.password)
-        .then(function () {
-            return userService.getData(true);
-        })
-        .then(function () {
+        .then (() => userService.getData(true))
+        .then(() => {
             sections.login.loginform.reset();
             openMenu();
         })
@@ -78,7 +76,7 @@ function openLogin() {
         sections.login.loginform = new Form(loginFields);
         sections.login.loginform.onSubmit(onSubmitLoginForm);
         sections.login
-            .append(Block.Create('h2', {}, [], 'Вход'))
+            .append(new Block('h2', {}, [], 'Вход'))
             .append(sections.login.loginform);
         sections.login.ready = true;
     }
@@ -92,11 +90,17 @@ function openLogin() {
 function onSubmitSingUpForm (formdata) {
     return userService
         .signup(formdata.login, formdata.email, formdata.password)
-        .then(function(){
+        .then((data) => {
+            const response = data[0];
+            const body = data[1];
+
+            console.log(response.status, body.message);
+        })
+        .then(() => {
             sections.signup.signupform.reset();
             openMenu();
         })
-        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
+        .catch((err) => alert(`Some error ${err.status}: ${err.message}`));
 }
 
 function openSignup() {
@@ -104,7 +108,7 @@ function openSignup() {
         sections.signup.signupform = new Form(signupFields);
         sections.signup.signupform.onSubmit(onSubmitSingUpForm);
         sections.signup
-            .append(Block.Create('h2', {}, [], 'Регистрация'))
+            .append(new Block('h2', {}, [], 'Регистрация'))
             .append(sections.signup.signupform);
         sections.signup.ready = true;
     }
@@ -119,7 +123,7 @@ function openProfile() {
     if (!sections.profile.ready) {
         sections.profile.profile = new Profile();
         sections.profile
-            .append(Block.Create('h2', {}, [], 'Мой профиль'))
+            .append(new Block('h2', {}, [], 'Мой профиль'))
             .append(sections.profile.profile);
         sections.profile.ready = true;
     }
@@ -128,7 +132,7 @@ function openProfile() {
         return openMenu();
     }
     userService.getData()
-        .then(function (user) {
+        .then((user) => {
             sections.profile.profile.update(user);
             sections.profile.show();
         })
@@ -140,7 +144,6 @@ function openLogout() {
         .logout()
         .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
     if (!userService.isLoggedIn()) {
-        console.log('ne log');
         return openMenu();
     }
 
@@ -150,14 +153,14 @@ function openMenu() {
     if (!sections.menu.ready) {
 
         sections.menu.items = {
-            login: Block.Create('button', {'data-section': 'login'}, [], 'Вход'),
-            game: Block.Create('button', {'data-section': 'game'}, [], 'Играть'),
-            signup: Block.Create('button', {'data-section': 'signup'}, [], 'Регистрация'),
-            about: Block.Create('button', {'data-section': 'about'}, [], 'Об игре'),
-            profile: Block.Create('button', {'data-section': 'profile'}, [], 'Посмотреть мой профиль'),
-            logout: Block.Create('button', {'data-section': 'logout'}, [], 'Выйти')
+            login: new Block('button', {'data-section': 'login'}, [], 'Вход'),
+            game: new Block('button', {'data-section': 'game'}, [], 'Играть'),
+            signup: new Block('button', {'data-section': 'signup'}, [], 'Регистрация'),
+            about: new Block('button', {'data-section': 'about'}, [], 'Об игре'),
+            profile: new Block('button', {'data-section': 'profile'}, [], 'Посмотреть мой профиль'),
+            logout: new Block('button', {'data-section': 'logout'}, [], 'Выйти')
         };
-        sections.menu.on('click', function (event) {
+        sections.menu.on('click', (event) => {
             event.preventDefault();
             const target = event.target;
             const section = target.getAttribute('data-section');
@@ -182,6 +185,7 @@ function openMenu() {
                     break;
             }
         });
+
         sections.menu
             .append(sections.menu.items.login)
             .append(sections.menu.items.signup)
@@ -193,7 +197,6 @@ function openMenu() {
     }
 
     sectionsHide();
-    console.log('hide');
     if (userService.isLoggedIn()) {
         sections.menu.items.login.hide();
         sections.menu.items.signup.hide();
@@ -202,7 +205,6 @@ function openMenu() {
         sections.menu.items.profile.show();
         sections.menu.items.logout.show();
     } else {
-        console.log('neavt');
         sections.menu.items.login.show();
         sections.menu.items.signup.show();
         sections.menu.items.about.show();
@@ -217,8 +219,8 @@ title.on('click', openMenu);
 openMenu();
 
 userService.getData()
-    .then(function () {
+    .then(() => {
         openMenu();
     })
-    .catch(function (/*error*/) {
+    .catch((/*error*/) => {
     });

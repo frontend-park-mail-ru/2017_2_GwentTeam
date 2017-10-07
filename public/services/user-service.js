@@ -59,10 +59,10 @@ class UserService {
         }
 
         return Http.Get(url + '/auth')
-            .then(function (userdata) {
+            .then((userdata) => {
                 this.user = userdata;
                 return userdata;
-            }.bind(this));
+            });
     }
 
 }

@@ -7,8 +7,7 @@ import './index.css';
 class Profile extends Block {
 
     constructor() {
-        const el = document.createElement('div');
-        super(el);
+        super('div');
     }
 
     /**
