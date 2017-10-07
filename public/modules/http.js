@@ -38,7 +38,7 @@ export default class Http {
             mode: 'cors',
             credentials: 'include'
         })
-            .then(function (response) {
+            .then((response) => {
                 if (response.status >= 400) {
                     throw response;
                 }
@@ -71,7 +71,7 @@ export default class Http {
             //         json: response.json(),
             //     };
             // })
-            .then(function (response) {
+            .then((response) => {
                 if (response.status >= 400) {
                     throw response;
                 }

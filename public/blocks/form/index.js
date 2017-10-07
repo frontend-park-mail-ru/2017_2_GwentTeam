@@ -8,15 +8,11 @@ class Form extends Block {
     * @constructor
     */
     constructor(fields = []) {
-        const el = document.createElement('form');
-        console.log(el);
-        super(el);
-        console.log(el);
-        fields.forEach(function (field) {
-
-            const f = Block.Create('input', field.attrs || {}, field.classes || []);
+        super('form');
+        fields.forEach((field) => {
+            const f = new Block('input', field.attrs || {}, field.classes || []);
             this.append(f);
-        }.bind(this));//к чему bind?
+        });
     }
 
     /**
@@ -24,7 +20,7 @@ class Form extends Block {
      * @param {function} callback
      */
     onSubmit(callback) {
-        this.el.addEventListener('submit', function (e) {
+        this.el.addEventListener('submit', (e) => {
             e.preventDefault();
             const formdata = {};
             const elements = this.el.elements;
@@ -32,7 +28,7 @@ class Form extends Block {
                 formdata[name] = elements[name].value;
             }
             callback(formdata);
-        }.bind(this));
+        });
     }
 
     /**

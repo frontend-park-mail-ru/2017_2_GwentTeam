@@ -1,16 +1,30 @@
 'use strict';
 
 /**
- * Базовый класс блока
- * @module Block
- */
+* Базовый класс блока
+* @module Block
+*/
 export default class Block {
     /**
      * @param {HTMLElement} el - корневой элемент блока
      * @constructor
      */
-    constructor(el) {
-        this.el = el;
+    constructor(tagName = 'div', attrs = {}, classes = [], text = null) {
+        if (typeof(tagName) !== 'string') {
+            this.el = tagName;
+        } else {
+            const el = document.createElement(tagName);
+            classes.forEach((className) => {
+                el.classList.add(className);
+            });
+            for (let name in attrs) {
+                el.setAttribute(name, attrs[name]);
+            }
+            if (text) {
+                el.textContent = text;
+            }
+            this.el = el;
+        }
     }
 
     /**
@@ -22,19 +36,19 @@ export default class Block {
      * @return {Block}
      * @constructor
      */
-    static Create(tagName = 'div', attrs = {}, classes = [], text = null) {
-        const el = document.createElement(tagName);
-        classes.forEach(function (className) {
-            el.classList.add(className);
-        });
-        for (let name in attrs) {
-            el.setAttribute(name, attrs[name]);
-        }
-        if (text) {
-            el.textContent = text;
-        }
-        return new Block(el);
-    }
+    // static Create(tagName = 'div', attrs = {}, classes = [], text = null) {
+    //     const el = document.createElement(tagName);
+    //     classes.forEach(function (className) {
+    //         el.classList.add(className);
+    //     });
+    //     for (let name in attrs) {
+    //         el.setAttribute(name, attrs[name]);
+    //     }
+    //     if (text) {
+    //         el.textContent = text;
+    //     }
+    //     return new Block(el);
+    // }
 
     /**
      * Установить новый текст для блока
@@ -82,9 +96,10 @@ export default class Block {
      * @return {function(this:Block)} - функция отписки от события
      */
     on(event, callback) {
+
         this.el.addEventListener(event, callback);
-        return function () {
+        return () => {
             this.el.removeEventListener(event, callback);
-        }.bind(this);
+        };
     }
 }
