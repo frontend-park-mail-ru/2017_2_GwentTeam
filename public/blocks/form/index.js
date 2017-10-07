@@ -3,18 +3,20 @@ import Block from '../block/index.js';
 
 class Form extends Block {
 
-   /**
-   * @param {} fields - элементы формы
-   * @constructor
-   */
+    /**
+    * @param {} fields - элементы формы
+    * @constructor
+    */
     constructor(fields = []) {
         const el = document.createElement('form');
+        console.log(el);
         super(el);
-
+        console.log(el);
         fields.forEach(function (field) {
+
             const f = Block.Create('input', field.attrs || {}, field.classes || []);
             this.append(f);
-        }.bind(this));
+        }.bind(this));//к чему bind?
     }
 
     /**
@@ -29,7 +31,6 @@ class Form extends Block {
             for (let name in elements) {
                 formdata[name] = elements[name].value;
             }
-
             callback(formdata);
         }.bind(this));
     }

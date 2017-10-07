@@ -1,5 +1,5 @@
 'use strict';
-const patternPassword = '\\d{2,}\\w{2,}';
+const patternPassword = '\\S{4,}';
 const patternLogin = '^\\d{0,}\\w{1,}$';
 
 const cssBlock = 'singup__';
@@ -30,7 +30,7 @@ const signupFields = [
             placeholder: 'Введите пароль',
             required: 'required',
             pattern: patternPassword,
-            title: 'Пароль должен содержать минимум 2 цифры и 2 буквы',
+            title: 'Пароль должен содержать минимум 4 символа',
         },
     },
     {

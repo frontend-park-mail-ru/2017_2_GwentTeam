@@ -1,11 +1,14 @@
 'use strict';
+// import Http from './modules/http.js';
+// if (window.location.host == 'gwentteam.herokuapp.com')
+//     Http.BaseUrl = 'https://gwentteam.herokuapp.com/';
 
-import Block from '/blocks/block/index.js';
-import Form from '/blocks/form/index.js';
-import Profile from '/blocks/profile/index.js';
-import UserService from '/services/user-service.js';
-import loginFields from '/configs/login-fields.js';
-import signupFields from '/configs/signup-fields.js';
+import Block from './blocks/block/index.js';
+import Form from './blocks/form/index.js';
+import Profile from './blocks/profile/index.js';
+import UserService from './services/user-service.js';
+import loginFields from './configs/login-fields.js';
+import signupFields from './configs/signup-fields.js';
 
 const userService = new UserService();
 const app = new Block(document.getElementById('application'));
@@ -90,11 +93,19 @@ function openLogin() {
 function onSubmitSingUpForm (formdata) {
     return userService
         .signup(formdata.login, formdata.email, formdata.password)
+        .then((data) => {
+            const response = data[0];
+            const body = data[1];
+
+            console.log(response.status, body.message);
+
+            // console.log(data[0].status, data[1].message);
+        })
         .then(function(){
             sections.signup.signupform.reset();
             openMenu();
         })
-        .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
+        .catch((err) => alert(`Some error ${err.status}: ${err.message}`));
 }
 
 function openSignup() {
@@ -138,7 +149,6 @@ function openLogout() {
         .logout()
         .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
     if (!userService.isLoggedIn()) {
-        console.log('ne log');
         return openMenu();
     }
 
@@ -191,7 +201,6 @@ function openMenu() {
     }
 
     sectionsHide();
-    console.log('hide');
     if (userService.isLoggedIn()) {
         sections.menu.items.login.hide();
         sections.menu.items.signup.hide();
@@ -200,7 +209,6 @@ function openMenu() {
         sections.menu.items.profile.show();
         sections.menu.items.logout.show();
     } else {
-        console.log('neavt');
         sections.menu.items.login.show();
         sections.menu.items.signup.show();
         sections.menu.items.about.show();
