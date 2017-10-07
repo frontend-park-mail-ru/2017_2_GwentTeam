@@ -1,11 +1,13 @@
 'use strict';
 
-import Block from '/blocks/block/index.js';
-import Form from '/blocks/form/index.js';
-import Profile from '/blocks/profile/index.js';
-import UserService from '/services/user-service.js';
-import loginFields from '/configs/login-fields.js';
-import signupFields from '/configs/signup-fields.js';
+import Block from './blocks/block/index';
+import Form from './blocks/form/index';
+import Profile from './blocks/profile/index';
+import UserService from './services/user-service';
+import loginFields from './configs/login-fields';
+import signupFields from './configs/signup-fields';
+
+import './styles.css';
 
 const userService = new UserService();
 const app = new Block(document.getElementById('application'));
@@ -26,7 +28,7 @@ function sectionsHide() {
         section.hide();
     });
 }
-
+console.log(app);
 app.append(title);
 Object.keys(sections).forEach((sectionKey) => {
     const section = sections[sectionKey];

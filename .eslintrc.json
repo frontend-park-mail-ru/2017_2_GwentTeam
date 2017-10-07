@@ -6,6 +6,7 @@
     "extends": "eslint:recommended",
     "rules": {
         "no-undef": "off",
+        "no-console": "warn",
         "indent": [
             "error",
             4,

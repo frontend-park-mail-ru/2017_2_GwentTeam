@@ -1,8 +1,8 @@
 'use strict';
 
-import Block from '../block/index.js';
-
-const ProfileTemplate = profileTemplate;
+import Block from '../block/index';
+import ProfileTemplate from './profile.pug';
+import './index.css';
 
 class Profile extends Block {
 
