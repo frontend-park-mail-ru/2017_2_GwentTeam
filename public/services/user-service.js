@@ -1,6 +1,6 @@
 'use strict';
 
-import Http from '../modules/http.js';
+import Http from '../modules/http';
 const url = 'https://technogwent-api-010.herokuapp.com/api';
 /**
  * Сервис для работы с юзерами

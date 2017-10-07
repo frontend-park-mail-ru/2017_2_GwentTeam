@@ -1,8 +1,8 @@
 'use strict';
 
-import Block from '../block/index.js';
-
-const ScoreboardTemplate = window.scoreboardTemplate;
+import Block from '../block/index';
+import ScoreboardTemplate from './scoreboard.pug';
+import './index.css';
 
 class Scoreboard extends Block {
     constructor() {

@@ -1,5 +1,6 @@
 'use strict';
-import Block from '../block/index.js';
+import Block from '../block/index';
+import './index.css';
 
 class Form extends Block {
 
