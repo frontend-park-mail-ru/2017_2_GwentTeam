@@ -1,15 +1,30 @@
 'use strict';
 
-import Http from '../modules/http';
+import Http from '../modules/http.js';
+import EventBus from '../modules/event-bus.js';
 const url = 'https://technogwent-api-010.herokuapp.com/api';
 /**
  * Сервис для работы с юзерами
  * @module UserService
  */
-class UserService {
+export default class UserService {
     constructor() {
+        if (UserService.__instance) {
+            return UserService.__instance;
+        }
+        this.bus = new EventBus();
         this.user = null;
         this.users = [];
+        this.bus.on('signup-user', function (data) {
+            const user = data.payload;
+            this.signup(user.login, user.email, user.password);
+        }.bind(this));
+        this.bus.on('signin-user', function (data) {
+            const user = data.payload;
+            this.login(user.login, user.password);
+        }.bind(this));
+
+        UserService.__instance = this;
     }
 
     /**
@@ -20,7 +35,11 @@ class UserService {
      */
 
     signup(login, email, password) {
-        return Http.Post(url + '/join', {login, email, password});
+        return Http.Post(url + '/join', {login, email, password})
+            .then(function(response) {
+                this.login(login, password);
+                return response;
+            }.bind(this));
     }
 
     /**
@@ -30,7 +49,11 @@ class UserService {
      */
 
     login(login, password) {
-        return Http.Post(url + '/auth', {login, password});
+        return Http.Post(url + '/auth', {login, password})
+            .then(function (response) {
+                this.getData(true);
+                return response;
+            }.bind(this));
     }
     /**
      * Логаут пользователя
@@ -59,12 +82,12 @@ class UserService {
         }
 
         return Http.Get(url + '/auth')
-            .then((userdata) => {
+            .then(function(userdata) {
                 this.user = userdata;
+                this.bus.emit('user:authorized', this.user);
                 return userdata;
-            });
+            }.bind(this));
     }
 
 }
 
-export default UserService;

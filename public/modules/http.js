@@ -16,7 +16,10 @@ export default class Http {
         return fetch(address, {
             method: 'GET',
             mode: 'cors',
-            credentials: 'include'
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+            }
         }).then(function (response) {
             if (response.status >= 400) {
                 throw response;
@@ -63,26 +66,27 @@ export default class Http {
                 'Content-Type': 'application/json; charset=utf-8'
             }
         })
-            // .then(function (response) {
-            //     return {
-            //         headers: response,
-            //         json: response.json(),
-            //     };
-            // })
-            .then((response) => {
+            .then(function (response) {
                 if (response.status >= 400) {
                     throw response;
                 }
-                // let promise = new Promise((resolve, reject) =>
-                //     resolve(response.json())
-                // )
-                // return promise.then((result) => result);
-                //
-                return Promise.all([
-                    response,
-                    response.json(),
-                ]);
-                // response.json();
+
+                return response.json();
+            // .then((response) => {
+            //     if (response.status >= 400) {
+            //         throw response;
+            //     }
+            //     // let promise = new Promise((resolve, reject) =>
+            //     //     resolve(response.json())
+            //     // )
+            //     // return promise.then((result) => result);
+            //     //
+            //     return Promise.all([
+            //         response,
+            //         response.json(),
+            //     ]);
+            //     // response.json();
+            // });
             });
     }
 }

@@ -9,23 +9,27 @@ export default class Block {
      * @param {HTMLElement} el - корневой элемент блока
      * @constructor
      */
-    constructor(tagName = 'div', attrs = {}, classes = [], text = null) {
-        if (typeof(tagName) !== 'string') {
-            this.el = tagName;
-        } else {
-            const el = document.createElement(tagName);
-            classes.forEach((className) => {
-                el.classList.add(className);
-            });
-            for (let name in attrs) {
-                el.setAttribute(name, attrs[name]);
-            }
-            if (text) {
-                el.textContent = text;
-            }
-            this.el = el;
-        }
+    constructor(element) {
+        this.el = element;
     }
+
+    // constructor(tagName = 'div', attrs = {}, classes = [], text = null) {
+    //     if (typeof(tagName) !== 'string') {
+    //         this.el = tagName;
+    //     } else {
+    //         const el = document.createElement(tagName);
+    //         classes.forEach((className) => {
+    //             el.classList.add(className);
+    //         });
+    //         for (let name in attrs) {
+    //             el.setAttribute(name, attrs[name]);
+    //         }
+    //         if (text) {
+    //             el.textContent = text;
+    //         }
+    //         this.el = el;
+    //     }
+    // }
 
     /**
      * Создание блока с заданными характеристиками
@@ -84,10 +88,10 @@ export default class Block {
      * @param {Block} block
      * @return {Block}
      */
-    append(block) {
-        this.el.appendChild(block.el);
-        return this;
-    }
+    // append(block) {
+    //     this.el.appendChild(block.el);
+    //     return this;
+    // }
 
     /**
      * Позволяет подписаться на событие

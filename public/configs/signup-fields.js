@@ -2,7 +2,7 @@
 const patternPassword = '\\S{4,}';
 const patternLogin = '^\\d{0,}\\w{1,}$';
 
-const cssBlock = 'singup__';
+const cssBlock = 'signup__';
 const signupFields = [
     {
         attrs: {
