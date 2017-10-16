@@ -9,8 +9,19 @@ export default class Block {
      * @param {HTMLElement} el - корневой элемент блока
      * @constructor
      */
-    constructor(element) {
-        this.el = element;
+    constructor(element, options) {
+        options = options || {};
+        this.el = element
+            || document.createElement(options.tagName || 'div');
+        this.el.classList.add.apply(this.el.classList, options.classList || []);
+        const attrs = options.attrs || {};
+        console.log(options.attrs, options.tagName, element)
+        for (const attr in attrs) {
+            this.el.setAttribute(attr, attrs[attr]);
+        }
+        if (options.textContent) {
+            this.el.textContent = options.textContent;
+        }
     }
 
     // constructor(tagName = 'div', attrs = {}, classes = [], text = null) {
@@ -100,10 +111,10 @@ export default class Block {
      * @return {function(this:Block)} - функция отписки от события
      */
     on(event, callback) {
-
         this.el.addEventListener(event, callback);
-        return () => {
+
+        return function () {
             this.el.removeEventListener(event, callback);
-        };
+        }.bind(this);
     }
 }

@@ -52,6 +52,7 @@ export default class EventBus {
     emit(event, payload) {
         if (Array.isArray(this.listeners[event])) {
             this.listeners[event].forEach(function (listener) {
+                console.log(listener);
                 listener({
                     event: event,
                     payload: payload,

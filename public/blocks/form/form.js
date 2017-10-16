@@ -26,7 +26,7 @@ export default class Form extends Block {
             this.fields.forEach(function (field) {
                 formdata[field] = elements[field].value;
             });
-
+            console.log('formdata', formdata)
             callback(formdata);
         }.bind(this));
         // this.el.addEventListener('submit', (e) => {
