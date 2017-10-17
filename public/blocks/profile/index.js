@@ -1,7 +1,7 @@
 // 'use strict';
 //
 // import Block from '../../modules/block';
-// import ProfileTemplate from './profile.pug';
+// import ProfileTemplate from './profile-view.pug';
 // import './index.css';
 //
 // class Profile extends Block {

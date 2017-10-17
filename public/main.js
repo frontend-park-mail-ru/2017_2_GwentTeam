@@ -3,6 +3,8 @@
 import ApplicationView from './views/application-view/application-view.js';
 import MenuView from './views/menu-view/menu-view.js';
 import AboutView from './views/about-view/about-view.js';
+import ProfileView from './views/profile-view/profile-view.js';
+import GameView from './views/game-view/game-view.js';
 import SignupView from './views/signup-view/signup-view.js';
 import SigninView from './views/signin-view/signin-view.js';
 import EventBus from './modules/event-bus.js';
@@ -17,8 +19,8 @@ const router = new Router(application.getElement(), application.getViewsContaine
 router
     .register('/', MenuView)
     .register('/about', AboutView)
-    //.register('/game', views.GameView)
-    //.register('/profile', views.ProfileView)
+    .register('/game', GameView)
+    .register('/profile', ProfileView)
     .register('/login', SigninView)
     .register('/signup', SignupView)
     .start();
@@ -41,7 +43,7 @@ userService
 //     game: new Block('section', {}, ['game-section']),
 //     signup: new Block('section', {}, ['signup-section']),
 //     about: new Block('section', {}, ['about-section']),
-//     profile: new Block('section', {}, ['profile-section']),
+//     profile-view: new Block('section', {}, ['profile-view-section']),
 //     logout: new Block('section', {}, ['logout-section']),
 // };
 //
@@ -142,12 +144,12 @@ userService
 // }
 //
 // function openProfile() {
-//     if (!sections.profile.ready) {
-//         sections.profile.profile = new Profile();
-//         sections.profile
+//     if (!sections.profile-view.ready) {
+//         sections.profile-view.profile-view = new Profile();
+//         sections.profile-view
 //             .append(new Block('h2', {}, [], 'Мой профиль'))
-//             .append(sections.profile.profile);
-//         sections.profile.ready = true;
+//             .append(sections.profile-view.profile-view);
+//         sections.profile-view.ready = true;
 //     }
 //     sectionsHide();
 //     if (!userService.isLoggedIn()) {
@@ -155,8 +157,8 @@ userService
 //     }
 //     userService.getData()
 //         .then((user) => {
-//             sections.profile.profile.update(user);
-//             sections.profile.show();
+//             sections.profile-view.profile-view.update(user);
+//             sections.profile-view.show();
 //         })
 //         .catch((err) => alert(`Some error ${err.status}: ${err.responseText}`));
 // }
@@ -179,7 +181,7 @@ userService
 //             game: new Block('button', {'data-section': 'game'}, [], 'Играть'),
 //             signup: new Block('button', {'data-section': 'signup'}, [], 'Регистрация'),
 //             about: new Block('button', {'data-section': 'about'}, [], 'Об игре'),
-//             profile: new Block('button', {'data-section': 'profile'}, [], 'Посмотреть мой профиль'),
+//             profile-view: new Block('button', {'data-section': 'profile-view'}, [], 'Посмотреть мой профиль'),
 //             logout: new Block('button', {'data-section': 'logout'}, [], 'Выйти')
 //         };
 //         sections.menu.on('click', (event) => {
@@ -199,7 +201,7 @@ userService
 //                 case 'about':
 //                     openAbout();
 //                     break;
-//                 case 'profile':
+//                 case 'profile-view':
 //                     openProfile();
 //                     break;
 //                 case 'logout':
@@ -213,7 +215,7 @@ userService
 //             .append(sections.menu.items.signup)
 //             .append(sections.menu.items.game)
 //             .append(sections.menu.items.about)
-//             .append(sections.menu.items.profile)
+//             .append(sections.menu.items.profile-view)
 //             .append(sections.menu.items.logout);
 //         sections.menu.ready = true;
 //     }
@@ -224,13 +226,13 @@ userService
 //         sections.menu.items.signup.hide();
 //         sections.menu.items.game.show();
 //         sections.menu.items.about.show();
-//         sections.menu.items.profile.show();
+//         sections.menu.items.profile-view.show();
 //         sections.menu.items.logout.show();
 //     } else {
 //         sections.menu.items.login.show();
 //         sections.menu.items.signup.show();
 //         sections.menu.items.about.show();
-//         sections.menu.items.profile.hide();
+//         sections.menu.items.profile-view.hide();
 //         sections.menu.items.game.hide();
 //         sections.menu.items.logout.hide();
 //     }

@@ -17,9 +17,6 @@ export default class Http {
             method: 'GET',
             mode: 'cors',
             credentials: 'include',
-            headers: {
-                'Accept': 'application/json',
-            }
         }).then(function (response) {
             if (response.status >= 400) {
                 throw response;
