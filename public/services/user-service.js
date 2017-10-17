@@ -21,7 +21,7 @@ export default class UserService {
         }.bind(this));
         this.bus.on('signin-user', function (data) {
             const user = data.payload;
-            this.login(user.login, user.password);
+            this.signin(user.login, user.password);
         }.bind(this));
 
         UserService.__instance = this;
@@ -35,9 +35,10 @@ export default class UserService {
      */
 
     signup(login, email, password) {
+        console.log('signup')
         return Http.Post(url + '/join', {login, email, password})
             .then(function(response) {
-                this.login(login, password);
+                this.signin(login, password);
                 return response;
             }.bind(this));
     }
@@ -48,7 +49,7 @@ export default class UserService {
      * @param {string} password
      */
 
-    login(login, password) {
+    signin(login, password) {
         return Http.Post(url + '/auth', {login, password})
             .then(function (response) {
                 this.getData(true);

@@ -24,10 +24,10 @@ router
     .start();
 
 userService
-    .getData(true);
-//.catch(function (error) {
+    .getData(true)
+    .catch(function (error) {
 // ignore
-//	});
+    });
 
 
 

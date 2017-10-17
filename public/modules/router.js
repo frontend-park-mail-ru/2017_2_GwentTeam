@@ -47,9 +47,9 @@ export default class Router {
         }.bind(this);
         console.log(this);
         this.rootElement.addEventListener('click', function (event) {
-            // if (event.target.tagName.toLowerCase() === 'button') 	{
-            //     this.go('/about');
-            // }
+            if (event.target.tagName.toLowerCase() === 'input') 	{
+                return;
+            }
             if (event.target.className === 'app__logo') {
                 this.go('/');
             }

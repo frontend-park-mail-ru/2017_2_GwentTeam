@@ -7,17 +7,23 @@ export default class Form extends Block {
     * @param {} fields - элементы формы
     * @constructor
     */
-    constructor(element, fields = []) {
+    constructor(element, fields) {
         super(element);
         this.fields = fields;
+    }
+
+
+    unsubscribe() {
+        this.unsub();
     }
 
     /**
     *
     * @param {function} callback
     */
-    onSubmit(callback) {
-        this.unsub = this.on('submit', function (event) {
+    onsubmit(callback) {
+        console.log('elements',this.el.elements)
+        this.el.addEventListener('submit', function (event) {
             event.preventDefault();
 
             const elements = this.el.elements;
@@ -26,7 +32,6 @@ export default class Form extends Block {
             this.fields.forEach(function (field) {
                 formdata[field] = elements[field].value;
             });
-            console.log('formdata', formdata)
             callback(formdata);
         }.bind(this));
         // this.el.addEventListener('submit', (e) => {

@@ -9,7 +9,9 @@
     background-image: url(../../images/background.jpg);
     background-size: cover;
 }
-
+.application {
+    width:640px;
+}
 .app__logo {
     background-repeat: no-repeat;
     background-image: url(../../images/logo.png);

@@ -14,11 +14,10 @@ const signupTemplate = window.signupTemplate;
 export default class SignupView extends BaseView {
     start() {
         this.render();
-        console.log(userService.user)
+        console.log(userService.user);
         this.form = new Form(this.el.querySelector('.signup-form-js'), ['login', 'email', 'password']);
-        console.log(this.form)
-        this.form.onSubmit(function (formdata) {
-            console.log('sub')
+        this.form.onsubmit(function (formdata) {
+            console.log('sub');
             this.bus.emit('signup-user', formdata);
         }.bind(this));
         this.bus.on('user:authorized', function () {
