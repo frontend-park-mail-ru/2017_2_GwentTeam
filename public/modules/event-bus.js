@@ -25,7 +25,6 @@ export default class EventBus {
     on(event, listener) {
         this.listeners[event] = this.listeners[event] || [];
         this.listeners[event].push(listener);
-        console.log(event, listener);
         return function () {
             this.off(event, listener);
         }.bind(this);

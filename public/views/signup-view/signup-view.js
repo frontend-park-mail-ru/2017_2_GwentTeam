@@ -14,10 +14,8 @@ const signupTemplate = window.signupTemplate;
 export default class SignupView extends BaseView {
     start() {
         this.render();
-        console.log(userService.user);
         this.form = new Form(this.el.querySelector('.signup-form-js'), ['login', 'email', 'password']);
-        this.form.onsubmit(function (formdata) {
-            console.log('sub');
+        this.form.onsubmit(function signup(formdata) {
             this.bus.emit('signup-user', formdata);
         }.bind(this));
         this.bus.on('user:authorized', function () {
@@ -31,7 +29,7 @@ export default class SignupView extends BaseView {
         }.bind(this));
         this.bus.on('user:unauthorized', function (data) {
             this.user = null;
-            this.resume();
+           // this.resume();
         }.bind(this));
     }
 
@@ -44,7 +42,6 @@ export default class SignupView extends BaseView {
             this.user = userService.user;
         }
         if (this.user !== null) {
-            console.log('nonull',  this)
             this.router.go('/');
             return;
         }

@@ -29,7 +29,7 @@ export default class SigninView extends BaseView {
         }.bind(this));
         this.bus.on('user:unauthorized', function (data) {
             this.user = null;
-            this.resume();
+           // this.resume();
         }.bind(this));
     }
 

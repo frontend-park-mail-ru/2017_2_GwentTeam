@@ -23,6 +23,9 @@ export default class UserService {
             const user = data.payload;
             this.signin(user.login, user.password);
         }.bind(this));
+        this.bus.on('signout-user', function (data) {
+            this.logout();
+        }.bind(this));
 
         UserService.__instance = this;
     }
@@ -35,7 +38,6 @@ export default class UserService {
      */
 
     signup(login, email, password) {
-        console.log('signup')
         return Http.Post(url + '/join', {login, email, password})
             .then(function(response) {
                 this.signin(login, password);
@@ -60,8 +62,12 @@ export default class UserService {
      * Логаут пользователя
      */
     logout() {
-        this.user = null;
-        return Http.Delete(url + '/auth');
+        return Http.Delete(url + '/auth')
+            .then(function (response) {
+                this.user = null;
+                this.bus.emit('user:unauthorized', this.user);
+                return response;
+            }.bind(this));
     }
 
     /**

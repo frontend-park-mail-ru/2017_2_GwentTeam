@@ -18,6 +18,15 @@ input {
     opacity: 0.9;
 }
 
+.form-input {
+    height: 30px;
+    background-color: #595;
+    width: 150px;
+    cursor: pointer;
+    opacity: 0.9;
+    border-radius: 9px;
+}
+
 .login__input {
     height: 30px;
     background-color: #595;

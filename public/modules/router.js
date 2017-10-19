@@ -34,7 +34,6 @@ export default class Router {
             View: View,
             view: null,
         });
-        console.log(this.routes)
         return this;
     }
 
@@ -45,9 +44,22 @@ export default class Router {
         window.onpopstate = function (e) {
             this.go(window.location.pathname);
         }.bind(this);
-        console.log(this);
         this.rootElement.addEventListener('click', function (event) {
-            if (event.target.tagName.toLowerCase() === 'input') 	{
+            if (event.target.tagName.toLowerCase() === 'input')
+            {
+                // if (event.target.hasAttribute('href')) {
+                //     const pathname = event.target.getAttribute('href');
+                //     this.go(pathname);
+                //     console.log('ku');
+                // }
+                return;
+            }
+            if (event.target.tagName.toLowerCase() === 'button') {
+                if (event.target.hasAttribute('href')) {
+                    const pathname = event.target.getAttribute('href');
+                    this.go(pathname);
+                    console.log('ku');
+                }
                 return;
             }
             if (event.target.className === 'app__logo') {
@@ -86,12 +98,10 @@ export default class Router {
 
             if (!info.view) {
                 info.view = new info.View(this.viewContainer, this);
-                console.log('new view')
-                info.view.start();
-            }
 
+            }
+            info.view.start();
             this.currentView = info.view;
-            console.log('current', this.currentView)
 
             info.view.resume();
 
