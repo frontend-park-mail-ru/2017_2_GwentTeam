@@ -1,0 +1,25 @@
+.Field {
+    position: absolute;
+    width: 1080px;
+    height: 881px;
+    opacity: 1;
+    cursor: pointer;
+    z-index: 0;
+  }
+
+.card {
+    width: 100px;
+    height: 142px;
+    cursor: pointer;
+}
+
+.cardS {
+    width: 110px;
+    height: 142px;
+}
+
+.canv1 {
+    border: 2px inset rgb(164, 243, 243);
+    opacity: 1;
+    cursor: pointer;
+}
