@@ -2,8 +2,11 @@
 
 const express = require('express');
 const app = express();
+const fallback = require('express-history-api-fallback');
 
-app.use(express.static('./build'));
+app.use(express.static('public'));
+app.use(fallback('index.html', { root: 'public' }));
+app.use(express.static('public'));
 
 const port = process.env.PORT || 8000;
 
