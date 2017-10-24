@@ -72,7 +72,6 @@ export default class Router {
 
         }.bind(this));
         this.go(window.location.pathname);
-
     }
 
     /**
@@ -109,4 +108,3 @@ export default class Router {
         }.bind(this));
     }
 }
-

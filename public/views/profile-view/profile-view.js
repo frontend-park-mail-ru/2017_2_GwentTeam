@@ -1,8 +1,9 @@
 'use strict';
 
+import './profile.css';
 import BaseView from '../../modules/view.js';
 import UserService from '../../services/user-service.js';
-const profileTemplate = window.profileTemplate;
+import profileTemplate from './profile.pug';
 const userService = new UserService();
 
 /**

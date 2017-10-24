@@ -1,10 +1,11 @@
 'use strict';
 
+import './signin.css';
 import BaseView from '../../modules/view.js';
 import UserService from '../../services/user-service.js';
 import Form from '../../blocks/form/form.js';
 const userService = new UserService();
-const signinTemplate = window.signinTemplate;
+import signinTemplate from './signin.pug';
 
 /**
  * Класс SigninView

@@ -1,7 +1,8 @@
 'use strict';
 
+import './application.css';
 import BaseView from '../../modules/view.js';
-const applicationTemplate = window.applicationTemplate;
+import applicationTemplate from './application.pug';
 
 //const views = modules.views = modules.views || Object.create(null);
 
@@ -33,4 +34,3 @@ export default class ApplicationView extends BaseView {
         return this.el.querySelector('.application__views-js');
     }
 }
-

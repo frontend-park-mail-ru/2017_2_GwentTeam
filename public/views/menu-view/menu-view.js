@@ -1,11 +1,12 @@
 'use strict';
 
+import './menu.css';
 // const BaseView = modules.BaseView;
 // const userService = new modules.services.UserService();
-const menuTemplate = window.menuTemplate;
 import UserService from '../../services/user-service.js';
 import BaseView from '../../modules/view.js';
 const userService = new UserService();
+import menuTemplate from './menu.pug';
 //const views = modules.views = modules.views || Object.create(null);
 
 /**

@@ -12,6 +12,10 @@ import EventBus from './modules/event-bus.js';
 import UserService from './services/user-service.js';
 import Router from './modules/router.js';
 
+import './blocks/form/index.css';    //TODO
+import './blocks/profile/index.css';
+
+
 const bus = new EventBus();
 const userService = new UserService();
 const application = new ApplicationView(document.body);

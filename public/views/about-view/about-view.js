@@ -1,8 +1,7 @@
 'use strict';
 
 import BaseView from '../../modules/view.js';
-const aboutTemplate = window.aboutTemplate;
-
+import aboutTemplate from './about.pug';
 /**
  * Класс AboutView
  * @module AboutView
@@ -17,4 +16,3 @@ export default class AboutView extends BaseView {
         this.el.innerHTML = aboutTemplate({});
     }
 }
-

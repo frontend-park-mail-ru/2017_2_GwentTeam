@@ -1,10 +1,11 @@
 'use strict';
 
+import './signup.css';
 import BaseView from '../../modules/view.js';
 import UserService from '../../services/user-service.js';
 import Form from '../../blocks/form/form.js';
 const userService = new UserService();
-const signupTemplate = window.signupTemplate;
+import signupTemplate from './signup.pug';
 
 /**
  * Класс SignupView
