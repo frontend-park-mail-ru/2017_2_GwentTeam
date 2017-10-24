@@ -1,19 +1,20 @@
-.main__menu {
-    width: 400px;
-    margin: auto;
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    font-family: 'system', Arial, sans-serif;
+    font-size: 16px;
 }
 
-.main__menu button {
+section {
     display: block;
-    margin: 10px auto;
-    width: 100px;
-    background-color: #595;
-    color: #111;
-    height: 50px;
-    border-width: 0;
-    opacity: 0.9;
-    box-shadow: 0 0 15px;
-    cursor: pointer;
+}
+
+[hidden] {
+    display: none;
 }
 
 .main__menu button[hidden] {
@@ -25,50 +26,4 @@ h1 {
 }
 h2 {
     color:lightseagreen;
-}
-
-input {
-    margin: 6px auto;
-    box-shadow: 0 0 20px;
-    border-width: 0;
-    padding: 4px;
-}
-
-.login__input {
-    height: 30px;
-    background-color: #595;
-    width: 60px;
-    cursor: pointer;
-    opacity: 0.8;
-}
-
-.background__img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-position: center bottom;
-    background-repeat: no-repeat;
-    background-image: url(./images/background.jpg);
-    background-size: cover;
-}
-
-.app__logo {
-    background-repeat: no-repeat;
-    background-image: url(./images/logo.png);
-    background-position: center center;
-    background-size: contain;
-    width: 500px;
-    margin: auto;
-    height: 320px;
-    cursor: pointer;
-}
-
-.singup__input {
-    height: 30px;
-    background-color: #595;
-    width: 150px;
-    cursor: pointer;
-    opacity: 0.9;
 }

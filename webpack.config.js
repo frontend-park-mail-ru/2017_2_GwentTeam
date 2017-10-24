@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const SRC_DIR = 'public';
 const BUILD_DIR = 'build';
 
@@ -31,8 +32,8 @@ const clientConfig = {
                     ]
                 }),
             }, {
-                test: /\.(jpe?g|png|gif|svg|)$/i,
-                loader: 'file-loader?name=img/[hash].[ext]'
+                test: /\.(jp?g|png|gif|svg|)$/i,
+                loader: 'file-loader?name=img/[name].[hash].[ext]'
             }, {
                 test: /\.html/,
                 loader: 'html-loader',
@@ -51,6 +52,11 @@ const clientConfig = {
             template: path.resolve(__dirname, SRC_DIR, 'index.html'),
         }),
         new ExtractTextPlugin(path.join('css', '[name].css')),
+
+        new CopyWebpackPlugin([{
+            from: path.join(__dirname, 'public', 'images'),
+            to: path.join(__dirname, 'build', 'img')
+        }])
     ],
 };
 
