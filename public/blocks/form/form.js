@@ -22,7 +22,7 @@ export default class Form extends Block {
     * @param {function} callback
     */
     onsubmit(callback) {
-        console.log('elements',this.el.elements)
+        console.log('elements',this.el.elements);
         this.el.addEventListener('submit', function (event) {
             event.preventDefault();
 
@@ -52,4 +52,3 @@ export default class Form extends Block {
         this.el.reset();
     }
 }
-

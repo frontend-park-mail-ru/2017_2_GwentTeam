@@ -1,24 +1,20 @@
 export default class Card {
-    constructor(url, scores, type, scene) {
-        let canv = document.getElement('application__game-view');
-        this.url = url;
-        console.log('game-card.construct');
-        this.scores = scores;
-        this.img = canv.createElement("img");
-        this.img.setAttribute("src", this.url);
-        this.img.border = "10 px inset black";
+    constructor(score, type, cardfield, gamer) {
+        this.score = score;
         this.type = type;
-        let obj = this;
+        this.cardfield = cardfield;
+        this.url = './img/cards/' + type + score + '.jpg';
+        this.img = document.createElement('img');  //TODO через this(?)
+        this.img.setAttribute('src', this.url);
+        this.img.setAttribute('class', 'cardImg');
+        cardfield.appendChild(this.img);
 
-        /*this.img.onclick = function(c) {
-            console.log("Кликните на одно из подсвеченных мест");
-            if(obj.type=="1"){
-            lightCanvas(arr1, obj);
-            } else if(obj.type=="2") {
-                lightCanvas(arr2, obj);
-            } else {
-                lightCanvas(arr3, obj);
-            }
-        }*/
+
+        this.img.onclick = function(c) {
+            //console.log("Кликните на одно из подсвеченных мест");
+            cardfield.removeChild(this.img);
+            this.cardfield = document.getElementById('user-' + this.type);
+            this.cardfield.appendChild(this.img);
+        }.bind(this);
     }
 }

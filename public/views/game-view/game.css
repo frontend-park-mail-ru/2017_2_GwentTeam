@@ -7,11 +7,61 @@
 }
 
 .cardImg {
-    width: 150px;
-    height: 180px;
+    width: 50px;
+    height: 70px;
+    padding: 5px;
 }
 
-.gameId {
-    width: 150px;
+#game-view__cardfield {
     height: 180px;
+    margin: auto;
+    width: 490px;
+}
+
+#game-view__gamefield {
+    width: 490px;
+    margin: auto;
+}
+
+
+#user-b {
+    background-color: gray;
+    opacity: 0.9;
+    height: 80px;
+    margin: 10px;
+}
+
+#user-c {
+    background-color: gray;
+    margin: 10px;
+    opacity: 0.9;
+    height: 80px;
+}
+
+#user-d {
+    background-color: gray;
+    margin: 10px;
+    opacity: 0.9;
+    height: 80px;
+}
+
+#comp-b {
+    background-color: gray;
+    margin: 10px;
+    opacity: 0.9;
+    height: 80px;
+}
+
+#comp-c {
+    background-color: gray;
+    margin: 10px;
+    opacity: 0.9;
+    height: 80px;
+}
+
+#comp-d {
+    background-color: gray;
+    margin: 10px;
+    opacity: 0.9;
+    height: 80px;
 }

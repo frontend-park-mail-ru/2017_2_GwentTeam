@@ -8,10 +8,10 @@ const userService = new UserService();
 import signupTemplate from './signup.pug';
 
 /**
- * Класс SignupView
- * @module SignupView
- * @extends BaseView
- */
+* Класс SignupView
+* @module SignupView
+* @extends BaseView
+*/
 export default class SignupView extends BaseView {
     start() {
         this.render();
@@ -28,9 +28,9 @@ export default class SignupView extends BaseView {
             this.user = data.payload;
             this.resume();
         }.bind(this));
-        this.bus.on('user:unauthorized', function (data) {
+        this.bus.on('user:unauthorized', function () {  //function(data)
             this.user = null;
-           // this.resume();
+            // this.resume();
         }.bind(this));
     }
 

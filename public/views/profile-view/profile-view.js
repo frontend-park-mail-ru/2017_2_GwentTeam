@@ -18,7 +18,7 @@ export default class ProfileView extends BaseView {
             this.user = data.payload;
             this.render();
         }.bind(this));
-        this.bus.on('user:unauthorized', function (data) {
+        this.bus.on('user:unauthorized', function() {      // (data) {
             this.user = null;
             this.resume();
         }.bind(this));
