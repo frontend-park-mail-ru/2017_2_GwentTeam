@@ -22,7 +22,7 @@ export default class UserService {
             const user = data.payload;
             this.signin(user.login, user.password);
         }.bind(this));
-        bus.on('signout-user', function (data) {
+        bus.on('signout-user', function () {
             this.logout();
         }.bind(this));
 

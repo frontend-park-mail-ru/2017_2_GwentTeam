@@ -41,7 +41,7 @@ export default class Router {
      * Запустить роутер
      */
     start() {
-        window.onpopstate = function (e) {
+        window.onpopstate = function () {
             this.go(window.location.pathname);
         }.bind(this);
         this.rootElement.addEventListener('click', function (event) {
@@ -58,7 +58,6 @@ export default class Router {
                 if (event.target.hasAttribute('href')) {
                     const pathname = event.target.getAttribute('href');
                     this.go(pathname);
-                    console.log('ku');
                 }
                 return;
             }

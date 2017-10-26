@@ -4,7 +4,8 @@ import Block from '../../modules/block.js';
 export default class Form extends Block {
 
     /**
-    * @param {} fields - элементы формы
+    * @param element
+    * @param fields - элементы формы
     * @constructor
     */
     constructor(element, fields) {
@@ -12,17 +13,11 @@ export default class Form extends Block {
         this.fields = fields;
     }
 
-
-    unsubscribe() {
-        this.unsub();
-    }
-
     /**
     *
     * @param {function} callback
     */
     onsubmit(callback) {
-        console.log('elements',this.el.elements);
         this.el.addEventListener('submit', function (event) {
             event.preventDefault();
 
@@ -34,15 +29,6 @@ export default class Form extends Block {
             });
             callback(formdata);
         }.bind(this));
-        // this.el.addEventListener('submit', (e) => {
-        //     e.preventDefault();
-        //     const formdata = {};
-        //     const elements = this.el.elements;
-        //     for (let name in elements) {
-        //         formdata[name] = elements[name].value;
-        //     }
-        //     callback(formdata);
-        //});
     }
 
     /**

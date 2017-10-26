@@ -6,7 +6,8 @@
 */
 export default class Block {
     /**
-     * @param {HTMLElement} el - корневой элемент блока
+     * @param {HTMLElement} element - корневой элемент блока
+     * @param options
      * @constructor
      */
     constructor(element, options) {
@@ -22,47 +23,6 @@ export default class Block {
             this.el.textContent = options.textContent;
         }
     }
-
-    // constructor(tagName = 'div', attrs = {}, classes = [], text = null) {
-    //     if (typeof(tagName) !== 'string') {
-    //         this.el = tagName;
-    //     } else {
-    //         const el = document.createElement(tagName);
-    //         classes.forEach((className) => {
-    //             el.classList.add(className);
-    //         });
-    //         for (let name in attrs) {
-    //             el.setAttribute(name, attrs[name]);
-    //         }
-    //         if (text) {
-    //             el.textContent = text;
-    //         }
-    //         this.el = el;
-    //     }
-    // }
-
-    /**
-     * Создание блока с заданными характеристиками
-     * @param {string} [tagName='div'] - tagName блока
-     * @param {*} [attrs={}] - объект с атрибутами блока
-     * @param {string[]} [classes=[]] - список имён классов
-     * @param {string|null} [text=null] - опциональный текст блока
-     * @return {Block}
-     * @constructor
-     */
-    // static Create(tagName = 'div', attrs = {}, classes = [], text = null) {
-    //     const el = document.createElement(tagName);
-    //     classes.forEach(function (className) {
-    //         el.classList.add(className);
-    //     });
-    //     for (let name in attrs) {
-    //         el.setAttribute(name, attrs[name]);
-    //     }
-    //     if (text) {
-    //         el.textContent = text;
-    //     }
-    //     return new Block(el);
-    // }
 
     /**
      * Установить новый текст для блока
@@ -92,16 +52,6 @@ export default class Block {
     show() {
         this.el.removeAttribute('hidden');
     }
-
-    /**
-     * Добавляет к текущему блоку дочерний
-     * @param {Block} block
-     * @return {Block}
-     */
-    // append(block) {
-    //     this.el.appendChild(block.el);
-    //     return this;
-    // }
 
     /**
      * Позволяет подписаться на событие

@@ -30,6 +30,6 @@ router
 
 userService
     .getData(true)
-    .catch(function (error) {
+    .catch(function () {
     // ignore
     });
