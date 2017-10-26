@@ -1,6 +1,6 @@
 'use strict';
 
-import EventBus from './event-bus.js';
+//import EventBus from './event-bus.js';
 let count = 0;
 
 /**
@@ -21,7 +21,7 @@ export default class BaseView {
         if (!root) {
             this.el.classList.add('application__view', `application__${name}-view`);
         }
-        this.bus = new EventBus();
+        //this.bus = new EventBus();
         this.router = router;
         this.pause();
         parentElement.appendChild(this.el);
@@ -55,4 +55,3 @@ export default class BaseView {
         this.el.removeAttribute('hidden');
     }
 }
-

@@ -6,7 +6,7 @@ import UserService from '../../services/user-service.js';
 import Form from '../../blocks/form/form.js';
 const userService = new UserService();
 import signupTemplate from './signup.pug';
-
+import bus from '../../modules/event-bus.js';
 /**
 * Класс SignupView
 * @module SignupView
@@ -17,18 +17,18 @@ export default class SignupView extends BaseView {
         this.render();
         this.form = new Form(this.el.querySelector('.signup-form-js'), ['login', 'email', 'password']);
         this.form.onsubmit(function signup(formdata) {
-            this.bus.emit('signup-user', formdata);
+            bus.emit('signup-user', formdata);
         }.bind(this));
-        this.bus.on('user:authorized', function () {
+        bus.on('user:authorized', function () {
             this.form.reset();
         }.bind(this));
 
         this.user = null;
-        this.bus.on('user:authorized', function (data) {
+        bus.on('user:authorized', function (data) {
             this.user = data.payload;
             this.resume();
         }.bind(this));
-        this.bus.on('user:unauthorized', function () {  //function(data)
+        bus.on('user:unauthorized', function () {  //function(data)
             this.user = null;
             // this.resume();
         }.bind(this));

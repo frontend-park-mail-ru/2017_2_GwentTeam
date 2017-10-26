@@ -1,67 +1,69 @@
 .game-view {
-
-}
-
-.game-view__header {
-
+    display: inline;
+    margin: auto;
+    float: left;
 }
 
 .cardImg {
-    width: 50px;
-    height: 70px;
+    width: 35px;
+    height: 50px;
     padding: 5px;
 }
 
-#game-view__cardfield {
-    height: 180px;
+.game-view__cardfield {
     margin: auto;
-    width: 490px;
+    width: 600px;
+    display: inline-block;
 }
 
-#game-view__gamefield {
-    width: 490px;
+.game-view__gamefield {
     margin: auto;
 }
 
-
-#user-b {
-    background-color: gray;
-    opacity: 0.9;
-    height: 80px;
-    margin: 10px;
+.game-view__profilefield {
+    height: 440px;
+    display: inline;
+    float: left;
 }
 
-#user-c {
-    background-color: gray;
+
+.btn-pass {
+    background-color: #22170f;
+    width: 110px;
+    height: 20px;
     margin: 10px;
+    border-width: 0px;
     opacity: 0.9;
-    height: 80px;
+    color: white;
 }
 
-#user-d {
-    background-color: gray;
-    margin: 10px;
+
+.user {
+    background-color: #22170f;
     opacity: 0.9;
-    height: 80px;
+    height: 57px;
+    margin: 10px;
+    width: 700px;
 }
 
-#comp-b {
-    background-color: gray;
+.user-score {
+    background-color: #22170f;
     margin: 10px;
     opacity: 0.9;
     height: 80px;
+    width: 100px;
+    padding: 7px;
+    box-shadow: 0 0 15px black;
+    color: white;
 }
 
-#comp-c {
-    background-color: gray;
+.comp-score {
+    background-color: #22170f;
     margin: 10px;
     opacity: 0.9;
     height: 80px;
-}
-
-#comp-d {
-    background-color: gray;
-    margin: 10px;
-    opacity: 0.9;
-    height: 80px;
+    width: 100px;
+    padding: 7px;
+    box-shadow: 0 0 15px black;
+    color: white;
 }

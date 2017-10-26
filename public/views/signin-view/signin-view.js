@@ -6,7 +6,7 @@ import UserService from '../../services/user-service.js';
 import Form from '../../blocks/form/form.js';
 const userService = new UserService();
 import signinTemplate from './signin.pug';
-
+import bus from '../../modules/event-bus.js';
 /**
 * Класс SigninView
 * @module SigninView
@@ -17,18 +17,18 @@ export default class SigninView extends BaseView {
         this.render();
         this.form = new Form(this.el.querySelector('.signin-form-js'), ['login', 'password']);
         this.form.onsubmit(function (formdata) {
-            this.bus.emit('signin-user', formdata);
+            bus.emit('signin-user', formdata);
         }.bind(this));
-        this.bus.on('user:authorized', function () {
+        bus.on('user:authorized', function () {
             this.form.reset();
         }.bind(this));
 
         this.user = null;
-        this.bus.on('user:authorized', function (data) {
+        bus.on('user:authorized', function (data) {
             this.user = data.payload;
             this.resume();
         }.bind(this));
-        this.bus.on('user:unauthorized', function () {     //(data) {
+        bus.on('user:unauthorized', function () {     //(data) {
             this.user = null;
             // this.resume();
         }.bind(this));

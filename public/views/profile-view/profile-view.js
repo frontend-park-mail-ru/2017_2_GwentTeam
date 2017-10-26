@@ -2,10 +2,10 @@
 
 import './profile.css';
 import BaseView from '../../modules/view.js';
+import bus from '../../modules/event-bus.js';
 import UserService from '../../services/user-service.js';
 import profileTemplate from './profile.pug';
 const userService = new UserService();
-
 /**
  * Класс ProfileView
  * @module ProfileView
@@ -14,11 +14,11 @@ const userService = new UserService();
 export default class ProfileView extends BaseView {
     start() {
         this.user = null;
-        this.bus.on('user:authorized', function (data) {
+        bus.on('user:authorized', function (data) {
             this.user = data.payload;
             this.render();
         }.bind(this));
-        this.bus.on('user:unauthorized', function() {      // (data) {
+        bus.on('user:unauthorized', function() {      // (data) {
             this.user = null;
             this.resume();
         }.bind(this));

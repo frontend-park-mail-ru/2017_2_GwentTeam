@@ -1,7 +1,7 @@
 'use strict';
 
 import Http from '../modules/http.js';
-import EventBus from '../modules/event-bus.js';
+import bus from '../modules/event-bus.js';
 const url = 'https://technogwent-api-010.herokuapp.com/api';
 /**
  * Сервис для работы с юзерами
@@ -12,18 +12,17 @@ export default class UserService {
         if (UserService.__instance) {
             return UserService.__instance;
         }
-        this.bus = new EventBus();
         this.user = null;
         this.users = [];
-        this.bus.on('signup-user', function (data) {
+        bus.on('signup-user', function (data) {
             const user = data.payload;
             this.signup(user.login, user.email, user.password);
         }.bind(this));
-        this.bus.on('signin-user', function (data) {
+        bus.on('signin-user', function (data) {
             const user = data.payload;
             this.signin(user.login, user.password);
         }.bind(this));
-        this.bus.on('signout-user', function (data) {
+        bus.on('signout-user', function (data) {
             this.logout();
         }.bind(this));
 
@@ -65,7 +64,7 @@ export default class UserService {
         return Http.Delete(url + '/auth')
             .then(function (response) {
                 this.user = null;
-                this.bus.emit('user:unauthorized', this.user);
+                bus.emit('user:unauthorized', this.user);
                 return response;
             }.bind(this));
     }
@@ -91,10 +90,9 @@ export default class UserService {
         return Http.Get(url + '/auth')
             .then(function(userdata) {
                 this.user = userdata;
-                this.bus.emit('user:authorized', this.user);
+                bus.emit('user:authorized', this.user);
                 return userdata;
             }.bind(this));
     }
 
 }
-
