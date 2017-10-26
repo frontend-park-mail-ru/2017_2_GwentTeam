@@ -1,1 +1,1 @@
-web: node ./server/block.js
+web: npm run build && node ./server/index.js
