@@ -4,17 +4,17 @@
 
 ## Описание игры
 
-Браузерная мультиплеерная карточная игра, по мотивам легендарной игры [Гвинт](https://www.playgwent.com).
-Отличительная особенность которой: героями игры являются преподаватели, менторы и студенты [Технопарка Mail.Ru](https://park.mail.ru).
+Браузерная мультиплеерная карточная игра, по мотивам легендарной игры <a href="https://www.playgwent.com" target="_blank">Гвинт</a>.
+Отличительная особенность которой: героями игры являются преподаватели, менторы и студенты <a href="https://park.mail.ru" target="_blank">Технопарка Mail.Ru</a>.
 Это великолепная возможность устроить поединок в логике, стратегическом мышлении и самообладании.
 
 ## Deploy
 
-Клиенская часть игры развернута на хостинге: <https://gwentteam.herokuapp.com/>
+Клиенская часть игры развернута на хостинге: <a href="https://gwent-front.herokuapp.com" target="_blank">https://gwent-front.herokuapp.com</a>
 
 ## API
 
-Репозиторий c реализацией API игры: <https://github.com/java-park-mail-ru/Gwent-09-2017>
+Репозиторий c реализацией API игры: <a href="https://github.com/java-park-mail-ru/Gwent-09-2017" target="_blank">https://github.com/java-park-mail-ru/Gwent-09-2017</a>
 
 ## Команда
 
@@ -50,4 +50,4 @@
 
 Код реализован под [MIT License](LICENSE.md).
 
-Проект является учебным и [CD PROJEKT RED](http://en.cdprojektred.com/) не выступают в качестве партнера.
+Проект является учебным и <a href="http://en.cdprojektred.com" target="_blank">CD PROJEKT RED</a> не выступают в качестве партнера.
