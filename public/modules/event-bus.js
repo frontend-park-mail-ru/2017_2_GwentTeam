@@ -25,9 +25,9 @@ class EventBus {
     on(event, listener) {
         this.listeners[event] = this.listeners[event] || [];
         this.listeners[event].push(listener);
-        return function () {
+        return (() => {
             this.off(event, listener);
-        }.bind(this);
+        }).bind(this);
     }
 
     /**
@@ -38,7 +38,7 @@ class EventBus {
     off(event, listener) {
         if (Array.isArray(this.listeners[event])) {
             this.listeners[event] = this.listeners[event]
-                .filter(function (element) {
+                .filter((element) => {
                     return element !== listener;
                 });
         }
@@ -51,7 +51,7 @@ class EventBus {
      */
     emit(event, payload) {
         if (Array.isArray(this.listeners[event])) {
-            this.listeners[event].forEach(function (listener) {
+            this.listeners[event].forEach((listener) => {
                 listener({
                     event: event,
                     payload: payload,

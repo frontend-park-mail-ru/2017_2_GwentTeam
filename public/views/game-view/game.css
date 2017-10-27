@@ -4,7 +4,7 @@
     float: left;
 }
 
-.cardImg {
+.game-view__cardfield__card-img {
     width: 35px;
     height: 50px;
     padding: 5px;
@@ -27,8 +27,7 @@
     margin-left: 40px;
 }
 
-
-.btn-pass {
+.game-view__profilefield__btn-pass {
     background-color: #22170f;
     width: 110px;
     height: 20px;
@@ -37,7 +36,6 @@
     opacity: 0.9;
     color: white;
 }
-
 
 .user {
     background-color: #22170f;

@@ -41,10 +41,10 @@ export default class Router {
      * Запустить роутер
      */
     start() {
-        window.onpopstate = function () {
+        window.onpopstate = (() => {
             this.go(window.location.pathname);
-        }.bind(this);
-        this.rootElement.addEventListener('click', function (event) {
+        }).bind(this);
+        this.rootElement.addEventListener('click', ((event) => {
             if (event.target.tagName.toLowerCase() === 'input') {
                 return;
             }
@@ -63,7 +63,7 @@ export default class Router {
             const pathname = event.target.pathname;
             this.go(pathname);
 
-        }.bind(this));
+        }).bind(this));
         this.go(window.location.pathname);
     }
 
@@ -72,7 +72,7 @@ export default class Router {
      * @param {string} route - адрес
      */
     go(route) {
-        this.routes.find(function (info) {
+        this.routes.find(((info) => {
             // идет по массиву, если pathname не равен текущему индексу сбрасывает значение и идет дальше
             if (route !== info.route) {
                 return false;
@@ -100,6 +100,6 @@ export default class Router {
             info.view.resume();
 
             return true;
-        }.bind(this));
+        }).bind(this));
     }
 }

@@ -12,7 +12,7 @@ export default class GameScene {
         this.profilefield.appendChild(this.compScoreField);
 
         this.btn = document.createElement('button');
-        this.btn.setAttribute('class', 'btn-pass');
+        this.btn.setAttribute('class', 'game-view__profilefield__btn-pass');
         this.btn.setAttribute('value', 'ПАС');
         this.btn.innerText = 'ПАС';
         this.btn.onclick = () => {
@@ -28,7 +28,7 @@ export default class GameScene {
 
     render(state) {
 
-        let child = this.cardfield.children;    
+        let child = this.cardfield.children;
         let arr = [];
         Object.keys(child).forEach((element) => {
             const l = child[element];
@@ -104,7 +104,7 @@ export default class GameScene {
         const cardEl = document.createElement('img');
         const src = './img/cards/' + type + score + '.jpg';
         cardEl.setAttribute('src', src);
-        cardEl.setAttribute('class', 'cardImg');
+        cardEl.setAttribute('class', 'game-view__cardfield__card-img');
         return cardEl;
     }
 

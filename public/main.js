@@ -11,7 +11,7 @@ import SignoutView from './views/signout-view/signout-view.js';
 import UserService from './services/user-service.js';
 import Router from './modules/router.js';
 
-import './blocks/form/index.css';    
+import './blocks/form/index.css';
 
 const userService = new UserService();
 const application = new ApplicationView(document.body);
@@ -29,6 +29,6 @@ router
 
 userService
     .getData(true)
-    .catch(function () {
+    .catch(() => {
         // ignore
     });

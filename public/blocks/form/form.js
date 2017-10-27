@@ -19,17 +19,17 @@ export default class Form extends Block {
      * @param {function} callback
      */
     onsubmit(callback) {
-        this.el.addEventListener('submit', function (event) {
+        this.el.addEventListener('submit',((event) => {
             event.preventDefault();
 
             const elements = this.el.elements;
             const formdata = Object.create(null);
 
-            this.fields.forEach(function (field) {
+            this.fields.forEach((field) => {
                 formdata[field] = elements[field].value;
             });
             callback(formdata);
-        }.bind(this));
+        }).bind(this));
     }
 
     /**

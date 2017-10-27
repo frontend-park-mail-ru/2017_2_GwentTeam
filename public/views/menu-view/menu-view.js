@@ -9,21 +9,22 @@ import bus from '../../modules/event-bus.js';
 const userService = new UserService();
 
 /**
- * Класс MenuView
- * @module MenuView
- * @extends BaseView
- */
+* Класс MenuView
+* @module MenuView
+* @extends BaseView
+*/
 export default class MenuView extends BaseView {
     start() {
         this.user = null;
-        bus.on('user:authorized', function (data) {
+        bus.on('user:authorized', ((data) => {
             this.user = data.payload;
             this.resume();
-        }.bind(this));
-        bus.on('user:unauthorized', function () {
+        }).bind(this));
+        bus.on('user:unauthorized', (() => {
             this.user = null;
             this.resume();
-        }.bind(this));
+        }).bind(this));
+        this.resume();
     }
 
     render() {

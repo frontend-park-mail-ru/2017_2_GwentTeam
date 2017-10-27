@@ -15,17 +15,17 @@ export default class UserService {
             return UserService.__instance;
         }
         this.user = null;
-        bus.on('signup-user', function (data) {
+        bus.on('signup-user', ((data) => {
             const user = data.payload;
             this.signup(user.login, user.email, user.password);
-        }.bind(this));
-        bus.on('signin-user', function (data) {
+        }).bind(this));
+        bus.on('signin-user', ((data) => {
             const user = data.payload;
             this.signin(user.login, user.password);
-        }.bind(this));
-        bus.on('signout-user', function () {
+        }).bind(this));
+        bus.on('signout-user', (() => {
             this.logout();
-        }.bind(this));
+        }).bind(this));
 
         UserService.__instance = this;
     }
@@ -39,10 +39,10 @@ export default class UserService {
 
     signup(login, email, password) {
         return Http.Post(url + '/join', {login, email, password})
-            .then(function(response) {
+            .then(((response) => {
                 this.signin(login, password);
                 return response;
-            }.bind(this));
+            }).bind(this));
     }
 
     /**
@@ -53,21 +53,21 @@ export default class UserService {
 
     signin(login, password) {
         return Http.Post(url + '/auth', {login, password})
-            .then(function (response) {
+            .then(((response) => {
                 this.getData(true);
                 return response;
-            }.bind(this));
+            }).bind(this));
     }
     /**
      * Логаут пользователя
      */
     logout() {
         return Http.Delete(url + '/auth')
-            .then(function (response) {
+            .then(((response) => {
                 this.user = null;
                 bus.emit('user:unauthorized', this.user);
                 return response;
-            }.bind(this));
+            }).bind(this));
     }
 
     /**
@@ -89,11 +89,11 @@ export default class UserService {
         }
 
         return Http.Get(url + '/auth')
-            .then(function(userdata) {
+            .then(((userdata) => {
                 this.user = userdata;
                 bus.emit('user:authorized', this.user);
                 return userdata;
-            }.bind(this));
+            }).bind(this));
     }
 
 }
