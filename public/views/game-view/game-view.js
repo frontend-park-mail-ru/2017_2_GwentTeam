@@ -4,6 +4,7 @@ import './game.css';
 import BaseView from '../../modules/view.js';
 import GameScene from './game-scene.js';
 import bus from '../../modules/event-bus.js';
+import Router from '../../modules/router.js';
 
 /**
 * @module GameView
@@ -11,15 +12,32 @@ import bus from '../../modules/event-bus.js';
 */
 export default class GameView extends BaseView {
     constructor(parentElement) {
-        super(parentElement, null, true);
+        const router = new Router();
+        super(parentElement, router, true);
+
+
+        this.gameEl = document.createElement('div');
+        this.gameEl.setAttribute('class', 'game-view__wrapper');
+        this.el.appendChild(this.gameEl);
 
         this.profilefield = document.createElement('div');
-        this.profilefield.setAttribute('class', 'game-view__profilefield');
-        this.el.appendChild(this.profilefield);
+        this.profilefield.setAttribute('class', 'profilefield');
+        this.gameEl.appendChild(this.profilefield);
 
-        this.gameView = document.createElement('div');
-        this.gameView.setAttribute('class', 'game-view');
-        this.el.appendChild(this.gameView);
+        this.btnExitEl = document.createElement('div');
+        this.btnExitEl.setAttribute('class', 'profilefield__btn-exit');
+        this.btnExitEl.innerHTML = 'В главное меню';
+        this.profilefield.appendChild(this.btnExitEl);
+
+        this.btnExitEl.onclick = () => {
+            this.router.go('/');
+        };
+
+        this.boardEl = document.createElement('div');
+        this.boardEl.setAttribute('class', 'game-view__board');
+        this.gameEl.appendChild(this.boardEl);
+
+
 
         this.gamefield = [];
 
@@ -28,13 +46,13 @@ export default class GameView extends BaseView {
         }
 
         this.gamefield.forEach((field) => {
-            field.setAttribute('class', 'user');
-            this.gameView.appendChild(field);
+            field.setAttribute('class', 'game-view__board-item');
+            this.boardEl.appendChild(field);
         });
-        this.cardfield = document.createElement('div');     
-        this.cardfield.setAttribute('class', 'game-view__cardfield');
-        this.el.appendChild(this.cardfield);
 
+        this.cardfield = document.createElement('div');
+        this.cardfield.setAttribute('class', 'game-view__cardfield');
+        this.boardEl.appendChild(this.cardfield);
         //const logo = document.getElementsByClassName('app__logo');
         //  Object.keys(logo).forEach((element) => {
         //      const el = logo[element];
@@ -70,7 +88,7 @@ export default class GameView extends BaseView {
             line4: []
         }];
         this.dealCards(8);
-        this.scene = new GameScene(this.gameView, this.gamefield, this.cardfield, this.profilefield);      //TODO (gamegield - array, cardfild-поле)
+        this.scene = new GameScene(this.boardEl, this.gamefield, this.cardfield, this.profilefield);      //TODO (gamegield - array, cardfild-поле)
 
         bus.on('CHOOSECARD', (payload) => {                                //TODO
             const data = payload.payload;

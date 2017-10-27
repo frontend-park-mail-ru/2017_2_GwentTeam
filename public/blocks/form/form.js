@@ -19,7 +19,7 @@ export default class Form extends Block {
      * @param {function} callback
      */
     onsubmit(callback) {
-        this.el.addEventListener('submit',((event) => {
+        this.el.addEventListener('submit',(event) => {
             event.preventDefault();
 
             const elements = this.el.elements;
@@ -29,7 +29,7 @@ export default class Form extends Block {
                 formdata[field] = elements[field].value;
             });
             callback(formdata);
-        }).bind(this));
+        });
     }
 
     /**

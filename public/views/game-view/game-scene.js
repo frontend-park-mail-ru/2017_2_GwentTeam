@@ -8,20 +8,20 @@ export default class GameScene {
         this.profilefield = profilefield;
 
         this.compScoreField = document.createElement('div');
-        this.compScoreField.setAttribute('class', 'comp-score');
+        this.compScoreField.setAttribute('class', 'profilefield__score');
         this.profilefield.appendChild(this.compScoreField);
 
-        this.btn = document.createElement('button');
-        this.btn.setAttribute('class', 'game-view__profilefield__btn-pass');
-        this.btn.setAttribute('value', 'ПАС');
-        this.btn.innerText = 'ПАС';
-        this.btn.onclick = () => {
+        this.btnPassEl = document.createElement('div');
+        this.btnPassEl.setAttribute('class', 'profilefield__btn-pass');
+        this.btnPassEl.setAttribute('value', 'ПАС');
+        this.btnPassEl.innerText = 'ПАС';
+        this.btnPassEl.onclick = () => {
             bus.emit('ROUND');
         };
-        this.profilefield.appendChild(this.btn);
+        this.profilefield.appendChild(this.btnPassEl);
 
         this.userScoreField = document.createElement('div');
-        this.userScoreField.setAttribute('class', 'user-score');
+        this.userScoreField.setAttribute('class', 'profilefield__score');
         this.profilefield.appendChild(this.userScoreField);
 
     }
@@ -90,9 +90,9 @@ export default class GameScene {
             }
         });
         this.userScoreField.innerHTML = 'Очков за раунд: ' + state[0].roundScores +
-        '     Выигранно раундов:  ' + state[0].roundWin;
+        '<br/><br/>Выигранно раундов:  ' + state[0].roundWin;
         this.compScoreField.innerHTML = 'Очков за раунд: ' + state[1].roundScores +
-        '     Выигранно раундов:  ' + state[1].roundWin;
+        '<br/><br/>Выигранно раундов:  ' + state[1].roundWin;
 
 
         if (state[0].line4.length === 0 || state[1].line4.length === 0) {

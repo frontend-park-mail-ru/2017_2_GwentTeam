@@ -12,11 +12,23 @@ import UserService from './services/user-service.js';
 import Router from './modules/router.js';
 
 import './blocks/form/index.css';
+import './styles.css';
 
 const userService = new UserService();
 const application = new ApplicationView(document.body);
 
 const router = new Router(application.getElement(), application.getViewsContainerElement());
+
+router.addCallback((route) => {
+    const logo = document.getElementById('logo');
+    if (route === '/game') {
+        logo.style.display = 'none';
+    }
+    else {
+        logo.style.display = 'block';
+    }
+});
+
 router
     .register('/', MenuView)
     .register('/about', AboutView)
@@ -29,6 +41,4 @@ router
 
 userService
     .getData(true)
-    .catch(() => {
-        // ignore
-    });
+    .catch(() => {});

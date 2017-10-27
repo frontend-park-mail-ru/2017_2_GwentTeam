@@ -27,7 +27,7 @@ class EventBus {
         this.listeners[event].push(listener);
         return (() => {
             this.off(event, listener);
-        }).bind(this);
+        });
     }
 
     /**

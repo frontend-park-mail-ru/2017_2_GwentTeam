@@ -62,6 +62,6 @@ export default class Block {
         this.el.addEventListener(event, callback);
         return (() => {
             this.el.removeEventListener(event, callback);
-        }).bind(this);
+        });
     }
 }

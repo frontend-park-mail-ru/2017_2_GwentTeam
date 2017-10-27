@@ -1,15 +1,15 @@
 'use strict';
 
 /**
- * Роутер
- * @module Router
- */
+* Роутер
+* @module Router
+*/
 export default class Router {
     /**
-     * @param {HTMLElement} rootElement
-     * @param {HTMLElement} [viewContainer]
-     * @constructor
-     */
+    * @param {HTMLElement} rootElement
+    * @param {HTMLElement} [viewContainer]
+    * @constructor
+    */
     constructor(rootElement, viewContainer) {
         if (Router.__instance) {
             return Router.__instance;
@@ -20,14 +20,16 @@ export default class Router {
         this.routes = [];
 
         Router.__instance = this;
+
+        this.callbacks = [];
     }
 
     /**
-     * Зарегистрировать новый route
-     * @param {string} route - адрес
-     * @param {BaseView} View
-     * @return {Router}
-     */
+    * Зарегистрировать новый route
+    * @param {string} route - адрес
+    * @param {BaseView} View
+    * @return {Router}
+    */
     register(route, View) {
         this.routes.push({
             route: route,
@@ -38,13 +40,13 @@ export default class Router {
     }
 
     /**
-     * Запустить роутер
-     */
+    * Запустить роутер
+    */
     start() {
         window.onpopstate = (() => {
             this.go(window.location.pathname);
-        }).bind(this);
-        this.rootElement.addEventListener('click', ((event) => {
+        });
+        this.rootElement.addEventListener('click', (event) => {
             if (event.target.tagName.toLowerCase() === 'input') {
                 return;
             }
@@ -63,16 +65,16 @@ export default class Router {
             const pathname = event.target.pathname;
             this.go(pathname);
 
-        }).bind(this));
+        });
         this.go(window.location.pathname);
     }
 
     /**
-     * Перейти на страницу
-     * @param {string} route - адрес
-     */
+    * Перейти на страницу
+    * @param {string} route - адрес
+    */
     go(route) {
-        this.routes.find(((info) => {
+        const res = this.routes.find((info) => {
             // идет по массиву, если pathname не равен текущему индексу сбрасывает значение и идет дальше
             if (route !== info.route) {
                 return false;
@@ -100,6 +102,16 @@ export default class Router {
             info.view.resume();
 
             return true;
-        }).bind(this));
+        });
+        
+        if (res) {
+            this.callbacks.forEach((callback) => {
+                callback(route);
+            });
+        }
+    }
+
+    addCallback(callback) {
+        this.callbacks.push(callback);
     }
 }

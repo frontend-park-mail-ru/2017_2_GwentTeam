@@ -15,14 +15,14 @@ const userService = new UserService();
 export default class ProfileView extends BaseView {
     start() {
         this.user = null;
-        bus.on('user:authorized', ((data) => {
+        bus.on('user:authorized', (data) => {
             this.user = data.payload;
             this.render();
-        }).bind(this));
-        bus.on('user:unauthorized', (() => {
+        });
+        bus.on('user:unauthorized', () => {
             this.user = null;
             this.resume();
-        }).bind(this));
+        });
     }
 
     render() {

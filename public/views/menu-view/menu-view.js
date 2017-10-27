@@ -19,11 +19,11 @@ export default class MenuView extends BaseView {
         bus.on('user:authorized', ((data) => {
             this.user = data.payload;
             this.resume();
-        }).bind(this));
+        }));
         bus.on('user:unauthorized', (() => {
             this.user = null;
             this.resume();
-        }).bind(this));
+        }));
         this.resume();
     }
 
