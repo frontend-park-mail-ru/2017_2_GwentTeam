@@ -1,18 +1,15 @@
 'use strict';
 
-//const baseurl = `${window.location.protocol}//${window.location.host}`;
-
 /**
-* Модуль, предоставляющий методы для выполнения HTTP-запросов
-* @module Http
-*/
+ * Модуль, предоставляющий методы для выполнения HTTP-запросов
+ * @module Http
+ */
 export default class Http {
     /**
-    * Выполняет GET-запрос по указанному адресу
-    * @param {string} address - адрес запроса
-    */
+     * Выполняет GET-запрос по указанному адресу
+     * @param {string} address - адрес запроса
+     */
     static Get(address) {
-        //const url = (Http.BaseUrl || baseurl) + address;
         return fetch(address, {
             method: 'GET',
             mode: 'cors',
@@ -26,12 +23,10 @@ export default class Http {
     }
 
     /**
-    * Выполняет DELETE-запрос по указанному адресу
-    * @param {string} address - адрес запроса
-    */
-
+     * Выполняет DELETE-запрос по указанному адресу
+     * @param {string} address - адрес запроса
+     */
     static Delete(address) {
-        //const url = (Http.BaseUrl || baseurl) + address;
         return fetch(address, {
             method: 'DELETE',
             mode: 'cors',
@@ -47,13 +42,11 @@ export default class Http {
 
 
     /**
-    * Выполняет POST-запрос по указанному адресу
-    * @param {string} address - адрес запроса
-    * @param {*} body - тело запроса (объект)
-    */
-
+     * Выполняет POST-запрос по указанному адресу
+     * @param {string} address - адрес запроса
+     * @param {*} body - тело запроса (объект)
+     */
     static Post(address, body) {
-        //const url = (Http.BaseUrl || baseurl) + address;
         return fetch(address, {
             method: 'POST',
             mode: 'cors',
@@ -69,22 +62,6 @@ export default class Http {
                 }
 
                 return response.json();
-            // .then((response) => {
-            //     if (response.status >= 400) {
-            //         throw response;
-            //     }
-            //     // let promise = new Promise((resolve, reject) =>
-            //     //     resolve(response.json())
-            //     // )
-            //     // return promise.then((result) => result);
-            //     //
-            //     return Promise.all([
-            //         response,
-            //         response.json(),
-            //     ]);
-            //     // response.json();
-            // });
             });
     }
 }
-//Http.BaseUrl = null;

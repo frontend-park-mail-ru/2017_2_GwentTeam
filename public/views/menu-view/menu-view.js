@@ -1,14 +1,12 @@
 'use strict';
 
 import './menu.css';
-// const BaseView = modules.BaseView;
-// const userService = new modules.services.UserService();
 import UserService from '../../services/user-service.js';
 import BaseView from '../../modules/view.js';
-const userService = new UserService();
 import menuTemplate from './menu.pug';
 import bus from '../../modules/event-bus.js';
-//const views = modules.views = modules.views || Object.create(null);
+
+const userService = new UserService();
 
 /**
  * Класс MenuView
@@ -22,7 +20,7 @@ export default class MenuView extends BaseView {
             this.user = data.payload;
             this.resume();
         }.bind(this));
-        bus.on('user:unauthorized', function() {       // (data) {
+        bus.on('user:unauthorized', function () {
             this.user = null;
             this.resume();
         }.bind(this));

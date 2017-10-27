@@ -1,9 +1,9 @@
 'use strict';
 
 /**
-* Базовый класс блока
-* @module Block
-*/
+ * Базовый класс блока
+ * @module Block
+ */
 export default class Block {
     /**
      * @param {HTMLElement} element - корневой элемент блока

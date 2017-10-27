@@ -4,8 +4,6 @@ import './application.css';
 import BaseView from '../../modules/view.js';
 import applicationTemplate from './application.pug';
 
-//const views = modules.views = modules.views || Object.create(null);
-
 /**
  * Класс ApplicationView
  * @module ApplicationView

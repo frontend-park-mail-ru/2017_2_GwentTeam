@@ -1,22 +1,23 @@
 'use strict';
+
 import Block from '../../modules/block.js';
 
 export default class Form extends Block {
 
     /**
-    * @param element
-    * @param fields - элементы формы
-    * @constructor
-    */
+     * @param element
+     * @param fields - элементы формы
+     * @constructor
+     */
     constructor(element, fields) {
         super(element);
         this.fields = fields;
     }
 
     /**
-    *
-    * @param {function} callback
-    */
+     *
+     * @param {function} callback
+     */
     onsubmit(callback) {
         this.el.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -32,8 +33,8 @@ export default class Form extends Block {
     }
 
     /**
-    * Выполняет сброс формы
-    */
+     * Выполняет сброс формы
+     */
     reset() {
         this.el.reset();
     }

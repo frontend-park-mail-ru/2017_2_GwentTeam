@@ -4,14 +4,16 @@ import './signin.css';
 import BaseView from '../../modules/view.js';
 import UserService from '../../services/user-service.js';
 import Form from '../../blocks/form/form.js';
-const userService = new UserService();
 import signinTemplate from './signin.pug';
 import bus from '../../modules/event-bus.js';
+
+const userService = new UserService();
+
 /**
-* Класс SigninView
-* @module SigninView
-* @extends BaseView
-*/
+ * Класс SigninView
+ * @module SigninView
+ * @extends BaseView
+ */
 export default class SigninView extends BaseView {
     start() {
         this.render();
@@ -28,9 +30,8 @@ export default class SigninView extends BaseView {
             this.user = data.payload;
             this.resume();
         }.bind(this));
-        bus.on('user:unauthorized', function () {     //(data) {
+        bus.on('user:unauthorized', function () {
             this.user = null;
-            // this.resume();
         }.bind(this));
     }
 

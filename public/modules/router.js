@@ -45,13 +45,7 @@ export default class Router {
             this.go(window.location.pathname);
         }.bind(this);
         this.rootElement.addEventListener('click', function (event) {
-            if (event.target.tagName.toLowerCase() === 'input')
-            {
-                // if (event.target.hasAttribute('href')) {
-                //     const pathname = event.target.getAttribute('href');
-                //     this.go(pathname);
-                //     console.log('ku');
-                // }
+            if (event.target.tagName.toLowerCase() === 'input') {
                 return;
             }
             if (event.target.tagName.toLowerCase() === 'button') {
@@ -79,7 +73,8 @@ export default class Router {
      */
     go(route) {
         this.routes.find(function (info) {
-            if (route !== info.route) {//идет по массиву, если pathname не равен текущему индексу сбрасывает значение и идет даль
+            // идет по массиву, если pathname не равен текущему индексу сбрасывает значение и идет дальше
+            if (route !== info.route) {
                 return false;
             }
 
@@ -87,7 +82,8 @@ export default class Router {
                 window.history.pushState({}, '', info.route);
             }
 
-            if (this.currentView) {//null только при первой загрузки страницы, потмоу что ничего перезагружать не надо
+            // null только при первой загрузки страницы, потому что ничего перезагружать не надо
+            if (this.currentView) {
                 this.currentView.pause();
             }
             if (window.location.pathname !== info.route) {

@@ -2,7 +2,9 @@
 
 import Http from '../modules/http.js';
 import bus from '../modules/event-bus.js';
+
 const url = 'https://technogwent-api-011.herokuapp.com/api';
+
 /**
  * Сервис для работы с юзерами
  * @module UserService
@@ -13,7 +15,6 @@ export default class UserService {
             return UserService.__instance;
         }
         this.user = null;
-        this.users = [];
         bus.on('signup-user', function (data) {
             const user = data.payload;
             this.signup(user.login, user.email, user.password);
