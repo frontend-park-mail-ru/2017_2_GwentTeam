@@ -1,6 +1,5 @@
 'use strict';
 
-
 /**
  * Модуль, предоставляющий методы для выполнения HTTP-запросов
  * @module Http
@@ -14,33 +13,29 @@ export default class Http {
         return fetch(address, {
             method: 'GET',
             mode: 'cors',
-            credentials: 'include'
-        })
-            .then(function (response) {
-                if (response.status >= 400) {
-                    throw response;
-                }
-                return response.json();
-            });
+            credentials: 'include',
+        }).then((response) => {
+            if (response.status >= 400) {
+                throw response;
+            }
+            return response.json();
+        });
     }
 
     /**
      * Выполняет DELETE-запрос по указанному адресу
      * @param {string} address - адрес запроса
      */
-
     static Delete(address) {
         return fetch(address, {
             method: 'DELETE',
             mode: 'cors',
             credentials: 'include'
         })
-            .then(function (response) {
+            .then((response) => {
                 if (response.status >= 400) {
-                    console.log(response.responseText);
                     throw response;
                 }
-
                 return response.json();
             });
     }
@@ -51,7 +46,6 @@ export default class Http {
      * @param {string} address - адрес запроса
      * @param {*} body - тело запроса (объект)
      */
-
     static Post(address, body) {
         return fetch(address, {
             method: 'POST',
@@ -62,7 +56,7 @@ export default class Http {
                 'Content-Type': 'application/json; charset=utf-8'
             }
         })
-            .then(function (response) {
+            .then((response) => {
                 if (response.status >= 400) {
                     throw response;
                 }

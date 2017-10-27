@@ -1,15 +1,33 @@
 'use strict';
 
 import Http from '../modules/http.js';
-const url = 'https://technogwent-api-010.herokuapp.com/api';
+import bus from '../modules/event-bus.js';
+
+const url = 'https://technogwent-api-011.herokuapp.com/api';
+
 /**
  * Сервис для работы с юзерами
  * @module UserService
  */
-class UserService {
+export default class UserService {
     constructor() {
+        if (UserService.__instance) {
+            return UserService.__instance;
+        }
         this.user = null;
-        this.users = [];
+        bus.on('signup-user', ((data) => {
+            const user = data.payload;
+            this.signup(user.login, user.email, user.password);
+        }));
+        bus.on('signin-user', ((data) => {
+            const user = data.payload;
+            this.signin(user.login, user.password);
+        }));
+        bus.on('signout-user', (() => {
+            this.logout();
+        }));
+
+        UserService.__instance = this;
     }
 
     /**
@@ -20,7 +38,11 @@ class UserService {
      */
 
     signup(login, email, password) {
-        return Http.Post(url + '/join', {login, email, password});
+        return Http.Post(url + '/join', {login, email, password})
+            .then((response) => {
+                this.signin(login, password);
+                return response;
+            });
     }
 
     /**
@@ -29,15 +51,23 @@ class UserService {
      * @param {string} password
      */
 
-    login(login, password) {
-        return Http.Post(url + '/auth', {login, password});
+    signin(login, password) {
+        return Http.Post(url + '/auth', {login, password})
+            .then((response) => {
+                this.getData(true);
+                return response;
+            });
     }
     /**
      * Логаут пользователя
      */
     logout() {
-        this.user = null;
-        return Http.Delete(url + '/auth');
+        return Http.Delete(url + '/auth')
+            .then((response) => {
+                this.user = null;
+                bus.emit('user:unauthorized', this.user);
+                return response;
+            });
     }
 
     /**
@@ -59,12 +89,11 @@ class UserService {
         }
 
         return Http.Get(url + '/auth')
-            .then(function (userdata) {
+            .then((userdata) => {
                 this.user = userdata;
+                bus.emit('user:authorized', this.user);
                 return userdata;
-            }.bind(this));
+            });
     }
 
 }
-
-export default UserService;

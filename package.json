@@ -3,19 +3,43 @@
   "version": "1.0.0",
   "description": "Gwent game",
   "main": "main.js",
+  "engines": {
+    "node": "8.4.x",
+    "npm": "5.3.x"
+  },
   "scripts": {
-    "start": "npm run compile-pug && node server/index.js",
-    "compile-pug": "pug -c --extension 'pug.js' --name-after-file ./public/blocks/",
-    "lint": "eslint ."
+    "start": "node server/index.js",
+    "lint": "eslint .",
+    "test": "jest",
+    "build": "webpack",
+    "build-dev": "webpack --watch",
+    "postinstall": "webpack -p --config ./webpack.config.js --progress"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "eslint": "^4.7.2",
-    "express": "^4.15.4",
-    "path": "^0.12.7",
+    "babel-core": "^6.26.0",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "express-history-api-fallback": "^2.2.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-jest": "^21.2.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.17",
+    "copy-webpack-plugin": "^4.2.0",
+    "css-loader": "^0.28.7",
+    "eslint": "^4.9.0",
+    "extract-text-webpack-plugin": "^3.0.1",
+    "file-loader": "^1.1.5",
+    "html-loader": "^0.5.1",
+    "html-webpack-plugin": "^2.30.1",
     "pug": "^2.0.0-rc.4",
     "pug-cli": "^1.0.0-alpha6",
     "pug-loader": "^2.3.0",
+    "style-loader": "^0.19.0",
+    "webpack": "^3.7.1"
   }
 }

@@ -1,0 +1,77 @@
+.game {
+    margin-top: 75px;
+}
+
+.game-view__wrapper {
+    display: flex;
+    margin: auto;
+    width: 700px;
+}
+
+.game-view__board {
+    margin: auto;
+    width: 500px;
+}
+
+.game-view__cardfield__card-img {
+    width: 35px;
+    height: 50px;
+    padding: 5px;
+}
+
+.game-view__cardfield {
+    margin: auto;
+    width: 600px;
+    display: block;
+}
+
+.game-view__gamefield {
+    margin: auto;
+}
+
+.profilefield {
+    height: 440px;
+    display: inline;
+    width: 170px;
+}
+
+.game-view__board-item {
+    background-color: #22170f;
+    opacity: 0.9;
+    height: 57px;
+    margin: 10px 0;
+}
+
+
+.profilefield__score,
+.profilefield__btn-pass,
+.profilefield__btn-exit {
+    background-color: #22170f;
+    margin: 10px;
+    opacity: 0.9;
+    padding: 7px;
+    box-shadow: 0 0 15px black;
+    color: white;
+}
+
+.profilefield__btn-exit {
+    background-color: #595;
+}
+
+.profilefield__btn-pass {
+    text-align: center;
+}
+
+.game-view__btn-exit {
+    width: 200px;
+    display: block;
+    margin: 10px;
+    background-color: #595;
+    color: #111;
+    height: 50px;
+    border-width: 0;
+    opacity: 0.9;
+    box-shadow: 0 0 15px;
+    cursor: pointer;
+    border-radius: 9px;
+}
