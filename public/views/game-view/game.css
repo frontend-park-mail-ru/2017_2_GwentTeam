@@ -13,7 +13,7 @@
 .game-view__cardfield {
     margin: auto;
     width: 600px;
-    display: inline-block;
+    display: block;
 }
 
 .game-view__gamefield {
@@ -24,6 +24,7 @@
     height: 440px;
     display: inline;
     float: left;
+    margin-left: 40px;
 }
 
 

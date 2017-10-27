@@ -1,7 +1,10 @@
 .profile-view {
-
+    color: lightseagreen;
+    margin: auto;
+    font-size: 150%;
+    width: 250px;
 }
 
-.profile-view__header {
-
+.profile-view__header__data {
+    margin-left: 4px;
 }

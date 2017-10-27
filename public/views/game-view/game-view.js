@@ -11,11 +11,9 @@ import bus from '../../modules/event-bus.js';
 */
 export default class GameView extends BaseView {
     constructor(parentElement) {
-        console.log('game-view construct');
         super(parentElement, null, true);
 
-
-        this.profilefield = document.createElement('div');     //this
+        this.profilefield = document.createElement('div');
         this.profilefield.setAttribute('class', 'game-view__profilefield');
         this.el.appendChild(this.profilefield);
 
@@ -29,16 +27,19 @@ export default class GameView extends BaseView {
             this.gamefield.push(document.createElement('div'));
         }
 
-        this.gamefield.forEach((field, fieldIndex) => {
-            //const scorefield = document.createElement('div');
+        this.gamefield.forEach((field) => {
             field.setAttribute('class', 'user');
-            //field.appendChild(scorefield);
             this.gameView.appendChild(field);
         });
-        this.cardfield = document.createElement('div');     //this
+        this.cardfield = document.createElement('div');     
         this.cardfield.setAttribute('class', 'game-view__cardfield');
         this.el.appendChild(this.cardfield);
 
+        //const logo = document.getElementsByClassName('app__logo');
+        //  Object.keys(logo).forEach((element) => {
+        //      const el = logo[element];
+        //      el.setAttribute('hidden', true);
+        //  })
 
         this.allCards = [];
         let typeOfCards = ['b', 'c', 'd'];
@@ -50,11 +51,11 @@ export default class GameView extends BaseView {
                 });
             }
         });
-        console.log(this.allCards);
 
         this.state = [{
             playerName: 'User',
             roundWin: 0,
+            roundScores: 0,
             line1: [],
             line2: [],
             line3: [],
@@ -62,6 +63,7 @@ export default class GameView extends BaseView {
         },{
             playerName: 'Computer',
             roundWin: 0,
+            roundScores: 0,
             line1: [],
             line2: [],
             line3: [],
@@ -71,7 +73,6 @@ export default class GameView extends BaseView {
         this.scene = new GameScene(this.gameView, this.gamefield, this.cardfield, this.profilefield);      //TODO (gamegield - array, cardfild-поле)
 
         bus.on('CHOOSECARD', (payload) => {                                //TODO
-            console.log('choosecard');
             const data = payload.payload;
             this.userGo(data.playerIndex, data.cardIndex);
             this.competitorGo();
@@ -89,43 +90,23 @@ export default class GameView extends BaseView {
                 this.GameOver();
             }
             this.dealCards(2);
+            this.state.forEach((player) => {
+                player.roundScores = 0;
+            });
             this.rerender();
         });
-        //this.start();
-        // this.el.innerHTML = gameTemplate({});
-        // const cardfield = document.getElementById('game-view__cardfield');
-        // const gamefield= document.getElementById('game-view__gamefield');
-        // const scene = new GameScene(gamefield, cardfield, this);
     }
 
     rerender(){
-        console.log('rerender');
         this.scene.render(this.state);
-
-        // const logo = document.getElementsByClassName('app__logo');
-        // Object.keys(logo).forEach((element) => {
-        //     const el = logo[element];
-        //     el.setAttribute('hidden', true);
-        // })
     }
 
-
-
     start() {
-
-        console.log('game-view start');
         this.render();
     }
 
     render() {
-        console.log('game-view render');
-        //this.el.innerHTML = gameTemplate({});
-        // const cardfield = document.getElementById('game-view__cardfield');
-        // const gamefield = document.getElementById('game-view__gamefield');
-        // const scene = new GameScene(gamefield, cardfield, this);
-
         this.rerender();
-
 
     }
     GameOver() {
@@ -146,8 +127,6 @@ export default class GameView extends BaseView {
     }
 
     userGo(playerIndex, cardIndex) {
-
-        let card = this.state[playerIndex].line4[cardIndex];
         this.pushCardInLine(playerIndex, cardIndex);
     }
 
@@ -176,17 +155,15 @@ export default class GameView extends BaseView {
         if (card.type === 'd') {
             this.state[playerIndex].line3.push(card);
         }
+        this.state[playerIndex].roundScores += card.score;
         this.state[playerIndex].line4.splice(cardIndex, 1);
     }
 
 
     dealCards(countOfCards) {
         for(let i = 0; i < countOfCards; i++) {
-            const cardIndex = Math.floor(Math.random() * this.allCards.length);
-            //console.log(this.state);
             this.state.forEach((player) => {
                 const cardIndex = Math.floor(Math.random() * this.allCards.length);
-                //console.log(cardIndex);
                 player.line4.push(this.allCards[cardIndex]);
                 this.allCards.splice(cardIndex, 1);
             });
@@ -220,6 +197,4 @@ export default class GameView extends BaseView {
         });
         return count;
     }
-
-
 }
