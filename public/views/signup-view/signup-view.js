@@ -6,6 +6,7 @@ import UserService from '../../services/user-service.js';
 import Form from '../../blocks/form/form.js';
 import signupTemplate from './signup.pug';
 import bus from '../../modules/event-bus.js';
+import {validate} from '../../modules/validate.js';
 
 const userService = new UserService();
 
@@ -17,6 +18,7 @@ const userService = new UserService();
 export default class SignupView extends BaseView {
     start() {
         this.render();
+        validate();
         this.form = new Form(this.el.querySelector('.signup-form-js'), ['login', 'email', 'password']);
         this.form.onsubmit(((formdata) => {
             bus.emit('signup-user', formdata);

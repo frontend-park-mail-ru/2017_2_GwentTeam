@@ -1,6 +1,10 @@
 .form-section
     form.signup-view__form.signup-form-js
-        input(type="text", required="required", name="login", placeholder="Введите ваш Login")
+        div.form-field
+            input(type="text", required="required", name="login", placeholder="Введите ваш Login")
+            div.login-validate
         input(type="email", required="required", name="email", placeholder="Введите ваш email")
-        input(type="password", required="required", name="password", placeholder="Пароль от 4 символов", pattern="^\\S{4,}$")
+        div.form-field
+            input(type="password", required="required", name="password", placeholder="Пароль от 4 символов", pattern="^\\S{4,}$")
+            div.password-validate
         input(type="submit", value="Зарегистрироваться").form-input

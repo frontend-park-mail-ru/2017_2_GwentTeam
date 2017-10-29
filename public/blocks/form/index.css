@@ -2,6 +2,11 @@
     width: 200px;
     margin: auto;
 }
+.form-field {
+    border: 1.5px solid #ddd;
+    border-radius: 5px;
+    color:aquamarine;
+}
 
 input {
     margin: 6px auto;
@@ -35,4 +40,9 @@ input {
     opacity: 0.8;
 }
 
-
+.password-validate {
+    font-size: 13px;
+    font-family: KacstScreen;
+    font-style: italic;
+    margin-top: -6px;
+}

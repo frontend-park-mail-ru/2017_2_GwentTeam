@@ -28,6 +28,20 @@ router.addCallback((route) => {
         logo.style.display = 'block';
     }
 });
+// const Inform = Array
+//     .from(document.getElementsByClassName('signin-view__form signin-form-js'))
+//     .forEach(elem => (elem.addEventListener('input', function (event) {
+//         console.log(elem);
+//         if (event.target === login && login.value.length < 4) {
+//             const logininput = document.createElement('div');
+//             console.log(logininput)
+//             logininput.innerHTML = 'Длина < 4';
+//         }
+//     })));
+
+
+
+
 
 router
     .register('/', MenuView)
@@ -38,6 +52,28 @@ router
     .register('/signup', SignupView)
     .register('/logout', SignoutView)
     .start();
+// const login = (document.getElementsByName('password'))[0];
+// const Inform = document.querySelector('.signin-form-js');
+// console.log(login, Inform);
+// Inform.addEventListener('input', function (event) {
+//     event.preventDefault();
+//     if (event.target === login && login.value.length < 4) {
+//         const logininput = document.createElement('div');
+//         console.log(logininput)
+//         logininput.innerHTML = 'Длина < 4';
+//         login.appendChild(logininput);
+//     }
+// });
+// const Inform = Array
+//     .from(document.getElementsByClassName('signin-view__form signin-form-js'))
+//     .forEach(elem => (elem.addEventListener('input', function (event) {
+//         console.log(elem);
+//         if (event.target === login && login.value.length < 4) {
+//             const logininput = document.createElement('div');
+//             console.log(logininput)
+//             logininput.innerHTML = 'Длина < 4';
+//         }
+//     })));
 
 userService
     .getData(true)
