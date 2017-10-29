@@ -19,7 +19,7 @@ export default class SigninView extends BaseView {
     start() {
         this.render();
         this.form = new Form(this.el.querySelector('.signin-form-js'), ['login', 'password']);
-        validate();
+        validate(this.form.el, document.querySelector('.signin-form-js'));
         this.form.onsubmit((formdata) => {
             bus.emit('signin-user', formdata);
         });

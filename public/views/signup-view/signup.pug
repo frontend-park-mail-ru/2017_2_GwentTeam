@@ -1,10 +1,16 @@
 .form-section
+    h2.signup-view__header Регистрация
     form.signup-view__form.signup-form-js
         div.form-field
-            input(type="text", required="required", name="login", placeholder="Введите ваш Login")
+            label.form-label Login
+            input(type="text", required="required", name="login", placeholder="Example")
             div.login-validate
-        input(type="email", required="required", name="email", placeholder="Введите ваш email")
         div.form-field
-            input(type="password", required="required", name="password", placeholder="Пароль от 4 символов", pattern="^\\S{4,}$")
+            label.form-label Email
+            input(type="email", required="required", name="email", placeholder="example@mail.ru")
+            div.email-validate
+        div.form-field
+            label.form-label Password
+            input(type="password", required="required", name="password", placeholder="****", pattern="^\\S{4,}$")
             div.password-validate
         input(type="submit", value="Зарегистрироваться").form-input

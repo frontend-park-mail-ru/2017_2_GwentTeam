@@ -6,6 +6,17 @@
     border: 1.5px solid #ddd;
     border-radius: 5px;
     color:aquamarine;
+    height: 51px;
+    margin-bottom: 10px;
+    padding-left: 5px;
+}
+.form-label {
+    overflow: hidden;
+    float:left;
+    margin-top: -10px;
+    font-size: 14px;
+    background-color: #1d0800;
+    padding-right: 2px;
 }
 
 input {

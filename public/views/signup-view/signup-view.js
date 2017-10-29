@@ -18,8 +18,8 @@ const userService = new UserService();
 export default class SignupView extends BaseView {
     start() {
         this.render();
-        validate();
         this.form = new Form(this.el.querySelector('.signup-form-js'), ['login', 'email', 'password']);
+        validate(this.form.el);
         this.form.onsubmit(((formdata) => {
             bus.emit('signup-user', formdata);
         }).bind(this));
