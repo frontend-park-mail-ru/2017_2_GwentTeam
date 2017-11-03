@@ -17,11 +17,15 @@ export default class GameView extends BaseView {
 
 
         this.gameEl = document.createElement('div');
-        this.gameEl.setAttribute('class', 'game-view__wrapper');
+        this.gameEl.setAttribute('class', 'game-view');
         this.el.appendChild(this.gameEl);
 
+        let html = document.documentElement;
+        this.fullscreen(html);
+
+
         this.profilefield = document.createElement('div');
-        this.profilefield.setAttribute('class', 'profilefield');
+        this.profilefield.setAttribute('class', 'game-view__profilefield');
         this.gameEl.appendChild(this.profilefield);
 
         this.btnExitEl = document.createElement('div');
@@ -34,10 +38,8 @@ export default class GameView extends BaseView {
         };
 
         this.boardEl = document.createElement('div');
-        this.boardEl.setAttribute('class', 'game-view__board');
+        this.boardEl.setAttribute('class', 'game-view__game-board');
         this.gameEl.appendChild(this.boardEl);
-
-
 
         this.gamefield = [];
 
@@ -46,18 +48,13 @@ export default class GameView extends BaseView {
         }
 
         this.gamefield.forEach((field) => {
-            field.setAttribute('class', 'game-view__board-item');
+            field.setAttribute('class', 'game-board__board-item');
             this.boardEl.appendChild(field);
         });
 
         this.cardfield = document.createElement('div');
         this.cardfield.setAttribute('class', 'game-view__cardfield');
         this.boardEl.appendChild(this.cardfield);
-        //const logo = document.getElementsByClassName('app__logo');
-        //  Object.keys(logo).forEach((element) => {
-        //      const el = logo[element];
-        //      el.setAttribute('hidden', true);
-        //  })
 
         this.allCards = [];
         let typeOfCards = ['b', 'c', 'd'];
@@ -130,11 +127,6 @@ export default class GameView extends BaseView {
     GameOver() {
         let winner = this.whoWinGame(this.state[0], this.state[1]);
         alert(winner.playerName + ' выиграл!');
-        // const logo = document.getElementsByClassName('app__logo');
-        // Object.keys(logo).forEach((element) => {
-        // const el = logo[element];
-        // el.setAttribute('hidden', false);
-        //this.router.go('/');
     }
 
     isGameOver(){
@@ -214,5 +206,17 @@ export default class GameView extends BaseView {
             count += card.score;
         });
         return count;
+    }
+
+     fullscreen(element) {
+        if(element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if(element.mozRequestFullScreen) {
+            element.mozRequestFullScreen();
+        } else if(element.webkitRequestFullscreen) {
+            element.webkitRequestFullscreen();
+        } else if(element.msRequestFullscreen) {
+            element.msRequestFullscreen();
+        }
     }
 }

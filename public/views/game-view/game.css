@@ -2,7 +2,7 @@
     margin-top: 75px;
 }
 
-.game-view__wrapper {
+.game-view {
     display: flex;
     margin: auto;
     width: 700px;
@@ -13,7 +13,7 @@
     width: 500px;
 }
 
-.game-view__cardfield__card-img {
+.cardfield__card-img {
     width: 35px;
     height: 50px;
     padding: 5px;
@@ -29,13 +29,13 @@
     margin: auto;
 }
 
-.profilefield {
+.game-view__profilefield {
     height: 440px;
     display: inline;
     width: 170px;
 }
 
-.game-view__board-item {
+.game-board__board-item {
     background-color: #22170f;
     opacity: 0.9;
     height: 57px;
@@ -56,6 +56,7 @@
 
 .profilefield__btn-exit {
     background-color: #595;
+    cursor: pointer;
 }
 
 .profilefield__btn-pass {

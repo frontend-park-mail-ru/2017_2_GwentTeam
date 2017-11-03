@@ -104,7 +104,7 @@ export default class GameScene {
         const cardEl = document.createElement('img');
         const src = './img/cards/' + type + score + '.jpg';
         cardEl.setAttribute('src', src);
-        cardEl.setAttribute('class', 'game-view__cardfield__card-img');
+        cardEl.setAttribute('class', 'cardfield__card-img');
         return cardEl;
     }
 
