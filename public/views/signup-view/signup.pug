@@ -9,8 +9,10 @@
             label.form-label Email
             input(type="email", required="required", name="email", placeholder="example@mail.ru")
             div.email-validate
-        div.form-field
-            label.form-label Password
-            input(type="password", required="required", name="password", placeholder="****", pattern="^\\S{4,}$")
-            div.password-validate
+        div.form-inline
+            div.form-field
+                label.form-label Password
+                input(type="password", required="required", name="password", placeholder="****", id="Signup" pattern="^\\S{4,}$")
+                div.password-validate
+            div.form-check
         input(type="submit", value="Зарегистрироваться").form-input

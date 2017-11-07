@@ -23,12 +23,14 @@ export default class GameScene {
         this.userScoreField = document.createElement('div');
         this.userScoreField.setAttribute('class', 'profilefield__score');
         this.profilefield.appendChild(this.userScoreField);
+        console.log(this);
 
     }
 
     render(state) {
 
         let child = this.cardfield.children;
+        console.log(child)
         let arr = [];
         Object.keys(child).forEach((element) => {
             const l = child[element];

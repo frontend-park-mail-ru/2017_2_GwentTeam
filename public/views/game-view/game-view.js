@@ -90,7 +90,7 @@ export default class GameView extends BaseView {
         this.dealCards(8);
         this.scene = new GameScene(this.boardEl, this.gamefield, this.cardfield, this.profilefield);      //TODO (gamegield - array, cardfild-поле)
 
-        bus.on('CHOOSECARD', (payload) => {                                //TODO
+        bus.on('CHOOSECARD', (payload) => {
             const data = payload.payload;
             this.userGo(data.playerIndex, data.cardIndex);
             this.competitorGo();
@@ -113,6 +113,7 @@ export default class GameView extends BaseView {
             });
             this.rerender();
         });
+        console.log(this);
     }
 
     rerender(){

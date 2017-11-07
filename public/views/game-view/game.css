@@ -1,5 +1,6 @@
 .game {
     margin-top: 75px;
+    overflow-x: hidden;
 }
 
 .game-view__wrapper {

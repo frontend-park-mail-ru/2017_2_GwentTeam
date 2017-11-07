@@ -19,7 +19,8 @@ export default class SignupView extends BaseView {
     start() {
         this.render();
         this.form = new Form(this.el.querySelector('.signup-form-js'), ['login', 'email', 'password']);
-        validate(this.form.el);
+        validate(this.form.el, document.querySelector('.signup-form-js'));
+        this.check();
         this.form.onsubmit(((formdata) => {
             bus.emit('signup-user', formdata);
         }).bind(this));
@@ -50,5 +51,18 @@ export default class SignupView extends BaseView {
             return;
         }
         super.resume();
+    }
+
+    check() {
+        document.querySelector('.form-check').addEventListener('mouseover', function(event) {
+            event.preventDefault();
+            //if (event.target === document.querySelector('.form-check'))
+            document.getElementById('Signup').setAttribute('type', 'text');
+        });
+        document.querySelector('.form-check').addEventListener('mouseout', function(event) {
+            event.preventDefault();
+            //if (event.target === document.querySelector('.form-check'))
+            document.getElementById('Signup').setAttribute('type', 'password');
+        });
     }
 }
