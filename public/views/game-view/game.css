@@ -61,6 +61,7 @@
 
 .profilefield__btn-pass {
     text-align: center;
+    cursor: pointer;
 }
 
 .game-view__btn-exit {
