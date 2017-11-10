@@ -5,6 +5,7 @@ export default class GameScene {
         this.cardfield = cardfield;
         this.el = gameview;
         this.lines = gamefield;
+        console.log(this.lines, 'lines');
         this.profilefield = profilefield;
 
         this.compScoreField = document.createElement('div');
@@ -74,6 +75,43 @@ export default class GameScene {
                             cardIndex
                         });
                     };
+
+                    cardEl.onmousedown = (e) => {
+                        cardEl.style.cursor = "pointer";
+                        console.log('ku');
+                        let coords = getCoords(cardEl);
+                        const shiftX = e.pageX - coords.left;
+                        const shiftY = e.pageY - coords.top;
+                        cardEl.style.position = 'absolute';
+                        //document.body.appendChild(cardEl);
+                        moveAt(e);
+
+                        document.onmousemove = (e) => {
+                            moveAt(e);
+                        };
+
+                        cardEl.onmouseup = () => {
+                            document.onmousemove = null;
+                            cardEl.onmouseup = null;
+                        };
+
+                        cardEl.ondragstart = () => {
+                            return false;
+                        };
+
+                        function moveAt(e) {
+                            cardEl.style.left = e.pageX - shiftX + 'px';
+                            cardEl.style.top = e.pageY - shiftY + 'px';
+                        }
+                        function getCoords(element) {
+                            let box = element.getBoundingClientRect();
+                            return {
+                                left: box.left + pageXOffset,
+                                top: box.top + pageYOffset
+                            };
+                        }
+                    };
+
                     this.cardfield.appendChild(cardEl);
                 });
 

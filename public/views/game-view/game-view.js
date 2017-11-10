@@ -37,18 +37,34 @@ export default class GameView extends BaseView {
         this.boardEl.setAttribute('class', 'game-view__board');
         this.gameEl.appendChild(this.boardEl);
 
-
-
         this.gamefield = [];
-
+        this.cell = []; //поч так нельзя?
         for (let i = 0; i < 6; i++) {
             this.gamefield.push(document.createElement('div'));
         }
 
         this.gamefield.forEach((field) => {
             field.setAttribute('class', 'game-view__board-item');
+
             this.boardEl.appendChild(field);
+
         });
+        for (let i = 0; i < 8; i++) {
+            this.cell.push(document.createElement('div'));
+        }
+
+        this.gamefield.forEach((el, elIndex) => {
+            this.cell.forEach((field,fieldIndex) => {
+                console.log('this', this)
+                field.setAttribute('class', 'game-view__board-item-cell');
+                //el.appendChild(field);
+                this.gamefield[elIndex].appendChild(field);
+                console.log('el', el);
+                console.log('gamefield[elIndex]', this.gamefield[elIndex]);
+                console.log('field', field);
+            });
+        })
+
 
         this.cardfield = document.createElement('div');
         this.cardfield.setAttribute('class', 'game-view__cardfield');
@@ -77,7 +93,7 @@ export default class GameView extends BaseView {
             line1: [],
             line2: [],
             line3: [],
-            line4: []
+            line4: new Array(8)
         },{
             playerName: 'Computer',
             roundWin: 0,

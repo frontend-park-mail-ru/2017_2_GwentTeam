@@ -43,6 +43,12 @@
     margin: 10px 0;
 }
 
+.game-view__board-item-cell {
+    background-color: #5ef536;
+    width: 10px;
+    height: 50px;
+}
+
 
 .profilefield__score,
 .profilefield__btn-pass,
