@@ -1,2 +1,4 @@
 #Pug
 *.pug.js
+
+build/

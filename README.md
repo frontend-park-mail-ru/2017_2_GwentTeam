@@ -10,7 +10,7 @@
 
 ## Deploy
 
-Клиенская часть игры развернута на хостинге: <https://gwentteam.herokuapp.com/>
+Клиенская часть игры развернута на хостинге: <https://gwent-front.herokuapp.com>
 
 ## API
 

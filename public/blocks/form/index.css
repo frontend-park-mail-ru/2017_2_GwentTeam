@@ -1,9 +1,59 @@
-.login-section {
+.form-section {
     width: 200px;
     margin: auto;
 }
+.form-field {
+    border: 1.5px solid #ddd;
+    border-radius: 5px;
+    color:aquamarine;
+    height: 51px;
+    margin-bottom: 10px;
+    padding-left: 5px;
+}
+.form-label {
+    overflow: hidden;
+    float:left;
+    margin-top: -10px;
+    font-size: 14px;
+    background-color: #1d0800;
+    padding-right: 2px;
+}
 
-.signup-section {
-    width: 200px;
-    margin: auto;
+input {
+    margin: 6px auto;
+    box-shadow: 0 0 20px;
+    border-width: 0;
+    padding: 4px;
+}
+
+.signup__input {
+    height: 30px;
+    background-color: #595;
+    width: 150px;
+    cursor: pointer;
+    opacity: 0.9;
+}
+
+.form-input {
+    height: 30px;
+    background-color: #595;
+    width: 150px;
+    cursor: pointer;
+    opacity: 0.9;
+    border-radius: 9px;
+}
+
+.login__input {
+    height: 30px;
+    background-color: #595;
+    width: 60px;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.password-validate {
+    font-size: 13px;
+    font-family: KacstScreen;
+    font-style: italic;
+    margin-top: -6px;
 }

@@ -1,0 +1,12 @@
+mixin item(title, href)
+    button.main__menu(href=href)= title
+
+.main__menu
+    +item('Об игре', '/about')
+    if authorized
+        +item('Играть', '/game')
+        +item('Посмотреть мой профиль', '/profile')
+        +item('Выйти', '/logout')
+    unless authorized
+        +item('Вход','/login')
+        +item('Регистрация','/signup')

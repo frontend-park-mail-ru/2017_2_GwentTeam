@@ -6,6 +6,11 @@
     "extends": "eslint:recommended",
     "rules": {
         "no-undef": "off",
+        "no-console": "warn",
+        "no-tabs": "error",
+        "no-param-reassign": "warn",
+        "no-throw-literal": "warn",
+        "prefer-arrow-callback": "warn",
         "indent": [
             "error",
             4,
