@@ -45,8 +45,12 @@
 
 .game-view__board-item-cell {
     background-color: #5ef536;
-    width: 10px;
-    height: 50px;
+    display: inline-block;
+    height: 57px;
+    width: 75px;
+}
+.game-view__board-item-cell div{
+    width: 100%
 }
 
 

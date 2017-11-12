@@ -52,21 +52,20 @@ export default class GameView extends BaseView {
             this.boardEl.appendChild(field);
 
         });
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 48; i++) {
             this.cell.push(document.createElement('div'));
         }
-
-        this.gamefield.forEach((el, elIndex) => {
-            this.cell.forEach((field,fieldIndex) => {
-                console.log('this', this)
-                field.setAttribute('class', 'game-view__board-item-cell');
-                //el.appendChild(field);
-                this.gamefield[elIndex].appendChild(field);
-                console.log('el', el);
-                console.log('gamefield[elIndex]', this.gamefield[elIndex]);
-                console.log('field', field);
-            });
-        })
+        this.cell.forEach((field) => {
+            field.setAttribute('class', 'game-view__board-item-cell');
+        });
+        let counter = 0;
+        let i = 0;
+        this.gamefield.forEach((field) => {
+            for (i = 0 + counter; i < 8 + counter; ++i) {
+                field.appendChild(this.cell[i]);
+            }
+            counter += 8;
+        });
 
 
         this.cardfield = document.createElement('div');
@@ -102,7 +101,7 @@ export default class GameView extends BaseView {
             line4: []
         }];
         this.dealCards(8);
-        this.scene = new GameScene(this.boardEl, this.gamefield, this.cardfield, this.profilefield);      //TODO (gamegield - array, cardfild-поле)
+        this.scene = new GameScene(this.boardEl, this.gamefield, this.cardfield, this.profilefield, this.cell);      //TODO (gamegield - array, cardfild-поле)
 
         bus.on('CHOOSECARD', (payload) => {
             const data = payload.payload;
@@ -112,6 +111,13 @@ export default class GameView extends BaseView {
                 this.GameOver();
             }
             this.rerender();
+        });
+
+        bus.on('ONMOUSEUP', (payload) => {
+            const data = payload.payload;
+            if (data.setCard === null) {
+
+            }
         });
 
 
