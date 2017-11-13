@@ -28,8 +28,24 @@ export default class GameScene {
         console.log(this);
     }
 
-    setrerender(state) {// TODO Попадание карты на поле, где уже есть карта; Вывод карты компа;
+    setrerender(state, computerChoice) {// TODO Попадание карты на поле, где уже есть карта; Вывод карты компа;
         // TODO Не работает подсчет очков при втором выводе карты на поле; Сортировка карты исходя из ее типа(b,c,d)
+        if (computerChoice !== undefined) {
+            if (computerChoice !== null) {
+                if (computerChoice.type === 'b') {
+                    this.cell[15 + state[1].line1.length].appendChild(this.createCardImg(computerChoice.type, computerChoice.score));
+                }
+                if (computerChoice.type === 'c') {
+                    this.cell[7 + state[1].line2.length].appendChild(this.createCardImg(computerChoice.type, computerChoice.score));
+                }
+                if (computerChoice.type === 'd') {
+                    this.cell[-1 + state[1].line3.length].appendChild(this.createCardImg(computerChoice.type, computerChoice.score));
+                }
+            }
+        }
+        console.log('choice1', state[1].line1.length);
+        console.log('choice2', state[1].line2.length);
+        console.log('choice3', state[1].line3.length);
         this.userScoreField.innerHTML = 'Очков за раунд: ' + state[0].roundScores +
             '<br/><br/>Выигранно раундов:  ' + state[0].roundWin;
         this.compScoreField.innerHTML = 'Очков за раунд: ' + state[1].roundScores +
@@ -37,147 +53,156 @@ export default class GameScene {
         //const childs = [];
         console.log('state', state)
         var numberCell = 0;
-        state.forEach((player, playerIndex) => {
-            if (playerIndex === 0) {
-                const child = this.cardfield.children;
-                Object.keys(child).forEach((card) => {
-                    const cardEl = child[card].children[0];
-                    cardEl.onmousedown = (e) => {
-                        console.log('child', this.wrapper);
-                        cardEl.style.cursor = "pointer";
-                        console.log('car', cardEl);
-                        let coords = getCoords(cardEl);
-                        const shiftX = e.pageX - coords.left;
-                        const shiftY = e.pageY - coords.top;
-                        cardEl.style.position = 'absolute';
-                        //document.body.appendChild(cardEl);
-                        moveAt(e);
+        // state.forEach((player, playerIndex) => {
+        //     if (playerIndex === 0) {
+        const child = this.cardfield.children;
+        console.log('child', child);
+        Object.keys(child).forEach((card) => {
+            const cardEl = child[card].children[0];
+            cardEl.onmousedown = (e) => {
+                cardEl.style.cursor = "pointer";
+                console.log('car', cardEl);
+                let coords = getCoords(cardEl);
+                const shiftX = e.pageX - coords.left;
+                const shiftY = e.pageY - coords.top;
+                cardEl.style.position = 'absolute';
+                //document.body.appendChild(cardEl);
+                moveAt(e);
 
-                        document.onmousemove = (e) => {
-                            moveAt(e);
-                        };
+                document.onmousemove = (e) => {
+                    moveAt(e);
+                };
 
-                        cardEl.onmouseup = (d) => {
-                            document.onmousemove = null;
-                            cardEl.onmouseup = null;
-                            //let setCell = this.cell[0];
-                            const needFirstCoords = getCoords(this.lines[3]);
-                            const needSecondCoords = getCoords(this.lines[5]);
-                            const Upcoords = getCoords(cardEl);
-                            if ((d.pageX >= needFirstCoords.left && d.pageX <= needFirstCoords.right)
-                                && (d.pageY >= needFirstCoords.top && d.pageY <= needSecondCoords.bottom)) {
-                                this.lines.forEach((el, elIndex) => {
-                                    const lineCoords = getCoords(el);
-                                    if ((d.pageX >= lineCoords.left && d.pageX <= lineCoords.right)
-                                        && (d.pageY >= lineCoords.top && d.pageY <= lineCoords.bottom)) {
-                                        if (elIndex === 3) {
-                                            for (let i = 24; i < 32; ++i) {
-                                                const cellCoords = getCoords(this.cell[i]);
-                                                if ((d.pageX >= (cellCoords.left) && d.pageX <= (cellCoords.right))
-                                                    && (d.pageY >= (cellCoords.top)) && d.pageY <= (cellCoords.bottom)) {
-                                                    cardEl.setAttribute('style', '');
-                                                    this.cell[i].appendChild(cardEl);
-                                                    numberCell = i;
-                                                    return this.cell[i];
-                                                }
-                                            }
-                                        }
-                                        if (elIndex === 4) {
-                                            for (let i = 32; i < 40; ++i) {
-                                                const cellCoords = getCoords(this.cell[i]);
-                                                if ((d.pageX >= (cellCoords.left) && d.pageX <= (cellCoords.right))
-                                                    && (d.pageY >= (cellCoords.top)) && d.pageY <= (cellCoords.bottom)) {
-                                                    cardEl.setAttribute('style', '');
-                                                    numberCell = i;
-                                                    this.cell[i].appendChild(cardEl);
-                                                    return this.cell[i];
-                                                }
-                                            }
-                                        }
-                                        if (elIndex === 5) {
-                                            for (let i = 40; i < 48; ++i) {
-                                                const cellCoords = getCoords(this.cell[i]);
-                                                if ((d.pageX >= (cellCoords.left) && d.pageX <= (cellCoords.right))
-                                                    && (d.pageY >= (cellCoords.top)) && d.pageY <= (cellCoords.bottom)) {
-                                                    if (this.cell[i].firstChild === null) {//условие повтора карты на одно поле
-                                                        console.log('nofull', this.cell[i].children);
-                                                        cardEl.setAttribute('style', '');
-                                                        numberCell = i;
-                                                        this.cell[i].appendChild(cardEl);
-                                                    }
-                                                    else {
-                                                        console.log('full');
-                                                    }
-                                                    return this.cell[i];
-                                                }
-                                            }
+                cardEl.onmouseup = (d) => {
+                    document.onmousemove = null;
+
+                    //let setCell = this.cell[0];
+                    const needFirstCoords = getCoords(this.lines[3]);
+                    const needSecondCoords = getCoords(this.lines[5]);
+                    const Upcoords = getCoords(cardEl);
+                    if ((d.pageX >= needFirstCoords.left && d.pageX <= needFirstCoords.right)
+                        && (d.pageY >= needFirstCoords.top && d.pageY <= needSecondCoords.bottom)) {
+                        this.lines.forEach((el, elIndex) => {
+                            const lineCoords = getCoords(el);
+                            if ((d.pageX >= lineCoords.left && d.pageX <= lineCoords.right)
+                                && (d.pageY >= lineCoords.top && d.pageY <= lineCoords.bottom)) {
+                                if (elIndex === 3) {
+                                    for (let i = 24; i < 32; ++i) {
+                                        const cellCoords = getCoords(this.cell[i]);
+                                        if ((d.pageX >= (cellCoords.left) && d.pageX <= (cellCoords.right))
+                                            && (d.pageY >= (cellCoords.top)) && d.pageY <= (cellCoords.bottom)) {
+                                            cardEl.setAttribute('style', '');
+                                            this.cell[i].appendChild(cardEl);
+                                            numberCell = i;
+                                            return this.cell[i];
                                         }
                                     }
-                                });
-                                console.log('CARD', card)
-                                bus.emit('ONMOUSEUP', {
-                                    playerIndex,
-                                    card,
-                                    numberCell
-                                });
+                                }
+                                if (elIndex === 4) {
+                                    for (let i = 32; i < 40; ++i) {
+                                        const cellCoords = getCoords(this.cell[i]);
+                                        if ((d.pageX >= (cellCoords.left) && d.pageX <= (cellCoords.right))
+                                            && (d.pageY >= (cellCoords.top)) && d.pageY <= (cellCoords.bottom)) {
+                                            cardEl.setAttribute('style', '');
+                                            numberCell = i;
+                                            this.cell[i].appendChild(cardEl);
+                                            return this.cell[i];
+                                        }
+                                    }
+                                }
+                                if (elIndex === 5) {
+                                    for (let i = 40; i < 48; ++i) {
+                                        const cellCoords = getCoords(this.cell[i]);
+                                        if ((d.pageX >= (cellCoords.left) && d.pageX <= (cellCoords.right))
+                                            && (d.pageY >= (cellCoords.top)) && d.pageY <= (cellCoords.bottom)) {
+                                            if (this.cell[i].firstChild === null) {//условие повтора карты на одно поле
+                                                console.log('nofull', this.cell[i].children);
+                                                cardEl.setAttribute('style', '');
+                                                numberCell = i;
+                                                this.cell[i].appendChild(cardEl);
+                                            }
+                                            else {
+                                                console.log('full');
+                                            }
+                                            return this.cell[i];
+                                        }
+                                    }
+                                }
                             }
-                            else {
-                                cardEl.setAttribute('style', '');
-                                cardEl.setAttribute('transition', 'all 30s easy-in-out');
-                                this.wrapper[card].appendChild(cardEl);
-                                console.log('CARDEL', cardEl);
-                                console.log('state', state);
-                                console.log('CHILD', child[card]);
-                                console.log('CHILD2', child);
-                                return;
-                            }
+                        });
+                        this.wrapper[card].remove();
+                        console.log('cardfield', this.cardfield.children)
+                        console.log('cardnumber', card)
+                        bus.emit('ONMOUSEUP', {
+                            playerIndex:0,
+                            card,
+                            numberCell
+                        });
+                        //this.cardfield.children[card].removeChild(this.wrapper)
+                        // this.wrapper[card].remove();
+                    }
+                    else {
+                        cardEl.setAttribute('style', '');
+                        cardEl.setAttribute('transition', 'all 30s easy-in-out');
+                        this.wrapper[card].appendChild(cardEl);
+                        console.log('CARDEL', cardEl);
+                        console.log('state', state);
+                        console.log('CHILD', child[card]);
+                        console.log('CHILD2', child);
+                    }
 
-                            if (state[0].line4.length === 0 || state[1].line4.length === 0) {
-                                bus.emit('ROUND');
-                            }
-                        };
+                    // if (state[0].line4.length === 0 || state[1].line4.length === 0) {
+                    //     bus.emit('ROUND');
+                    // }
+                    cardEl.onmouseup = null;
+                    //cardEl.onmousedown = null;
+                };
 
 
-                        //     function setCell(elIndex, d) {// 0: 0 - 7, 1: 8 - 15, 2: 16 - 23, 3: 24 - 31
-                        //
-                        // };
+                //     function setCell(elIndex, d) {// 0: 0 - 7, 1: 8 - 15, 2: 16 - 23, 3: 24 - 31
+                //
+                // };
 
-                        cardEl.ondragstart = () => {
-                            return false;
-                        };
+                cardEl.ondragstart = () => {
+                    return false;
+                };
 
-                        function moveAt(e) {
-                            cardEl.style.left = e.pageX - shiftX + 'px';
-                            cardEl.style.top = e.pageY - shiftY + 'px';
-                        }
+                function moveAt(e) {
+                    cardEl.style.left = e.pageX - shiftX + 'px';
+                    cardEl.style.top = e.pageY - shiftY + 'px';
+                }
 
-                        function getCoords(element) {
-                            let box = element.getBoundingClientRect();
-                            return {
-                                left: box.left + pageXOffset,
-                                right: box.right + pageXOffset,
-                                top: box.top + pageYOffset,
-                                bottom: box.bottom + pageYOffset
-                            };
-                        }
+                function getCoords(element) {
+                    let box = element.getBoundingClientRect();
+                    return {
+                        left: box.left + pageXOffset,
+                        right: box.right + pageXOffset,
+                        top: box.top + pageYOffset,
+                        bottom: box.bottom + pageYOffset
                     };
+                }
+            };
 
-                });
-            }
         });
+            //}
+            // else {
+            //
+            // }
+        //});
     }
 
     render(state) {
 
         state.forEach((player, playerIndex) => {
-            player.line4.forEach((card,cardIndex) => {
-                const cardEl = this.createCardImg(card.type, card.score);
-                if (playerIndex === 0) {
-                    console.log('this.wrapper[i]', this.wrapper[cardIndex])
+            if (playerIndex === 0) {
+                player.line4.forEach((card,cardIndex) => {
+                    const cardEl = this.createCardImg(card.type, card.score);
+                    console.log('this.wrapper[i]', this.wrapper[cardIndex]);
+                    this.wrapper[cardIndex].appendChild(cardEl);
                     this.cardfield.appendChild(this.wrapper[cardIndex]);
-                    this.cardfield.children[cardIndex].appendChild(cardEl);
-                }
-            });
+                    //this.cardfield.children[cardIndex].appendChild(cardEl);
+                });
+            }
         });
         this.userScoreField.innerHTML = 'Очков за раунд: ' + state[0].roundScores +
             '<br/><br/>Выигранно раундов:  ' + state[0].roundWin;

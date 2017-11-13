@@ -102,9 +102,9 @@ export default class GameView extends BaseView {
             playerName: 'Computer',
             roundWin: 0,
             roundScores: 0,
-            line1: new Array(8),
-            line2: new Array(8),
-            line3: new Array(8),
+            line1: [],
+            line2: [],
+            line3: [],
             line4: new Array(8)
         }];
         this.dealCards(8);
@@ -125,8 +125,7 @@ export default class GameView extends BaseView {
             if (data.numberCell !== null) {
                 this.userGo(data.playerIndex, data.card, data.numberCell);
             }
-            this.competitorGo();
-            this.setrerender();
+            this.setrerender(this.competitorGo());
         });
 
 
@@ -149,8 +148,8 @@ export default class GameView extends BaseView {
         this.scene.render(this.state);
     }
 
-    setrerender() {
-        this.scene.setrerender(this.state);
+    setrerender(el) {
+        this.scene.setrerender(this.state, el);
     }
     start() {
         this.render();
@@ -172,8 +171,8 @@ export default class GameView extends BaseView {
         return false;
     }
 
-    userGo(playerIndex, cardIndex) {
-        this.pushCardInLine(playerIndex, cardIndex);
+    userGo(playerIndex, cardIndex, number) {
+        this.pushCardInLine(playerIndex, cardIndex, number);
     }
 
     competitorGo() {
@@ -187,23 +186,40 @@ export default class GameView extends BaseView {
                 index = cardIndex;
             }
         });
-        this.pushCardInLine(playerIndex, index);
+        const result = this.pushCardInLine(playerIndex, index);
+        return result;
     }
 
     pushCardInLine(playerIndex, cardIndex, number) {
         const card = this.state[playerIndex].line4[cardIndex];
         if (card.type === 'b') {
-            this.state[playerIndex].line1[number % 8] = card;
+            if (playerIndex === 1) {
+                this.state[playerIndex].line1.push(card);
+                console.log('computer', card);
+            } else {
+                console.log('line1', this.state[0].line1.length);
+                console.log('number', number);
+                this.state[playerIndex].line1[number % 8] = card;
+            }
         }
         if (card.type === 'c') {
-            this.state[playerIndex].line2[number % 8] = card;
+            if (playerIndex === 1) {
+                this.state[playerIndex].line2.push(card);
+            } else {
+                this.state[playerIndex].line2[number % 8] = card;
+            }
         }
         if (card.type === 'd') {
-            this.state[playerIndex].line3[number % 8] = card;
+            if (playerIndex === 1) {
+                this.state[playerIndex].line3.push(card);
+            } else {
+                this.state[playerIndex].line3[number % 8] = card;
+            }
         }
         this.state[playerIndex].roundScores += card.score;
         this.state[playerIndex].line4.splice(cardIndex, 1);
-        console.log('card', this.state[playerIndex].line4);
+        //this.state[playerIndex].line4[cardIndex] = null;
+        return card;
     }
 
 
