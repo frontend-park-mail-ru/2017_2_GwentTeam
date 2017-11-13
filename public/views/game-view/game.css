@@ -26,6 +26,12 @@
     display: block;
 }
 
+.cardfield__wrapper {
+    background-color: black;
+    height: 60px;
+    width: 50px;
+    display: inline-block;
+}
 .game-view__gamefield {
     margin: auto;
 }
@@ -39,18 +45,15 @@
 .game-board__board-item {
     background-color: #22170f;
     opacity: 0.9;
-    height: 57px;
+    height: 60px;
     margin: 10px 0;
 }
 
 .game-view__board-item-cell {
-    background-color: #5ef536;
+    background-color: #22170f;
     display: inline-block;
-    height: 57px;
+    height: 60px;
     width: 75px;
-}
-.game-view__board-item-cell div{
-    width: 100%
 }
 
 
