@@ -28,7 +28,8 @@ export default class GameScene {
         console.log(this);
     }
 
-    setrerender(state) {
+    setrerender(state) {// TODO Попадание карты на поле, где уже есть карта; Вывод карты компа;
+        // TODO Не работает подсчет очков при втором выводе карты на поле; Сортировка карты исходя из ее типа(b,c,d)
         this.userScoreField.innerHTML = 'Очков за раунд: ' + state[0].roundScores +
             '<br/><br/>Выигранно раундов:  ' + state[0].roundWin;
         this.compScoreField.innerHTML = 'Очков за раунд: ' + state[1].roundScores +
