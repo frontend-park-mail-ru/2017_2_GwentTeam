@@ -10,6 +10,7 @@ import Router from '../../modules/router.js';
 * @module GameView
 * @extends BaseView
 */
+let Finishresult = null;
 export default class GameView extends BaseView {
     constructor(parentElement) {
         const router = new Router();
@@ -41,6 +42,10 @@ export default class GameView extends BaseView {
         this.boardEl.setAttribute('class', 'game-view__game-board');
         this.gameEl.appendChild(this.boardEl);
 
+        this.computerCardfield = document.createElement('div');
+        this.computerCardfield.setAttribute('class', 'game-view__cardfield');
+        this.boardEl.appendChild(this.computerCardfield);
+
         this.gamefield = [];
         this.cell = []; //поч так нельзя?
         for (let i = 0; i < 6; i++) {
@@ -67,16 +72,18 @@ export default class GameView extends BaseView {
             counter += 8;
         });
 
-
         this.cardfield = document.createElement('div');
         this.cardfield.setAttribute('class', 'game-view__cardfield');
         this.boardEl.appendChild(this.cardfield);
 
         this.wrapper = [];
+        this.computerWrapper = [];
 
         for (let i = 0; i < 8; ++i) {
             this.wrapper.push(document.createElement('div'));
+            this.computerWrapper.push(document.createElement('div'));
             this.wrapper[i].setAttribute('class', 'cardfield__wrapper');
+            this.computerWrapper[i].setAttribute('class', 'cardfield__wrapper');
         }
 
         this.allCards = [];
@@ -105,10 +112,11 @@ export default class GameView extends BaseView {
             line1: [],
             line2: [],
             line3: [],
-            line4: new Array(8)
+            line4: []
         }];
+
         this.dealCards(8);
-        this.scene = new GameScene(this.boardEl, this.gamefield, this.cardfield, this.profilefield, this.cell, this.wrapper);      //TODO (gamegield - array, cardfild-поле)
+        this.scene = new GameScene(this.boardEl, this.gamefield, this.cardfield, this.profilefield, this.cell, this.wrapper, this.computerCardfield, this.computerWrapper);      //TODO (gamegield - array, cardfild-поле)
 
         bus.on('CHOOSECARD', (payload) => {
             const data = payload.payload;
@@ -122,12 +130,11 @@ export default class GameView extends BaseView {
 
         bus.on('ONMOUSEUP', (payload) => {
             const data = payload.payload;
-            if (data.numberCell !== null) {
-                this.userGo(data.playerIndex, data.card, data.numberCell);
+            if (data.cellIndex !== null) {
+                this.userGo(data.playerIndex, data.card, data.cellIndex);
             }
             this.setrerender(this.competitorGo());
         });
-
 
         bus.on('ROUND', ()  => {
             let user = this.whoWinRound(this.state[0], this.state[1]);
@@ -164,7 +171,7 @@ export default class GameView extends BaseView {
         alert(winner.playerName + ' выиграл!');
     }
 
-    isGameOver(){
+    isGameOver() {
         if (this.state[0].roundWin === 2 || this.state[1].roundWin === 2) {
             return true;
         }
@@ -187,11 +194,15 @@ export default class GameView extends BaseView {
             }
         });
         const result = this.pushCardInLine(playerIndex, index);
-        return result;
+        return {
+            card: result,
+            cardIndex: index
+        };
     }
 
     pushCardInLine(playerIndex, cardIndex, number) {
         const card = this.state[playerIndex].line4[cardIndex];
+        console.log('number', number);
         if (card.type === 'b') {
             if (playerIndex === 1) {
                 this.state[playerIndex].line1.push(card);

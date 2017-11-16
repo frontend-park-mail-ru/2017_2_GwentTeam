@@ -1,11 +1,18 @@
 import bus from '../../modules/event-bus.js';
+//window.onload = () => {
+let ca = null;
+let shiftX = null;
+let shiftY = null;
 export default class GameScene {
-    constructor(gameview, gamefield, cardfield, profilefield, cell, wrapper) {
+
+    constructor(gameview, gamefield, cardfield, profilefield, cell, wrapper, computerCardfield, computerWrapper) {
         this.cardfield = cardfield;
+        this.computerCardfield = computerCardfield;
         this.el = gameview;
         this.lines = gamefield;
         this.cell = cell;
         this.wrapper = wrapper;
+        this.computerWrapper = computerWrapper;
         console.log(this.lines, 'lines');
         this.profilefield = profilefield;
 
@@ -28,149 +35,189 @@ export default class GameScene {
         console.log(this);
     }
 
-    setrerender(state, computerChoice) {// TODO Попадание карты на поле, где уже есть карта; Вывод карты компа;
+    setrerender(state, computerObject) {// TODO Попадание карты на поле, где уже есть карта; Вывод карты компа;
         // TODO Не работает подсчет очков при втором выводе карты на поле; Сортировка карты исходя из ее типа(b,c,d)
-        if (computerChoice !== undefined) {
-            if (computerChoice !== null) {
-                if (computerChoice.type === 'b') {
-                    this.cell[15 + state[1].line1.length].appendChild(this.createCardImg(computerChoice.type, computerChoice.score));
-                }
-                if (computerChoice.type === 'c') {
-                    this.cell[7 + state[1].line2.length].appendChild(this.createCardImg(computerChoice.type, computerChoice.score));
-                }
-                if (computerChoice.type === 'd') {
-                    this.cell[-1 + state[1].line3.length].appendChild(this.createCardImg(computerChoice.type, computerChoice.score));
+        // TODO Добавить обработку при нажатии на карту, уже добавленную на линию
+        let computerChild = null;
+        let computerChoiceIndex = null;
+
+        Object.keys(this.computerCardfield.children).forEach((computerCard) => {
+            computerChild = this.computerCardfield.children[computerCard];
+        });
+
+        if (computerObject !== undefined) {
+            let computerChoice = computerObject.card;
+            computerChoiceIndex = computerObject.cardIndex;
+
+            if (computerChoice !== undefined) {
+                if (computerChoice !== null) {
+                    if (computerChoice.type === 'b') {
+                        computerChild.parentNode.removeChild(computerChild);
+                        this.computerWrapper.splice(computerChoiceIndex, 1);
+                        this.cell[15 + state[1].line1.length].appendChild(this.createCardImg(computerChoice.type, computerChoice.score));
+                        //добавить линию рубашкой вверх
+                    }
+                    if (computerChoice.type === 'c') {
+                        computerChild.parentNode.removeChild(computerChild);
+                        this.computerWrapper.splice(computerChoiceIndex, 1);
+                        this.cell[7 + state[1].line2.length].appendChild(this.createCardImg(computerChoice.type, computerChoice.score));
+                    }
+                    if (computerChoice.type === 'd') {
+                        computerChild.parentNode.removeChild(computerChild);
+                        this.computerWrapper.splice(computerChoiceIndex, 1);
+                        this.cell[-1 + state[1].line3.length].appendChild(this.createCardImg(computerChoice.type, computerChoice.score));
+                    }
                 }
             }
         }
-        console.log('choice1', state[1].line1.length);
-        console.log('choice2', state[1].line2.length);
-        console.log('choice3', state[1].line3.length);
         this.userScoreField.innerHTML = 'Очков за раунд: ' + state[0].roundScores +
             '<br/><br/>Выигранно раундов:  ' + state[0].roundWin;
         this.compScoreField.innerHTML = 'Очков за раунд: ' + state[1].roundScores +
             '<br/><br/>Выигранно раундов:  ' + state[1].roundWin;
-        //const childs = [];
-        console.log('state', state)
-        var numberCell = 0;
-        // state.forEach((player, playerIndex) => {
-        //     if (playerIndex === 0) {
+
+        console.log('state', state);
+        const playerChoice = state[0].line4;
         const child = this.cardfield.children;
         console.log('child', child);
-        Object.keys(child).forEach((card) => {
-            const cardEl = child[card].children[0];
-            cardEl.onmousedown = (e) => {
-                cardEl.style.cursor = "pointer";
-                console.log('car', cardEl);
-                let coords = getCoords(cardEl);
-                const shiftX = e.pageX - coords.left;
-                const shiftY = e.pageY - coords.top;
-                cardEl.style.position = 'absolute';
+
+        Object.keys(child).forEach((card) => {//при нажатии главное меню и играть второй раз создается второй ряд
+            console.log('cardEls', child);
+
+            child[card].firstChild.addEventListener('mousedown', e => {//Большой drag n drop, чтобы карты можно было перемещать не только с
+            //child[card].firstChild.onmousedown = (e) => {//Большой drag n drop, чтобы карты можно было перемещать не только с
+                //cardfield но и с поля. Мб добавить внешний цикл if type.skill === ?
+                console.log('cardEl', e.target);
+                ca = e.target;
+                ca.style.cursor = "pointer";
+                console.log('car', ca, card);
+                let coords = getCoords(ca);
+                shiftX = e.pageX - coords.left;
+                shiftY = e.pageY - coords.top;
+                ca.style.position = 'absolute';
                 //document.body.appendChild(cardEl);
                 moveAt(e);
+
+                function moveAt(e) {
+                    ca.style.left = e.pageX - shiftX + 'px';
+                    ca.style.top = e.pageY - shiftY + 'px';
+                }
 
                 document.onmousemove = (e) => {
                     moveAt(e);
                 };
 
-                cardEl.onmouseup = (d) => {
+                e.target.onmouseup = (d) => {
                     document.onmousemove = null;
-
-                    //let setCell = this.cell[0];
+                    d.target.onmouseup = null;
                     const needFirstCoords = getCoords(this.lines[3]);
                     const needSecondCoords = getCoords(this.lines[5]);
-                    const Upcoords = getCoords(cardEl);
                     if ((d.pageX >= needFirstCoords.left && d.pageX <= needFirstCoords.right)
                         && (d.pageY >= needFirstCoords.top && d.pageY <= needSecondCoords.bottom)) {
+                        let lineIndex = null;
+                        let cellIndex = null;
+
                         this.lines.forEach((el, elIndex) => {
                             const lineCoords = getCoords(el);
                             if ((d.pageX >= lineCoords.left && d.pageX <= lineCoords.right)
                                 && (d.pageY >= lineCoords.top && d.pageY <= lineCoords.bottom)) {
-                                if (elIndex === 3) {
+                                if (elIndex === 3 && playerChoice[card].type === 'b') {
                                     for (let i = 24; i < 32; ++i) {
                                         const cellCoords = getCoords(this.cell[i]);
                                         if ((d.pageX >= (cellCoords.left) && d.pageX <= (cellCoords.right))
                                             && (d.pageY >= (cellCoords.top)) && d.pageY <= (cellCoords.bottom)) {
-                                            cardEl.setAttribute('style', '');
-                                            this.cell[i].appendChild(cardEl);
-                                            numberCell = i;
-                                            return this.cell[i];
+                                            if (this.cell[i].firstChild === null) {//исправить дублирование кода
+                                                lineIndex = 3;
+                                                cellIndex = i;
+                                                return;
+                                            }
+                                            else {// не нужен
+                                                ca.setAttribute('style', '');
+                                                child[card].appendChild(ca);
+                                                console.log('full');
+                                            }
                                         }
                                     }
                                 }
-                                if (elIndex === 4) {
+                                if (elIndex === 4 && playerChoice[card].type === 'c') {
                                     for (let i = 32; i < 40; ++i) {
                                         const cellCoords = getCoords(this.cell[i]);
                                         if ((d.pageX >= (cellCoords.left) && d.pageX <= (cellCoords.right))
                                             && (d.pageY >= (cellCoords.top)) && d.pageY <= (cellCoords.bottom)) {
-                                            cardEl.setAttribute('style', '');
-                                            numberCell = i;
-                                            this.cell[i].appendChild(cardEl);
-                                            return this.cell[i];
+                                            if (this.cell[i].firstChild === null) {
+                                                lineIndex = 4;
+                                                cellIndex = i;
+                                                return;
+                                            }
+                                            else {
+                                                ca.setAttribute('style', '');
+                                                child[card].appendChild(ca);
+                                                console.log('full');
+                                            }
                                         }
                                     }
                                 }
-                                if (elIndex === 5) {
+                                if (elIndex === 5 && playerChoice[card].type === 'd') {
                                     for (let i = 40; i < 48; ++i) {
                                         const cellCoords = getCoords(this.cell[i]);
                                         if ((d.pageX >= (cellCoords.left) && d.pageX <= (cellCoords.right))
                                             && (d.pageY >= (cellCoords.top)) && d.pageY <= (cellCoords.bottom)) {
                                             if (this.cell[i].firstChild === null) {//условие повтора карты на одно поле
-                                                console.log('nofull', this.cell[i].children);
-                                                cardEl.setAttribute('style', '');
-                                                numberCell = i;
-                                                this.cell[i].appendChild(cardEl);
+                                                lineIndex = 5;
+                                                cellIndex = i;
+                                                return;
                                             }
                                             else {
-                                                console.log('full');
+                                                ca.setAttribute('style', '');
+                                                child[card].appendChild(ca);
+                                                console.log('full');//если карту один раз поставить на свою, то в след раз нельзя ее перенести
                                             }
-                                            return this.cell[i];
                                         }
                                     }
                                 }
                             }
                         });
-                        this.wrapper[card].remove();
-                        console.log('cardfield', this.cardfield.children)
-                        console.log('cardnumber', card)
-                        bus.emit('ONMOUSEUP', {
-                            playerIndex:0,
-                            card,
-                            numberCell
-                        });
-                        //this.cardfield.children[card].removeChild(this.wrapper)
-                        // this.wrapper[card].remove();
-                    }
-                    else {
-                        cardEl.setAttribute('style', '');
-                        cardEl.setAttribute('transition', 'all 30s easy-in-out');
-                        this.wrapper[card].appendChild(cardEl);
-                        console.log('CARDEL', cardEl);
-                        console.log('state', state);
+
+                        if (lineIndex && cellIndex) {
+                            ca.setAttribute('style', '');
+                            this.cell[cellIndex].appendChild(ca);
+                            console.log('children', this.wrapper)
+                            this.cardfield.removeChild(this.cardfield.children[card]);
+                            this.wrapper.splice(card, 1);
+                            //this.wrapper[card].parentNode.removeChild(this.wrapper[card]);
+                            bus.emit('ONMOUSEUP', {
+                                playerIndex: 0,
+                                card,
+                                cellIndex
+                            });
+                            console.log('cardfield', this.wrapper)
+                            console.warn('bla', this.cardfield.children)
+                            console.log('cardnumber', card);
+                        }
+                        else {
+                            ca.setAttribute('style', '');
+                            //ca.setAttribute('transition', 'all 30s easy-in-out');
+                            child[card].appendChild(ca);
+                            console.log('state', state);
+                            console.log('CHILD', child[card]);
+                            console.log('CHILD2', child);
+                        }
+
+                        // if (state[0].line4.length === 0 || state[1].line4.length === 0) {
+                        //     bus.emit('ROUND');
+                        // }
+                    } else {
+                        ca.setAttribute('style', '');
+                        //ca.setAttribute('transition', 'all 30s easy-in-out');
+                        child[card].appendChild(ca);
                         console.log('CHILD', child[card]);
                         console.log('CHILD2', child);
                     }
-
-                    // if (state[0].line4.length === 0 || state[1].line4.length === 0) {
-                    //     bus.emit('ROUND');
-                    // }
-                    cardEl.onmouseup = null;
-                    //cardEl.onmousedown = null;
+                    //e.target.onmousedown = null;
+                    //child[card].onmousedown = null;
                 };
-
-
-                //     function setCell(elIndex, d) {// 0: 0 - 7, 1: 8 - 15, 2: 16 - 23, 3: 24 - 31
-                //
-                // };
-
-                cardEl.ondragstart = () => {
+                e.target.ondragstart = () => {
                     return false;
                 };
-
-                function moveAt(e) {
-                    cardEl.style.left = e.pageX - shiftX + 'px';
-                    cardEl.style.top = e.pageY - shiftY + 'px';
-                }
 
                 function getCoords(element) {
                     let box = element.getBoundingClientRect();
@@ -181,33 +228,36 @@ export default class GameScene {
                         bottom: box.bottom + pageYOffset
                     };
                 }
-            };
 
+            });
         });
-            //}
-            // else {
-            //
-            // }
-        //});
     }
 
     render(state) {
-
-        state.forEach((player, playerIndex) => {
-            if (playerIndex === 0) {
-                player.line4.forEach((card,cardIndex) => {
-                    const cardEl = this.createCardImg(card.type, card.score);
-                    console.log('this.wrapper[i]', this.wrapper[cardIndex]);
-                    this.wrapper[cardIndex].appendChild(cardEl);
-                    this.cardfield.appendChild(this.wrapper[cardIndex]);
-                    //this.cardfield.children[cardIndex].appendChild(cardEl);
-                });
-            }
-        });
-        this.userScoreField.innerHTML = 'Очков за раунд: ' + state[0].roundScores +
-            '<br/><br/>Выигранно раундов:  ' + state[0].roundWin;
-        this.compScoreField.innerHTML = 'Очков за раунд: ' + state[1].roundScores +
-            '<br/><br/>Выигранно раундов:  ' + state[1].roundWin;
+        if (this.cardfield.children.length === 0) {
+            state.forEach((player, playerIndex) => {
+                if (playerIndex === 0) {
+                    player.line4.forEach((card, cardIndex) => {
+                        const cardEl = this.createCardImg(card.type, card.score);
+                        console.log('this.wrapper[i]', this.wrapper[cardIndex]);
+                        this.wrapper[cardIndex].appendChild(cardEl);
+                        this.cardfield.appendChild(this.wrapper[cardIndex]);
+                    });
+                }
+                if (playerIndex === 1) {
+                    player.line4.forEach((card, cardIndex) => {
+                        const cardEl = this.createCardImg(card.type, card.score);
+                        console.log('this.wrapper[i]', this.wrapper[cardIndex]);
+                        this.computerWrapper[cardIndex].appendChild(cardEl);
+                        this.computerCardfield.appendChild(this.computerWrapper[cardIndex]);
+                    });
+                }
+            });
+            this.userScoreField.innerHTML = 'Очков за раунд: ' + state[0].roundScores +
+                '<br/><br/>Выигранно раундов:  ' + state[0].roundWin;
+            this.compScoreField.innerHTML = 'Очков за раунд: ' + state[1].roundScores +
+                '<br/><br/>Выигранно раундов:  ' + state[1].roundWin;
+        }
 
         this.setrerender(state);
     }
@@ -221,3 +271,5 @@ export default class GameScene {
     }
 
 }
+//};
+

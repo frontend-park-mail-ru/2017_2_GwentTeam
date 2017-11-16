@@ -1,12 +1,15 @@
 .game {
-    margin-top: 75px;
+    margin: 40px;
     overflow-x: hidden;
 }
 
 .game-view {
     display: flex;
     margin: auto;
-    width: 700px;
+    width: 780px;
+    border: 5px solid;
+    border-color: turquoise;
+    border-radius: 27px;
 }
 
 .game-view__board {
@@ -50,7 +53,7 @@
 }
 
 .game-view__board-item-cell {
-    background-color: #22170f;
+    background-color: #c5c5c5;
     display: inline-block;
     height: 60px;
     width: 75px;
