@@ -11,8 +11,8 @@ import SignoutView from './views/signout-view/signout-view.js';
 import UserService from './services/user-service.js';
 import Router from './modules/router.js';
 
-import './blocks/form/index.css';
-import './styles.css';
+// import './blocks/form/index.styl';
+// import './styles.styl';
 
 const userService = new UserService();
 const application = new ApplicationView(document.body);

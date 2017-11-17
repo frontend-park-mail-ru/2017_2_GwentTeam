@@ -1,17 +1,28 @@
-.game {
+.game
     margin-top: 75px;
-}
 
-.game-view {
+
+.game-view
     display: flex;
     margin: auto;
     width: 700px;
-}
 
-.game-view__board {
-    margin: auto;
-    width: 500px;
-}
+
+.game-view
+    &__board
+        margin: auto;
+        width: 500px;
+    &__cardfield
+        margin: auto;
+        width: 600px;
+        display: block;
+    &__gamefield
+        margin: auto;
+    &__profilefield
+        height: 440px;
+        display: inline;
+        width: 170px;
+
 
 .cardfield__card-img {
     width: 35px;
@@ -19,21 +30,9 @@
     padding: 5px;
 }
 
-.game-view__cardfield {
-    margin: auto;
-    width: 600px;
-    display: block;
-}
 
-.game-view__gamefield {
-    margin: auto;
-}
 
-.game-view__profilefield {
-    height: 440px;
-    display: inline;
-    width: 170px;
-}
+
 
 .game-board__board-item {
     background-color: #22170f;

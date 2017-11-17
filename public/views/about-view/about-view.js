@@ -2,7 +2,7 @@
 
 import BaseView from '../../modules/view.js';
 import aboutTemplate from './about.pug';
-import './about.css';
+import './about.styl';
 
 /**
  * Класс AboutView

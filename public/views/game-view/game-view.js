@@ -1,10 +1,10 @@
 'use strict';
 
-import './game.css';
+import './game.styl';
 import BaseView from '../../modules/view.js';
 import bus from '../../modules/event-bus.js';
 import Router from '../../modules/router.js';
-import SinglePlayerStrategy from './game-strategy/singleplayer.js';
+import SinglePlayerStrategy from './game-strategy/singleplayerServer.js';
 import MultiPlayerStrategy from './game-strategy/multiplayer.js';
 
 /**
