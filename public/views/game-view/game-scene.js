@@ -94,6 +94,7 @@ export default class GameScene {
                 shiftX = e.pageX - coords.left;
                 shiftY = e.pageY - coords.top;
                 ca.style.position = 'absolute';
+                ca.setAttribute('class', 'cardfield__card-img-modified');
                 //document.body.appendChild(cardEl);
                 moveAt(e);
 
