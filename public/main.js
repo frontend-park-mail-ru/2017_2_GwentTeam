@@ -14,31 +14,48 @@ import Router from './modules/router.js';
 import './blocks/form/index.css';
 import './styles.css';
 
-const userService = new UserService();
-const application = new ApplicationView(document.body);
+const loader = document.createElement('div');
+const back = document.createElement('div');
+loader.setAttribute('class', 'loader');
+back.setAttribute('class', 'background-loader');
+document.body.appendChild(back);
+back.appendChild(loader);
 
-const router = new Router(application.getElement(), application.getViewsContainerElement());
+function loaderOut() {
+    loader.style.display = 'none';
+    back.style.display= 'none';
+}
 
-router.addCallback((route) => {
-    const logo = document.getElementById('logo');
-    if (route === '/game') {
-        logo.style.display = 'none';
-    }
-    else {
-        logo.style.display = 'block';
-    }
-});
+window.onload = () => {
+    setTimeout(loaderOut, 3000);
+    const userService = new UserService();
 
-router
-    .register('/', MenuView)
-    .register('/about', AboutView)
-    .register('/game', GameView)
-    .register('/profile', ProfileView)
-    .register('/login', SigninView)
-    .register('/signup', SignupView)
-    .register('/logout', SignoutView)
-    .start();
+    const application = new ApplicationView(document.body);
+    //loader.style.display = 'none';
+    const router = new Router(application.getElement(), application.getViewsContainerElement());
 
-userService
-    .getData(true)
-    .catch(() => {});
+    router.addCallback((route) => {
+        const logo = document.getElementById('logo');
+        if (route === '/game') {
+            logo.style.display = 'none';
+        }
+        else {
+            logo.style.display = 'block';
+        }
+    });
+
+    router
+        .register('/', MenuView)
+        .register('/about', AboutView)
+        .register('/game', GameView)
+        .register('/profile', ProfileView)
+        .register('/login', SigninView)
+        .register('/signup', SignupView)
+        .register('/logout', SignoutView)
+        .start();
+
+    userService
+        .getData(true)
+        .catch(() => {
+        });
+};
