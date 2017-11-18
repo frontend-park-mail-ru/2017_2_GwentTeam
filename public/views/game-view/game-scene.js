@@ -89,12 +89,15 @@ export default class GameScene {
                 console.log('cardEl', e.target);
                 ca = e.target;
                 ca.style.cursor = "pointer";
+                ca.setAttribute('class', 'cardfield__card-img-mousedown');
+
                 console.log('car', ca, card);
                 let coords = getCoords(ca);
                 shiftX = e.pageX - coords.left;
                 shiftY = e.pageY - coords.top;
                 ca.style.position = 'absolute';
-                ca.setAttribute('class', 'cardfield__card-img-modified');
+
+
                 //document.body.appendChild(cardEl);
                 moveAt(e);
 
@@ -180,6 +183,7 @@ export default class GameScene {
 
                         if (lineIndex && cellIndex) {
                             ca.setAttribute('style', '');
+                            ca.setAttribute('class', 'cardfield__card-img-modified');
                             this.cell[cellIndex].appendChild(ca);
                             console.log('children', this.wrapper)
                             this.cardfield.removeChild(this.cardfield.children[card]);

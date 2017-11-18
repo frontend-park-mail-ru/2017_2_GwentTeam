@@ -27,7 +27,8 @@ function loaderOut() {
 }
 
 window.onload = () => {
-    setTimeout(loaderOut, 3000);
+    loaderOut();
+    //setTimeout(loaderOut, 3000);
     const userService = new UserService();
 
     const application = new ApplicationView(document.body);

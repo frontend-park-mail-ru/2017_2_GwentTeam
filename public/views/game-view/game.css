@@ -27,10 +27,26 @@
     transition-duration: 0.3s;
     cursor: pointer;
 }
+.cardfield__card-img-mousedown {
+    width: 35px;
+    height: 50px;
+    padding: 5px;
+}
+
 .cardfield__card-img-modified {
     width: 35px;
     height: 50px;
     padding: 5px;
+    animation: append .2s linear;
+}
+
+@keyframes append {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-5px);
+    }
 }
 .game-view__cardfield {
     margin: auto;
