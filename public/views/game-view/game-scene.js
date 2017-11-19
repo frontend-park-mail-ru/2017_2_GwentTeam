@@ -113,15 +113,17 @@ export default class GameScene {
                 let startY = null;
                 let finishX = null;
                 let finishY = null;
+                let lineIndex = null;
+                let cellIndex = null;
                 e.target.onmouseup = (d) => {
                     document.onmousemove = null;
                     d.target.onmouseup = null;
+                    console.log('cords', ca.style.left)
                     const needFirstCoords = getCoords(this.lines[3]);
                     const needSecondCoords = getCoords(this.lines[5]);
                     if ((d.pageX >= needFirstCoords.left && d.pageX <= needFirstCoords.right)
                         && (d.pageY >= needFirstCoords.top && d.pageY <= needSecondCoords.bottom)) {
-                        let lineIndex = null;
-                        let cellIndex = null;
+
 
                         this.lines.forEach((el, elIndex) => {
                             const lineCoords = getCoords(el);
@@ -185,38 +187,44 @@ export default class GameScene {
                         });
 
                         if (lineIndex && cellIndex) {
-                            //let appendStartCoords = getCoords(d.target);
-                            ca.setAttribute('style', '');
-                            startX = d.pageX - shiftX;
-                            startY = d.pageY - shiftY;
-                            //ca.setAttribute('class', 'cardfield__card-img-modified');
-                            this.cell[cellIndex].appendChild(ca);//
-                            let appendFinishCoords = getCoords(ca);
-                            //finishX = d.pageX - shiftX;
-                            finishX = appendFinishCoords.left;
-                            finishY = appendFinishCoords.top;
-                            //finishY = d.pageY - shiftY;
-                            //this.cell[cellIndex].removeChild(ca);//
-                            console.log(startX, startY, appendFinishCoords.left, finishY);
-                            //this.cell[cellIndex].removeChild(ca);
-                            ca.style.position= 'absolute';
-                            ca.style.left = startX + 'px';
-                            ca.style.top = startY + 'px';
-                            console.log('tops', ca);
-                            //ca.setAttribute('style', '');
-                            ca.style.transition = 'all 1s linear';
-                            ca.style.transform = `translate(${finishX - startX}px, ${finishY - startY }px)`;
-                            //this.cell[cellIndex].appendChild(ca);
-                            //ca.setAttribute('style', '');
-                            console.log('children', getCoords(ca));//не те координаты
-                            this.cardfield.removeChild(this.cardfield.children[card]);
-                            this.wrapper.splice(card, 1);
-                            //this.wrapper[card].parentNode.removeChild(this.wrapper[card]);
-                            // bus.emit('ONMOUSEUP', {
-                            //     playerIndex: 0,
-                            //     card,
-                            //     cellIndex
-                            // });
+                            console.log('cellIndex', cellIndex);
+                            const Emit = (callback) => {
+                                ca.setAttribute('style', '');
+                                startX = d.pageX - shiftX;
+                                console.log('cell', this, cellIndex)
+                                startY = d.pageY - shiftY;
+                                //ca.setAttribute('class', 'cardfield__card-img-modified');
+                                this.cell[cellIndex].appendChild(ca);//
+                                let appendFinishCoords = getCoords(this.cell[cellIndex]);
+                                //finishX = d.pageX - shiftX;
+                                finishX = appendFinishCoords.left;
+                                finishY = appendFinishCoords.top;
+                                //finishY = d.pageY - shiftY;
+                                //this.cell[cellIndex].removeChild(ca);//
+                                console.log(startX, startY, getCoords(this.cell[cellIndex]).left, getCoords(this.cell[cellIndex]).top, appendFinishCoords.left, finishY);
+                                //this.cell[cellIndex].removeChild(ca);
+                                ca.style.position= 'absolute';
+                                ca.style.left = startX + 'px';
+                                ca.style.top = startY + 'px';
+                                console.log('tops', ca);
+                                //ca.setAttribute('style', '');
+                                ca.style.transition = 'all 1s linear';
+                                ca.style.transform = `translate(${finishX - startX}px, ${finishY - startY}px)`;
+                                //this.cell[cellIndex].appendChild(ca);
+                                //ca.setAttribute('style', '');
+                                //ca.style.position = '';
+                                console.log('children', getCoords(d.target));//не те координаты
+                                this.cardfield.removeChild(this.cardfield.children[card]);
+                                this.wrapper.splice(card, 1);
+                                setTimeout(callback, 1001);
+                            };
+                            Emit(() => {
+                                bus.emit('ONMOUSEUP', {
+                                    playerIndex: 0,
+                                    card,
+                                    cellIndex
+                                });
+                            });
                             console.log('cardfield', this.wrapper)
                             console.warn('bla', this.cardfield.children)
                             console.log('cardnumber', card);
@@ -233,6 +241,7 @@ export default class GameScene {
                         // if (state[0].line4.length === 0 || state[1].line4.length === 0) {
                         //     bus.emit('ROUND');
                         // }
+
                     } else {
                         ca.setAttribute('style', '');
                         //ca.setAttribute('transition', 'all 30s easy-in-out');
