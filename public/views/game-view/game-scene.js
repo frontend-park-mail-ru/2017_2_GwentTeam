@@ -86,7 +86,7 @@ export default class GameScene {
             child[card].firstChild.addEventListener('mousedown', e => {//Большой drag n drop, чтобы карты можно было перемещать не только с
             //child[card].firstChild.onmousedown = (e) => {//Большой drag n drop, чтобы карты можно было перемещать не только с
                 //cardfield но и с поля. Мб добавить внешний цикл if type.skill === ?
-                console.log('cardEl', e.target);
+                console.log('cardEl', getCoords(e.target));
                 ca = e.target;
                 ca.style.cursor = "pointer";
                 ca.setAttribute('class', 'cardfield__card-img-mousedown');
@@ -109,7 +109,10 @@ export default class GameScene {
                 document.onmousemove = (e) => {
                     moveAt(e);
                 };
-
+                let startX = null;
+                let startY = null;
+                let finishX = null;
+                let finishY = null;
                 e.target.onmouseup = (d) => {
                     document.onmousemove = null;
                     d.target.onmouseup = null;
@@ -182,18 +185,38 @@ export default class GameScene {
                         });
 
                         if (lineIndex && cellIndex) {
+                            //let appendStartCoords = getCoords(d.target);
                             ca.setAttribute('style', '');
-                            ca.setAttribute('class', 'cardfield__card-img-modified');
-                            this.cell[cellIndex].appendChild(ca);
-                            console.log('children', this.wrapper)
+                            startX = d.pageX - shiftX;
+                            startY = d.pageY - shiftY;
+                            //ca.setAttribute('class', 'cardfield__card-img-modified');
+                            this.cell[cellIndex].appendChild(ca);//
+                            let appendFinishCoords = getCoords(ca);
+                            //finishX = d.pageX - shiftX;
+                            finishX = appendFinishCoords.left;
+                            finishY = appendFinishCoords.top;
+                            //finishY = d.pageY - shiftY;
+                            //this.cell[cellIndex].removeChild(ca);//
+                            console.log(startX, startY, appendFinishCoords.left, finishY);
+                            //this.cell[cellIndex].removeChild(ca);
+                            ca.style.position= 'absolute';
+                            ca.style.left = startX + 'px';
+                            ca.style.top = startY + 'px';
+                            console.log('tops', ca);
+                            //ca.setAttribute('style', '');
+                            ca.style.transition = 'all 1s linear';
+                            ca.style.transform = `translate(${finishX - startX}px, ${finishY - startY }px)`;
+                            //this.cell[cellIndex].appendChild(ca);
+                            //ca.setAttribute('style', '');
+                            console.log('children', getCoords(ca));//не те координаты
                             this.cardfield.removeChild(this.cardfield.children[card]);
                             this.wrapper.splice(card, 1);
                             //this.wrapper[card].parentNode.removeChild(this.wrapper[card]);
-                            bus.emit('ONMOUSEUP', {
-                                playerIndex: 0,
-                                card,
-                                cellIndex
-                            });
+                            // bus.emit('ONMOUSEUP', {
+                            //     playerIndex: 0,
+                            //     card,
+                            //     cellIndex
+                            // });
                             console.log('cardfield', this.wrapper)
                             console.warn('bla', this.cardfield.children)
                             console.log('cardnumber', card);
@@ -220,6 +243,7 @@ export default class GameScene {
                     //e.target.onmousedown = null;
                     //child[card].onmousedown = null;
                 };
+
                 e.target.ondragstart = () => {
                     return false;
                 };
