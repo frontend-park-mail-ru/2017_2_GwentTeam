@@ -44,8 +44,9 @@ export default class UserService {
                 return response;
             })
             .catch((err) => {
-                if (err.status === 409)
-                    alert('Пользователь уже существует :(');
+            //??
+                // if (err.status === 409)
+                //     alert('Пользователь уже существует :(');
             });
     }
 

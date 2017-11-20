@@ -134,13 +134,21 @@ export default class TrainingView extends BaseView {
             firstStep.style.bottom = 120 + 'px';
             this.el.appendChild(firstStep);
             firstStep.innerHTML = '<p class="text-typing"> Это твое карточное <br>поле </p>';
+            console.log('Fstep', firstStep);
         });
+
         firstStep.addEventListener('mousedown', (event) => {
             event.preventDefault();
             steps.unshift();
             currentStep = steps[0];
+            console.log('bla')
+            this.accordingTo(currentStep);
         });
         //setTimeout(first, 1000);
+    }
+
+    accordingTo(step) {
+        console.log('step', step);
     }
 
     createCard(name) {
