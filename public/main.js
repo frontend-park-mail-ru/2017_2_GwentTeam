@@ -8,11 +8,13 @@ import GameView from './views/game-view/game-view.js';
 import SignupView from './views/signup-view/signup-view.js';
 import SigninView from './views/signin-view/signin-view.js';
 import SignoutView from './views/signout-view/signout-view.js';
+import TrainingView from './views/training-view/training-view.js';
 import UserService from './services/user-service.js';
 import Router from './modules/router.js';
 
 import './blocks/form/index.css';
 import './styles.css';
+import {Training} from './views/training-view/training-view';
 
 const loader = document.createElement('div');
 const back = document.createElement('div');
@@ -37,7 +39,7 @@ window.onload = () => {
 
     router.addCallback((route) => {
         const logo = document.getElementById('logo');
-        if (route === '/game') {
+        if (route === '/game' || route === '/training') {
             logo.style.display = 'none';
         }
         else {
@@ -53,6 +55,7 @@ window.onload = () => {
         .register('/login', SigninView)
         .register('/signup', SignupView)
         .register('/logout', SignoutView)
+        .register('/training', TrainingView)
         .start();
 
     userService

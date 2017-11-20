@@ -54,12 +54,12 @@ export default class SignupView extends BaseView {
     }
 
     check() {
-        document.querySelector('.form-check').addEventListener('mouseover', function(event) {
+        document.querySelector('.form-check').addEventListener('mouseover', (event) => {
             event.preventDefault();
             //if (event.target === document.querySelector('.form-check'))
             document.getElementById('Signup').setAttribute('type', 'text');
         });
-        document.querySelector('.form-check').addEventListener('mouseout', function(event) {
+        document.querySelector('.form-check').addEventListener('mouseout', (event) => {
             event.preventDefault();
             //if (event.target === document.querySelector('.form-check'))
             document.getElementById('Signup').setAttribute('type', 'password');

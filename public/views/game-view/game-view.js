@@ -42,6 +42,10 @@ export default class GameView extends BaseView {
         this.boardEl.setAttribute('class', 'game-view__game-board');
         this.gameEl.appendChild(this.boardEl);
 
+        this.zoomEl = document.createElement('div');
+        this.zoomEl.setAttribute('class', 'game-view__zoomEl');
+        this.gameEl.appendChild(this.zoomEl);
+
         this.computerCardfield = document.createElement('div');
         this.computerCardfield.setAttribute('class', 'game-view__cardfield');
         this.boardEl.appendChild(this.computerCardfield);

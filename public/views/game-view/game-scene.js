@@ -79,7 +79,7 @@ export default class GameScene {
         const playerChoice = state[0].line4;
         const child = this.cardfield.children;
         console.log('child', child);
-
+        this.cell[23].appendChild(this.createNavr('b', 1));
         Object.keys(child).forEach((card) => {//при нажатии главное меню и играть второй раз создается второй ряд
             console.log('cardEls', child);
 
@@ -303,6 +303,13 @@ export default class GameScene {
     createCardImg(type, score) {
         const cardEl = document.createElement('img');
         const src = './img/cards/' + type + score + '.jpg';
+        cardEl.setAttribute('src', src);
+        cardEl.setAttribute('class', 'cardfield__card-img');
+        return cardEl;
+    }
+    createNavr(type, score) {
+        const cardEl = document.createElement('img');
+        const src = './img/cards/mityam.png';
         cardEl.setAttribute('src', src);
         cardEl.setAttribute('class', 'cardfield__card-img');
         return cardEl;

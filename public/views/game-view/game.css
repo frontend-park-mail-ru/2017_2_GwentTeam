@@ -1,15 +1,24 @@
 .game {
-    margin: 40px;
+    margin: 20px;
     overflow-x: hidden;
+}
+
+.game-view__zoomEl {
+    padding-top: 78px;
+    background: url("../../images/cards/b1.jpg") no-repeat center bottom;
+    width: 940px;
+    height: 400px;
+    background-size: 300px;
 }
 
 .game-view {
     display: flex;
     margin: auto;
-    width: 780px;
+    width: 1050px;
     border: 5px solid;
     border-color: turquoise;
     border-radius: 27px;
+    padding: 5px;
 }
 
 .game-view__board {
@@ -18,9 +27,8 @@
 }
 
 .cardfield__card-img {
-    width: 35px;
-    height: 50px;
-    padding: 5px;
+    width: 50px;
+    height: 65px;
 }
 .cardfield__card-img:hover {
     transform: translateY(-20px);
@@ -28,9 +36,8 @@
     cursor: pointer;
 }
 .cardfield__card-img-mousedown {
-    width: 35px;
-    height: 50px;
-    padding: 5px;
+    width: 50px;
+    height: 65px;
 }
 
 .cardfield__card-img-modified {
@@ -56,8 +63,8 @@
 
 .cardfield__wrapper {
     background-color: black;
-    height: 60px;
-    width: 50px;
+    height: 65px;
+    width: 55px;
     display: inline-block;
 }
 .game-view__gamefield {
@@ -73,14 +80,14 @@
 .game-board__board-item {
     background-color: #22170f;
     opacity: 0.9;
-    height: 60px;
+    height: 65px;
     margin: 10px 0;
 }
 
 .game-view__board-item-cell {
     background-color: #c5c5c5;
     display: inline-block;
-    height: 60px;
+    height: 65px;
     width: 75px;
 }
 

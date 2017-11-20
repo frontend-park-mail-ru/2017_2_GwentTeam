@@ -14,6 +14,7 @@ export default class BaseView {
      * @param {boolean} [root=false]
      */
     constructor(parentElement, router, root) {
+        console.log('name', this.constructor.name)
         const name = this.constructor.name.slice(0, -4).toLowerCase() || `view-${count++}`;
         this.el = document.createElement('section');
         this.el.setAttribute('data-view', name);     //TODO remove
