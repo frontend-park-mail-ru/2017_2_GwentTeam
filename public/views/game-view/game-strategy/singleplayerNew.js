@@ -29,7 +29,7 @@ export default class SinglePlayerStrategy extends Strategy {
         //     console.log('Код: ' + event.code + ' причина: ' + event.reason);
         // };
         ws.onopen = () => {
-            ws.send('startGame');
+            ws.send(JSON.stringify({event:'startGame', payload: {}}));
 
             this.router = router;
             this.el = el;
@@ -57,23 +57,31 @@ export default class SinglePlayerStrategy extends Strategy {
             this.boardEl.setAttribute('class', 'game-view__game-board');
             this.gameEl.appendChild(this.boardEl);
 
-            this.gamefield = [];
+            this.userGamefield = [];
+            this.opponentGamefield = [];
 
-            for (let i = 0; i < 6; i++) {
-                this.gamefield.push(document.createElement('div'));
+            for (let i = 0; i < 3; i++) {
+              this.opponentGamefield.push(document.createElement('div'));
+              this.userGamefield.push(document.createElement('div'));
             }
 
-            this.gamefield.forEach((field) => {
+            this.opponentGamefield.forEach((field) => {
                 field.setAttribute('class', 'game-board__board-item');
                 this.boardEl.appendChild(field);
             });
+
+            this.userGamefield.forEach((field) => {
+              field.setAttribute('class', 'game-board__board-item');
+            });
+            for (let i = 2; i >= 0; i--) {
+              this.boardEl.appendChild(this.userGamefield[i]);
+            }
 
             this.cardfield = document.createElement('div');
             this.cardfield.setAttribute('class', 'game-view__cardfield');
             this.boardEl.appendChild(this.cardfield);
 
             //this.scene = new GameScene(this.boardEl, this.gamefield, this.cardfield, this.profilefield);
-
 
             // this.cardfield = cardfield;
             // this.el = gameview;
@@ -89,15 +97,14 @@ export default class SinglePlayerStrategy extends Strategy {
             this.btnPassEl.setAttribute('value', 'ПАС');
             this.btnPassEl.innerText = 'ПАС';
             this.btnPassEl.onclick = () => {
-                bus.emit('ROUND');
+                //bus.emit('ROUND');
+                  ws.send(JSON.stringify({event:'pass', payload: {}}));
             };
             this.profilefield.appendChild(this.btnPassEl);
 
             this.userScoreField = document.createElement('div');
             this.userScoreField.setAttribute('class', 'profilefield__score');
             this.profilefield.appendChild(this.userScoreField);
-
-
 
             this.state = {
                 playerName: 'User',
@@ -109,26 +116,54 @@ export default class SinglePlayerStrategy extends Strategy {
                 line4: []
             };
 
-            ws.send('dealCards');
+            ws.send(JSON.stringify({event:'dealCards', payload: {}}));
 
-            bus.on('DEALCARDS', (payload) => {                                //TODO
+            bus.on('DEALCARDS', (payload) => {
                 const data = payload.payload;
                 console.log(data);
                 data.forEach((card) => {
-                    this.state.line4.push(card);
+                    const cardEl = this.createCardImg(card.type, card.score);
+                    this.cardfield.appendChild(cardEl);
+                    this.state.line4.push({
+                      type: card.type,
+                      score: card.score,
+                      domEl: cardEl,
+                      index: card.index
+                    });
+                    const index = card.index;
+                    cardEl.onclick = () => {
+                        bus.emit('CHOOSECARD', { card });
+                        //console.log(card);
+                    };
                 })
             });
         }
 
-        //     bus.on('CHOOSECARD', (payload) => {                                //TODO
-        //         const data = payload.payload;
-        //         this.userGo(data.playerIndex, data.cardIndex);
-        //         this.competitorGo();
-        //         if (this.isGameOver()) {
-        //             this.GameOver();
-        //         }
-        //         this.rerender();
-        //     });
+            bus.on('CHOOSECARD', (payload) => {                                //TODO
+                const data = payload.payload.card;
+                //console.log(data);
+                this.userGo(data);
+                // this.state.line4.forEach((card, cardIndex) => {
+                //   if (card.index === data.index) {
+                //     card.domEl.remove();
+                //     this.userGo(cardIndex);
+                //   }
+                // })
+                // this.state.line4[data.cardIndex].domEl.remove();
+                // this.userGo(data.cardIndex);
+                ws.send(JSON.stringify({event:'userGo', payload: data.index}));
+                //this.competitorGo();
+                // if (this.isGameOver()) {
+                //     this.GameOver();
+                // }
+                //this.rerender();
+            });
+
+            bus.on('OPPONENTGO', (payload) => {
+              const data = payload.payload;
+              //console.log(data);
+              this.opponentGo(data);
+            })
         //
         //     bus.on('ROUND', ()  => {
         //         let user = this.whoWinRound(this.state[0], this.state[1]);
@@ -170,8 +205,9 @@ export default class SinglePlayerStrategy extends Strategy {
         //     return false;
         // }
         //
-        // userGo(playerIndex, cardIndex) {
-        //     this.pushCardInLine(playerIndex, cardIndex);
+      }
+        // userGo(cardIndex) {
+        //     this.pushCardInLine(cardIndex);
         // }
         //
         // competitorGo() {
@@ -188,70 +224,49 @@ export default class SinglePlayerStrategy extends Strategy {
         //     this.pushCardInLine(playerIndex, index);
         // }
         //
-        // pushCardInLine(playerIndex, cardIndex) {
-        //     const card = this.state[playerIndex].line4[cardIndex];
-        //     if (card.type === 'b') {
-        //         this.state[playerIndex].line1.push(card);
-        //     }
-        //     if (card.type === 'c') {
-        //         this.state[playerIndex].line2.push(card);
-        //     }
-        //     if (card.type === 'd') {
-        //         this.state[playerIndex].line3.push(card);
-        //     }
-        //     this.state[playerIndex].roundScores += card.score;
-        //     this.state[playerIndex].line4.splice(cardIndex, 1);
-        // }
-        //
-        //
-        // dealCards(countOfCards) {
-        //     for(let i = 0; i < countOfCards; i++) {
-        //         this.state.forEach((player) => {
-        //             const cardIndex = Math.floor(Math.random() * this.allCards.length);
-        //             player.line4.push(this.allCards[cardIndex]);
-        //             this.allCards.splice(cardIndex, 1);
-        //         });
-        //     }
-        // }
-        //
-        // whoWinRound(user1, user2) {
-        //     let score1 = this.scoreCount(user1);
-        //     let score2 = this.scoreCount(user2);
-        //     if (score1 > score2) return user1;
-        //     return user2;
-        // }
-        //
-        // whoWinGame(user1, user2) {
-        //     if (user1.roundWin === 2) {
-        //         return user1;
-        //     }
-        //     return user2;
-        // }
-        //
-        // scoreCount(profile) {
-        //     let count = 0;
-        //     profile.line1.forEach((card) => {
-        //         count += card.score;
-        //     });
-        //     profile.line2.forEach((card) => {
-        //         count += card.score;
-        //     });
-        //     profile.line3.forEach((card) => {
-        //         count += card.score;
-        //     });
-        //     return count;
-        // }
-        //
-        // fullscreen(element) {
-        //     if(element.requestFullscreen) {
-        //         element.requestFullscreen();
-        //     } else if(element.mozRequestFullScreen) {
-        //         element.mozRequestFullScreen();
-        //     } else if(element.webkitRequestFullscreen) {
-        //         element.webkitRequestFullscreen();
-        //     } else if(element.msRequestFullscreen) {
-        //         element.msRequestFullscreen();
-        //     }
-        // }
+
+        userGo(data) {
+          this.state.line4.forEach((card, cardIndex) => {
+                if (card.index === data.index) {
+                  card.domEl.remove();
+                  if (card.type === 'b') {
+                    this.state.line1.push(card);
+                    this.userGamefield[2].appendChild(card.domEl);
+                  }
+                  if (card.type === 'c') {
+                    this.state.line2.push(card);
+                    this.userGamefield[1].appendChild(card.domEl);
+                  }
+                  if (card.type === 'd') {
+                    this.state.line3.push(card);
+                    this.userGamefield[0].appendChild(card.domEl);
+                  }
+                  this.state.roundScores += card.score;
+                  this.state.line4.splice(cardIndex, 1);
+                }
+              })
+        }
+
+        opponentGo(card) {
+            card.domEl = this.createCardImg(card.type, card.score);
+            if (card.type === 'b') {
+              this.opponentGamefield[2].appendChild(card.domEl);
+            }
+            if (card.type === 'c') {
+              this.opponentGamefield[1].appendChild(card.domEl);
+            }
+            if (card.type === 'd') {
+              this.opponentGamefield[0].appendChild(card.domEl);
+            }
+        }
+
+
+
+    createCardImg(type, score) {
+        const cardEl = document.createElement('img');
+        const src = './img/cards/' + type + score + '.jpg';
+        cardEl.setAttribute('src', src);
+        cardEl.setAttribute('class', 'cardfield__card-img');
+        return cardEl;
     }
 }
