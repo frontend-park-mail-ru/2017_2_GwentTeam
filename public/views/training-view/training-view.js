@@ -6,6 +6,14 @@ import BaseView from '../../modules/view.js';
 import Router from '../../modules/router';
 
 let arrayCards = ['mityam', 'navr', 'ostapenko'];
+let currentStep = null;
+let firstStep = document.createElement('div');
+let secondStep = null;
+let thirdStep = null;
+let button = document.createElement('div');
+button.setAttribute('class', 'button_3d');
+button.innerHTML = 'Дальше';
+let steps = ['firstStep', 'secondStep', 'thirdStep'];
 
 export default class TrainingView extends BaseView {
     constructor(parentElement) {
@@ -116,39 +124,45 @@ export default class TrainingView extends BaseView {
         this.render();
     }
     render() {
-        let currentStep = null;
-        let firstStep = document.createElement('div');
-        let secondStep = null;
-        let thirdStep = null;
-        let steps = [firstStep, secondStep, thirdStep];
-        const first = (callback) => {
-            this.cardfield.setAttribute('class', 'firstStep__cardfield');
-            this.cardfield.style.border = '5px solid #FDEAA8';
-            setTimeout(callback, 1500);
-        };
-        first(() => {
-            //firstStep = document.createElement('div');
-            firstStep.setAttribute('class', 'firstStep');
-            firstStep.style.position = 'absolute';
-            firstStep.style.left = 40 + 'px';
-            firstStep.style.bottom = 120 + 'px';
-            this.el.appendChild(firstStep);
-            firstStep.innerHTML = '<p class="text-typing"> Это твое карточное <br>поле </p>';
-            console.log('Fstep', firstStep);
-        });
-
-        firstStep.addEventListener('mousedown', (event) => {
-            event.preventDefault();
-            steps.unshift();
-            currentStep = steps[0];
-            console.log('bla')
-            this.accordingTo(currentStep);
-        });
-        //setTimeout(first, 1000);
+        if (steps[0] === 'firstStep') {
+            const first = (callback) => {
+                this.cardfield.setAttribute('class', 'firstStep__cardfield');
+                this.cardfield.style.border = '5px solid #FDEAA8';
+                setTimeout(callback, 1500);
+            };
+            first(() => {
+                firstStep.setAttribute('class', 'firstStep');
+                firstStep.style.position = 'absolute';
+                firstStep.style.left = 40 + 'px';
+                firstStep.style.bottom = 120 + 'px';
+                this.el.appendChild(firstStep);
+                firstStep.innerHTML = '<p class="text-typing"> Это твое карточное <br>поле </p>';
+                firstStep.appendChild(button);
+                this.accordingTo(button);
+            });
+        }
+        if (steps[0] === 'secondStep') {
+            const second = (callback) => {
+                this.computerCardfield.setAttribute('class', 'firstStep__cardfield');
+                this.computerCardfield.style.border = '5px solid #FDEAA8';
+                this.cardfield.style.border = '';
+                this.cardfield.setAttribute('class', 'training-view__cardfield');
+                setTimeout(callback, 1500);
+            };
+            second(() => {
+                firstStep.innerHTML = '<p class="text-typing"> Это карточное поле <br>соперника </p>';
+                firstStep.appendChild(button);
+                this.accordingTo(button);
+            });
+        }
     }
 
-    accordingTo(step) {
-        console.log('step', step);
+    accordingTo(button) {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            steps.shift();
+            this.render();
+        });
     }
 
     createCard(name) {

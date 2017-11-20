@@ -58,7 +58,7 @@ export default class Http {
         })
             .then((response) => {
                 if (response.status >= 400) {
-                    throw response.json();
+                    throw response;
                 }
 
                 return response.json();
