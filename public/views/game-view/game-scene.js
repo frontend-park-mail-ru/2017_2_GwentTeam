@@ -208,15 +208,17 @@ export default class GameScene {
                                 ca.style.top = startY + 'px';
                                 console.log('tops', ca);
                                 //ca.setAttribute('style', '');
-                                ca.style.transition = 'all 1s linear';
-                                ca.style.transform = `translate(${finishX - startX}px, ${finishY - startY}px)`;
-                                //this.cell[cellIndex].appendChild(ca);
-                                //ca.setAttribute('style', '');
-                                //ca.style.position = '';
+                                ca.style.transition = 'all .3s linear';
+
+                                const next = () => {
+                                    ca.style.left = finishX + 'px';
+                                    ca.style.top = finishY + 'px';
+                                };
+                                setTimeout(next, 1);
                                 console.log('children', getCoords(d.target));//не те координаты
                                 this.cardfield.removeChild(this.cardfield.children[card]);
                                 this.wrapper.splice(card, 1);
-                                setTimeout(callback, 1001);
+                                setTimeout(callback, 401);
                             };
                             Emit(() => {
                                 bus.emit('ONMOUSEUP', {

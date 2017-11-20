@@ -59,6 +59,10 @@ export default class TrainingView extends BaseView {
         this.computerCardfield.setAttribute('class', 'game-view__cardfield');
         this.boardEl.appendChild(this.computerCardfield);
 
+        this.zoomEl = document.createElement('div');
+        this.zoomEl.setAttribute('class', 'game-view__zoomEl');
+        this.gameEl.appendChild(this.zoomEl);
+
         this.gamefield = [];
         this.cell = []; //поч так нельзя?
         for (let i = 0; i < 6; i++) {
@@ -112,21 +116,29 @@ export default class TrainingView extends BaseView {
         this.render();
     }
     render() {
+        let currentStep = null;
         let firstStep = null;
+        let secondStep = null;
+        let thirdStep = null;
+        let steps = [firstStep, secondStep, thirdStep];
         const first = (callback) => {
             firstStep = document.createElement('div');
             firstStep.setAttribute('class', 'firstStep');
             firstStep.style.position = 'absolute';
-            firstStep.style.left = 100 + 'px';
-            firstStep.style.bottom = 100 + 'px';
+            firstStep.style.left = 40 + 'px';
+            firstStep.style.bottom = 120 + 'px';
             this.el.appendChild(firstStep);
-            this.cardfield.style.border = '3px solid blue';
-            this.cardfield.style.borderLeftColor = 'orange';
-            this.cardfield.style.borderRightColor = 'orange';
+            this.cardfield.style.border = '5px solid #FDEAA8';
+            this.cardfield.setAttribute('class', 'firstStep__cardfield');
             callback();
         };
         first(() => {
-            firstStep.innerHTML = '<p class="text-typing"> Это такая то штука </p>';
+            firstStep.innerHTML = '<p class="text-typing"> Это твое карточное <br>поле </p>';
+        });
+        firstStep.addEventListener('mousedown', (event) => {
+            event.preventDefault();
+            steps.unshift();
+            currentStep = steps[0];
         });
         //setTimeout(first, 1000);
     }
