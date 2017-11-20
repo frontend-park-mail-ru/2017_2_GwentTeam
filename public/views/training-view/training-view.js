@@ -117,22 +117,22 @@ export default class TrainingView extends BaseView {
     }
     render() {
         let currentStep = null;
-        let firstStep = null;
+        let firstStep = document.createElement('div');
         let secondStep = null;
         let thirdStep = null;
         let steps = [firstStep, secondStep, thirdStep];
         const first = (callback) => {
-            firstStep = document.createElement('div');
+            this.cardfield.setAttribute('class', 'firstStep__cardfield');
+            this.cardfield.style.border = '5px solid #FDEAA8';
+            setTimeout(callback, 1500);
+        };
+        first(() => {
+            //firstStep = document.createElement('div');
             firstStep.setAttribute('class', 'firstStep');
             firstStep.style.position = 'absolute';
             firstStep.style.left = 40 + 'px';
             firstStep.style.bottom = 120 + 'px';
             this.el.appendChild(firstStep);
-            this.cardfield.style.border = '5px solid #FDEAA8';
-            this.cardfield.setAttribute('class', 'firstStep__cardfield');
-            callback();
-        };
-        first(() => {
             firstStep.innerHTML = '<p class="text-typing"> Это твое карточное <br>поле </p>';
         });
         firstStep.addEventListener('mousedown', (event) => {

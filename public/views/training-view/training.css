@@ -17,7 +17,7 @@
     box-shadow: 0px 0px 10px whitesmoke;
     border-radius: 3px;
     background-color: lightgray;
-    animation: firstDiscription 2s;
+    animation: firstDiscription 1s;
 }
 
 .firstStep__cardfield {
@@ -25,7 +25,7 @@
     width: 166px;
     display: block;
     float: left;
-    animation: scaling 2s linear;
+    animation: scaling 1.5s linear;
 }
 
 @keyframes scaling  {
@@ -70,8 +70,8 @@
     font-style: italic;
     white-space:nowrap;
     overflow:hidden;
-    -webkit-animation: type 5s steps(50, end);
-    animation: type 5s steps(50, end);
+    -webkit-animation: type 3s steps(50, end);
+    animation: type 3s steps(50, end);
 }
 @keyframes type{
     from { width: 0; }

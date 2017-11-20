@@ -42,6 +42,10 @@ export default class UserService {
             .then((response) => {
                 this.signin(login, password);
                 return response;
+            })
+            .catch((err) => {
+                if (err.status === 409)
+                    alert('Пользователь уже существует :(');
             });
     }
 
@@ -56,6 +60,10 @@ export default class UserService {
             .then((response) => {
                 this.getData(true);
                 return response;
+            })
+            .catch((err) => {
+                if (err.status === 403)
+                    alert('Неверные данные :(');
             });
     }
     /**
