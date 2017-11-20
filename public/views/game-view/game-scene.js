@@ -79,7 +79,7 @@ export default class GameScene {
         const playerChoice = state[0].line4;
         const child = this.cardfield.children;
         console.log('child', child);
-        this.cell[23].appendChild(this.createNavr('b', 1));
+        //this.cell[23].appendChild(this.createNavr('b', 1));
         Object.keys(child).forEach((card) => {//при нажатии главное меню и играть второй раз создается второй ряд
             console.log('cardEls', child);
 
