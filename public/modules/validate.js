@@ -7,14 +7,14 @@ export function validate(form, selector) {
         password = Arraypassword[0];
         //window.count = 0;
         window.id = selector;
-        console.log(window.id, selector, password, Arraypassword);
+        //console.log(window.id, selector, password, Arraypassword);
     }
     if (window.id != selector) {//Затем нажимаю на лого, Второй раз нажимаю на форму и заходит сюда. Почему он считает window.id и selector разными, несмотря на то, что у них одинаковые значения, и как сделать так, чтобы они были одинаковыми?
-        console.log(window.id, selector);
+        //console.log(window.id, selector);
         //window.id = selector;
         window.count = +1;
         password = Arraypassword[(window.count % 2)];
-        console.log(password);
+        //console.log(password);
     }
     const passwordinput = form.querySelector('.password-validate');
     passwordinput.innerHTML = 'Must be more than 4 symbols';
@@ -43,5 +43,3 @@ export function validate(form, selector) {
         }
     });
 }
-
-

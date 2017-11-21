@@ -1,4 +1,4 @@
-import bus from '../../modules/event-bus.js';
+import bus from '../../../modules/event-bus.js';
 
 export default class GameScene {
     constructor(gameview, gamefield, cardfield, profilefield) {
@@ -23,11 +23,9 @@ export default class GameScene {
         this.userScoreField = document.createElement('div');
         this.userScoreField.setAttribute('class', 'profilefield__score');
         this.profilefield.appendChild(this.userScoreField);
-
     }
 
     render(state) {
-
         let child = this.cardfield.children;
         let arr = [];
         Object.keys(child).forEach((element) => {
@@ -89,10 +87,11 @@ export default class GameScene {
 
             }
         });
+
         this.userScoreField.innerHTML = 'Очков за раунд: ' + state[0].roundScores +
-        '<br/><br/>Выигранно раундов:  ' + state[0].roundWin;
+        '<br/><br/>Выиграно раундов:  ' + state[0].roundWin;
         this.compScoreField.innerHTML = 'Очков за раунд: ' + state[1].roundScores +
-        '<br/><br/>Выигранно раундов:  ' + state[1].roundWin;
+        '<br/><br/>Выиграно раундов:  ' + state[1].roundWin;
 
 
         if (state[0].line4.length === 0 || state[1].line4.length === 0) {
