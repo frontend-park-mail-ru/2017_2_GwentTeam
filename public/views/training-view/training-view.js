@@ -155,6 +155,24 @@ export default class TrainingView extends BaseView {
                 this.accordingTo(button);
             });
         }
+        if (steps[0] === thirdStep) {
+            firstStep.innerHTML = '<p class="text-typing"> Это очки карты</p>'
+            const third = (callback) => {
+                this.computerCardfield.setAttribute('class', 'firstStep__cardfield');
+                this.computerCardfield.style.border = '5px solid #FDEAA8';
+                this.cardfield.style.border = '';
+                this.cardfield.setAttribute('class', 'training-view__cardfield');
+                setTimeout(callback, 1500);
+            };
+            third(() => {
+                firstStep.innerHTML = '<p class="text-typing"> Это карточное поле <br>соперника </p>';
+                firstStep.appendChild(button);
+                this.accordingTo(button);
+            });
+        }
+        if (steps[0] === 'thirdStep') {
+
+        }
     }
 
     accordingTo(button) {

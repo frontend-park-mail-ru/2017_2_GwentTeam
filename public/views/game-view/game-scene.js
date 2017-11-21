@@ -71,9 +71,9 @@ export default class GameScene {
             }
         }
         this.userScoreField.innerHTML = 'Очков за раунд: ' + state[0].roundScores +
-            '<br/><br/>Выигранно раундов:  ' + state[0].roundWin;
+            '<br/><br/>Выиграно раундов:  ' + state[0].roundWin;
         this.compScoreField.innerHTML = 'Очков за раунд: ' + state[1].roundScores +
-            '<br/><br/>Выигранно раундов:  ' + state[1].roundWin;
+            '<br/><br/>Выиграно раундов:  ' + state[1].roundWin;
 
         console.log('state', state);
         const playerChoice = state[0].line4;
@@ -294,9 +294,9 @@ export default class GameScene {
                 }
             });
             this.userScoreField.innerHTML = 'Очков за раунд: ' + state[0].roundScores +
-                '<br/><br/>Выигранно раундов:  ' + state[0].roundWin;
+                '<br/><br/>Выиграно раундов:  ' + state[0].roundWin;
             this.compScoreField.innerHTML = 'Очков за раунд: ' + state[1].roundScores +
-                '<br/><br/>Выигранно раундов:  ' + state[1].roundWin;
+                '<br/><br/>Выиграно раундов:  ' + state[1].roundWin;
         }
 
         this.setrerender(state);
