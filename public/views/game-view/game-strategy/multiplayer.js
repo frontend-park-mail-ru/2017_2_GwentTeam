@@ -49,7 +49,6 @@ export default class MultiPlayerStrategy extends Strategy {
 
           bus.on('DEALCARDS', (payload) => {
               const data = payload.payload;
-              //console.log(data);
               data.forEach((card) => {
                   const cardEl = this.createCardImg(card.type, card.score);
                   this.cardfield.appendChild(cardEl);
@@ -117,14 +116,15 @@ export default class MultiPlayerStrategy extends Strategy {
 
       opponentGo(card) {
           card.domEl = this.createCardImg(card.type, card.score);
-          if (card.type === 'b') {
-            this.opponentGamefield[2].appendChild(card.domEl);
-          }
-          if (card.type === 'c') {
-            this.opponentGamefield[1].appendChild(card.domEl);
-          }
-          if (card.type === 'd') {
-            this.opponentGamefield[0].appendChild(card.domEl);
-          }
+          this.pushCardInLine(this.opponentGamefield, card);
+          // if (card.type === 'b') {
+          //   this.opponentGamefield[2].appendChild(card.domEl);
+          // }
+          // if (card.type === 'c') {
+          //   this.opponentGamefield[1].appendChild(card.domEl);
+          // }
+          // if (card.type === 'd') {
+          //   this.opponentGamefield[0].appendChild(card.domEl);
+          // }
       }
 }

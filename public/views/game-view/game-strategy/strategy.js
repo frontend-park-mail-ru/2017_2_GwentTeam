@@ -104,4 +104,16 @@ export default class GameStrategy {
         alert('Вы проиграли:(');
       }
     }
+
+    pushCardInLine(arrayOfLines, card) {
+      if (card.type === 'b') {
+        arrayOfLines[2].appendChild(card.domEl);
+      }
+      if (card.type === 'c') {
+        arrayOfLines[1].appendChild(card.domEl);
+      }
+      if (card.type === 'd') {
+        arrayOfLines[0].appendChild(card.domEl);
+      }
+    }
 }
