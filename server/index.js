@@ -101,6 +101,7 @@ webSocketServer.on('connection', function(ws) {
     const cardIndex = message.payload;
     state[0].line4.forEach((card, index) => {
       if (card.index === cardIndex) {
+        state[0].roundScores += card.score;
         state[0].line4.splice(index, 1);
         if (card.type === 'b') {
                   state[0].line1.push(card);
@@ -122,6 +123,7 @@ webSocketServer.on('connection', function(ws) {
         }
     });
         state[1].line4.splice(index, 1);
+        state[1].roundScores += maxCard.score;
         if (maxCard.type === 'b') {
                   state[1].line1.push(maxCard);
                 }
@@ -131,10 +133,41 @@ webSocketServer.on('connection', function(ws) {
                 if (maxCard.type === 'd') {
                   state[1].line3.push(maxCard);
                 }
-                ws.send(JSON.stringify({event: 'OPPONENTGO', payload: maxCard}));
+                ws.send(JSON.stringify({event: 'OPPONENTGO', payload: {
+                  card: maxCard,
+                  score: {
+                    userScore: state[0].roundScores,
+                    userRounds: state[0].roundWin,
+                    opponentScore: state[1].roundScores,
+                    opponentRounds: state[1].roundWin
+                  }}}));
       }
       else if(message.event === 'pass') {
         console.log('pass');
+        if (state[0].roundScores >= state[1].roundScores) {
+          state[0].roundWin += 1;
+        }
+        else {
+          state[1].roundWin += 1;
+        }
+        state[0].roundScores = 0;
+        state[1].roundScores = 0;
+        if (state[1].roundWin > 2) {
+          ws.send(JSON.stringify({event: 'GAMEOVER', payload: false}));
+        }
+        else if (state[0].roundWin > 2) {
+          ws.send(JSON.stringify({event: 'GAMEOVER', payload: true}));
+        }
+        else {
+           ws.send(JSON.stringify({event: 'ROUND', payload: {
+             userScore: state[0].roundScores,
+             userRounds: state[0].roundWin,
+             opponentScore: state[1].roundScores,
+             opponentRounds: state[1].roundWin
+           }}));
+        }
+        //console.log(isUserWin);
+        //ws.send(JSON.stringify({event: 'ROUND', payload: isUserWin}));
       }
   });
 
