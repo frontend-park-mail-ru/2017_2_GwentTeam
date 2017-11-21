@@ -4,8 +4,8 @@
   "description": "Gwent game",
   "main": "main.js",
   "engines": {
-    "node": "8.4.x",
-    "npm": "5.3.x"
+    "node": "9.2.0",
+    "npm": "5.5.1"
   },
   "scripts": {
     "start": "node server/index.js",
