@@ -116,4 +116,16 @@ export default class GameStrategy {
         arrayOfLines[0].appendChild(card.domEl);
       }
     }
+
+    pushCardInState(playerState, card) {
+      if (card.type === 'b') {
+        playerState.line1.push(card);
+      }
+      if (card.type === 'c') {
+        playerState.line2.push(card);
+      }
+      if (card.type === 'd') {
+        playerState.line3.push(card);
+      }
+    }
 }

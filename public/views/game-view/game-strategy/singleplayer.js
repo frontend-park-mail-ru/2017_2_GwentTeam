@@ -1,7 +1,6 @@
 'use strict';
 
 import Strategy from './strategy.js';
-import GameScene from './game-scene.js';
 import bus from '../../../modules/event-bus.js';
 /**
 * @module GameView
@@ -10,212 +9,228 @@ import bus from '../../../modules/event-bus.js';
 export default class SinglePlayerStrategy extends Strategy {
     constructor(router, el) {
 
-        super();
+        super(router, el);
 
-        this.router = router;
-        this.el = el;
-
-        this.gameEl = document.createElement('div');
-        this.gameEl.setAttribute('class', 'game-view');
-        this.el.appendChild(this.gameEl);
-
-        //let html = document.documentElement;
-        //this.fullscreen(html);
-        this.profilefield = document.createElement('div');
-        this.profilefield.setAttribute('class', 'game-view__profilefield');
-        this.gameEl.appendChild(this.profilefield);
-
-        this.btnExitEl = document.createElement('div');
-        this.btnExitEl.setAttribute('class', 'profilefield__btn-exit');
-        this.btnExitEl.innerHTML = 'В главное меню';
-        this.profilefield.appendChild(this.btnExitEl);
-
-        this.btnExitEl.onclick = () => {
-            this.router.go('/');
+        this.btnPassEl.onclick = () => {
+              this.round();
         };
 
-        this.boardEl = document.createElement('div');
-        this.boardEl.setAttribute('class', 'game-view__game-board');
-        this.gameEl.appendChild(this.boardEl);
+        let ind = 0;
+         this.userCards = [];
+            let typeOfCards = ['b', 'c', 'd'];
+            typeOfCards.forEach((type) => {
+                for (let i = 1; i < 9; i++) {
+                    this.userCards.push({
+                        type: type,
+                        score: i,
+                        index: ind
+                    });
+                    ind++;
+                }
+            });
 
-        this.gamefield = [];
+            this.compCards = [];
+            ind = 0;
+               typeOfCards.forEach((type) => {
+                   for (let i = 1; i < 9; i++) {
+                       this.compCards.push({
+                           type: type,
+                           score: i,
+                           index: ind
+                       });
+                       ind++;
+                   }
+               });
 
-        for (let i = 0; i < 6; i++) {
-            this.gamefield.push(document.createElement('div'));
-        }
+            this.state = [{
+                    playerName: 'User',
+                    roundWin: 0,
+                    roundScores: 0,
+                    line1: [],
+                    line2: [],
+                    line3: [],
+                    line4: []
+                },{
+                    playerName: 'Opponent',
+                    roundWin: 0,
+                    roundScores: 0,
+                    line1: [],
+                    line2: [],
+                    line3: [],
+                    line4: []
+                }];
 
-        this.gamefield.forEach((field) => {
-            field.setAttribute('class', 'game-board__board-item');
-            this.boardEl.appendChild(field);
-        });
-
-        this.cardfield = document.createElement('div');
-        this.cardfield.setAttribute('class', 'game-view__cardfield');
-        this.boardEl.appendChild(this.cardfield);
-
-        this.allCards = [];
-        let typeOfCards = ['b', 'c', 'd'];
-        typeOfCards.forEach((type) => {
-            for (let i = 1; i < 9; i++) {
-                this.allCards.push({
-                    type: type,
-                    score: i
+                bus.on('DEALCARDS', (payload) => {
+                  const data = payload.payload;
+                  let arrayOfCards = data.cards;   //
+                  let player = data.player;        //
+                  arrayOfCards.forEach((card) => {
+                    const cardEl = this.createCardImg(card.type, card.score);
+                    player.line4.push({
+                      type: card.type,
+                      score: card.score,
+                      domEl: cardEl,
+                      index: card.index
+                    });
+                    if (player.playerName === 'User') {
+                      this.cardfield.appendChild(cardEl);
+                      cardEl.onclick = () => {
+                        bus.emit('CHOOSECARD', { card });
+                      };
+                    }
+                  })
                 });
-            }
-        });
 
-        this.state = [{
-            playerName: 'User',
-            roundWin: 0,
-            roundScores: 0,
-            line1: [],
-            line2: [],
-            line3: [],
-            line4: []
-        },{
-            playerName: 'Computer',
-            roundWin: 0,
-            roundScores: 0,
-            line1: [],
-            line2: [],
-            line3: [],
-            line4: []
-        }];
-        this.dealCards(8);
+                this.dealCards(this.state[0], this.userCards, 8);
+                this.dealCards(this.state[1], this.compCards, 8);
 
-        this.scene = new GameScene(this.boardEl, this.gamefield, this.cardfield, this.profilefield);      //TODO (gamegield - array, cardfild-поле)
+            bus.on('ROUND', (payload) => {
+              const data = payload.payload;
+              this.printScore(data);
+            })
 
-        bus.on('CHOOSECARD', (payload) => {                                //TODO
-            const data = payload.payload;
-            this.userGo(data.playerIndex, data.cardIndex);
-            this.competitorGo();
-            if (this.isGameOver()) {
-                this.GameOver();
-            }
-            this.rerender();
-        });
-
-        bus.on('ROUND', ()  => {
-            let user = this.whoWinRound(this.state[0], this.state[1]);
-            user.roundWin += 1;
-            if (this.isGameOver()) {
-                this.GameOver();
-            }
-            this.dealCards(2);
-            this.state.forEach((player) => {
-                player.roundScores = 0;
+            bus.on('CHOOSECARD', (payload) => {
+                //console.log('CHOOSECARD');
+                const data = payload.payload.card;
+                this.userGo(data);
+                this.opponentCard();
+                if (this.isRound()) {
+                  this.round();
+                }
             });
-            this.rerender();
-        });
 
-        this.render();
-    }
+            // bus.on('OPPONENTGO', (payload) => {
+            //   const data = payload.payload;   //&
+            //   //console.log(data);
+            //   this.opponentGo(data.card);
+            //   this.printScore(data.score);
+            // })
 
-    rerender(){
-        this.scene.render(this.state);
-    }
 
-    start() {
-        this.render();
-    }
+            // bus.on('GAMEOVER', (payload) => {
+            //   const data = payload.payload;
+            //   this.showResult(data);
+            // })
+      }
 
-    render() {
-        this.rerender();
-
-    }
-    GameOver() {
-        let winner = this.whoWinGame(this.state[0], this.state[1]);
-        alert(winner.playerName + ' выиграл!');
-    }
-
-    isGameOver(){
-        if (this.state[0].roundWin === 2 || this.state[1].roundWin === 2) {
-            return true;
+        userGo(data) {
+          this.state[0].line4.forEach((card, cardIndex) => {
+                if (card.index === data.index) {
+                  card.domEl.remove();
+                  this.pushCardInLine(this.userGamefield, card);
+                  this.pushCardInState(this.state[0], card);
+                  this.state[0].roundScores += card.score;
+                  this.state[0].line4.splice(cardIndex, 1);
+                }
+              })
         }
-        return false;
+
+        opponentCard() {
+          let maxCard = this.state[1].line4[0];
+              let index = 0;
+              this.state[1].line4.forEach((card, cardIndex) => {
+                  if (maxCard.score < card.score) {
+                      maxCard = card;
+                      index = cardIndex;
+                  }
+              });
+              //console.log(maxCard);
+              this.opponentGo(maxCard);
+        }
+
+        opponentGo(data) {
+            this.state[1].line4.forEach((card, cardIndex) => {
+            if (card.index === data.index) {
+              this.pushCardInLine(this.opponentGamefield, card);
+              this.pushCardInState(this.state[1], card);
+            this.state[1].roundScores += card.score;
+            this.state[1].line4.splice(cardIndex, 1);
+        }
+      })
+      this.printScore({userScore: this.state[0].roundScores,
+                   userRounds: this.state[0].roundWin,
+                   opponentScore: this.state[1].roundScores,
+                   opponentRounds: this.state[1].roundWin});
     }
 
-    userGo(playerIndex, cardIndex) {
-        this.pushCardInLine(playerIndex, cardIndex);
-    }
+        createArrayOfCards(deck, cardsCount){
+          console.log('dealCards');
+          let arrayOfCards = [];
+          for(let i = 0; i < cardsCount; i++) {
+                  const cardIndex = Math.floor(Math.random() * deck.length);
+                  arrayOfCards.push(deck[cardIndex]);
+                  deck.splice(cardIndex, 1);
+              }
+          return arrayOfCards;
+        }
 
-    competitorGo() {
-        const playerIndex = 1;
-        let comp = this.state[playerIndex];
-        let maxCard = comp.line4[0];
-        let index = 0;
-        comp.line4.forEach((card, cardIndex) => {
-            if (maxCard.score < card.score) {
-                maxCard = card;
-                index = cardIndex;
+        dealCards(player, deck, cardsCount) {
+          let arr = this.createArrayOfCards(this.userCards, cardsCount);
+          bus.emit('DEALCARDS', {player: player, cards: arr});
+        }
+
+          isRound() {
+             if (this.state[0].line4.length === 0 || this.state[1].line4.length === 0) {
+               return true;
+             }
+             return false;
+          }
+
+          isUserWinRound() {
+             let userScores = this.countScores(this.state[0]);
+             let opponentScores = this.countScores(this.state[1]);
+             console.log(userScores);
+             console.log(opponentScores);
+             return (userScores >= opponentScores);
+          }
+
+          isUserWin() {
+             return (this.state[0].roundWin >= this.state[1].roundWin);
+          }
+
+
+          round() {
+            if (this.isUserWinRound()) {
+              this.state[0].roundWin += 1;
             }
-        });
-        this.pushCardInLine(playerIndex, index);
-    }
+            else {
+              this.state[1].roundWin += 1;
+            }
 
-    pushCardInLine(playerIndex, cardIndex) {
-        const card = this.state[playerIndex].line4[cardIndex];
-        if (card.type === 'b') {
-            this.state[playerIndex].line1.push(card);
-        }
-        if (card.type === 'c') {
-            this.state[playerIndex].line2.push(card);
-        }
-        if (card.type === 'd') {
-            this.state[playerIndex].line3.push(card);
-        }
-        this.state[playerIndex].roundScores += card.score;
-        this.state[playerIndex].line4.splice(cardIndex, 1);
-    }
+            this.state[0].roundScores = 0;
+            this.state[1].roundScores = 0;
+            bus.emit('ROUND', {userScore: this.state[0].roundScores,
+                         userRounds: this.state[0].roundWin,
+                         opponentScore: this.state[1].roundScores,
+                         opponentRounds: this.state[1].roundWin});
+              if (this.isGameOver()) {
+                this.gameOver();
+              }
+          }
 
+          countScores(player) {
+            let scores = 0;
+            player.line1.forEach((card) => {
+              scores += card.score;
+            })
+            player.line2.forEach((card) => {
+              scores += card.score;
+            })
+            player.line3.forEach((card) => {
+              scores += card.score;
+            })
+            return scores;
+          }
 
-    dealCards(countOfCards) {
-        for(let i = 0; i < countOfCards; i++) {
-            this.state.forEach((player) => {
-                const cardIndex = Math.floor(Math.random() * this.allCards.length);
-                player.line4.push(this.allCards[cardIndex]);
-                this.allCards.splice(cardIndex, 1);
-            });
-        }
-    }
+          isGameOver() {
+            if (this.state[0].roundWin > 2 || this.state[1].roundWin > 2) {
+              return true;
+            }
+            return false;
+          }
 
-    whoWinRound(user1, user2) {
-        let score1 = this.scoreCount(user1);
-        let score2 = this.scoreCount(user2);
-        if (score1 > score2) return user1;
-        return user2;
-    }
+          gameOver() {
+             this.showResult(this.isUserWin());
+          }
 
-    whoWinGame(user1, user2) {
-        if (user1.roundWin === 2) {
-            return user1;
-        }
-        return user2;
-    }
-
-    scoreCount(profile) {
-        let count = 0;
-        profile.line1.forEach((card) => {
-            count += card.score;
-        });
-        profile.line2.forEach((card) => {
-            count += card.score;
-        });
-        profile.line3.forEach((card) => {
-            count += card.score;
-        });
-        return count;
-    }
-
-    fullscreen(element) {
-        if(element.requestFullscreen) {
-            element.requestFullscreen();
-        } else if(element.mozRequestFullScreen) {
-            element.mozRequestFullScreen();
-        } else if(element.webkitRequestFullscreen) {
-            element.webkitRequestFullscreen();
-        } else if(element.msRequestFullscreen) {
-            element.msRequestFullscreen();
-        }
-    }
 }
