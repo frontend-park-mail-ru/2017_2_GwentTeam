@@ -64,6 +64,7 @@ export default class SinglePlayerStrategy extends Strategy {
                   const data = payload.payload;
                   let arrayOfCards = data.cards;   //
                   let player = data.player;        //
+                  console.log(arrayOfCards);
                   arrayOfCards.forEach((card) => {
                     const cardEl = this.createCardImg(card.type, card.score);
                     player.line4.push({
@@ -90,7 +91,6 @@ export default class SinglePlayerStrategy extends Strategy {
             })
 
             bus.on('CHOOSECARD', (payload) => {
-                //console.log('CHOOSECARD');
                 const data = payload.payload.card;
                 this.userGo(data);
                 this.opponentCard();
@@ -165,7 +165,7 @@ export default class SinglePlayerStrategy extends Strategy {
         }
 
         dealCards(player, deck, cardsCount) {
-          let arr = this.createArrayOfCards(this.userCards, cardsCount);
+          let arr = this.createArrayOfCards(deck, cardsCount);
           bus.emit('DEALCARDS', {player: player, cards: arr});
         }
 
@@ -203,8 +203,16 @@ export default class SinglePlayerStrategy extends Strategy {
                          userRounds: this.state[0].roundWin,
                          opponentScore: this.state[1].roundScores,
                          opponentRounds: this.state[1].roundWin});
+
+            this.cleanBoard();
+            this.cleanState(this.state[0]);
+            this.cleanState(this.state[1]);
               if (this.isGameOver()) {
                 this.gameOver();
+              }
+              else {
+                this.dealCards(this.state[0], this.userCards, 2);
+                this.dealCards(this.state[1], this.compCards, 2);
               }
           }
 
@@ -231,6 +239,6 @@ export default class SinglePlayerStrategy extends Strategy {
 
           gameOver() {
              this.showResult(this.isUserWin());
+             this.cleanBoard();
           }
-
 }

@@ -128,4 +128,21 @@ export default class GameStrategy {
         playerState.line3.push(card);
       }
     }
+
+    cleanState(playerState) {
+      playerState.line1 = [];
+      playerState.line2 = [];
+      playerState.line3 = [];
+    }
+
+    cleanBoard() {
+      this.userGamefield.forEach((elem) => this.removeChildren(elem));
+      this.opponentGamefield.forEach((elem) => this.removeChildren(elem));
+    }
+
+    removeChildren(elem) {
+      while (elem.lastChild) {
+         elem.removeChild(elem.lastChild);
+      }
+    }
 }
