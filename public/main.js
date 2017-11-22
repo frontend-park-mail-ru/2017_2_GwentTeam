@@ -11,11 +11,25 @@ import SignoutView from './views/signout-view/signout-view.js';
 import UserService from './services/user-service.js';
 import Router from './modules/router.js';
 
+//import ServiceWorker from './service-worker.js';
+
 import './blocks/form/index.styl';
 import './styles.styl';
 
 const userService = new UserService();
 const application = new ApplicationView(document.body);
+
+// if ('serviceWorker' in navigator) {
+//     console.log(navigator);
+// 		navigator.serviceWorker.register('./service-worker.js', {scope: '/'})
+// 			.then(registration => {
+// 				console.log('ServiceWorker registration: ${registration}');
+// 			})
+// 			.catch(error => {
+// 				console.log('${error}');
+// 			});
+// }
+
 
 const router = new Router(application.getElement(), application.getViewsContainerElement());
 

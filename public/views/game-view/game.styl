@@ -24,13 +24,24 @@
         width: 170px;
 
 
-.cardfield__card-img {
+.cardfield__card-img, .cardfield__card-img__mousedown {
     width: 35px;
     height: 50px;
     padding: 5px;
 }
 
+.cardfield__card-img:hover {
+    transform: translateY(-20px);
+    transition-duration: 0.3s;
+    cursor: pointer;
+}
 
+.cardfield__wrapper {
+    background-color: black;
+    height: 65px;
+    width: 55px;
+    display: inline-flex;
+}
 
 
 
@@ -39,6 +50,10 @@
     opacity: 0.9;
     height: 57px;
     margin: 10px 0;
+}
+
+.board-item__inneritem {
+    margin: 0 auto;
 }
 
 
