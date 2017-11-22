@@ -9,6 +9,12 @@ body {
     font-size: 16px;
     overflow-y: hidden;
 }
+@viewport {
+    width: 600px;
+    height: 200px;
+    zoom: 2;
+    user-zoom: fixed;
+}
 .background-loader {
     background: #22170f;
     top: 0;

@@ -1,3 +1,5 @@
+$max-width = 768px;
+
 .background__img {
     position: absolute;
     top: 0;
@@ -8,6 +10,10 @@
     background-repeat: no-repeat;
     background-image: url(../../images/background1.jpg);
     background-size: cover;
+
+    @media screen and (max-width: $max-width){
+        width: 100%;
+    }
 }
 
 .application {

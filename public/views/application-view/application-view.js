@@ -1,6 +1,6 @@
 'use strict';
 
-import './application.css';
+import './application.scss';
 import BaseView from '../../modules/view.js';
 import applicationTemplate from './application.pug';
 
