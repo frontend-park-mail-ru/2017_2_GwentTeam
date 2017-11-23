@@ -11,6 +11,7 @@ export default class MultiPlayerStrategy extends Strategy {
 
         super(router, el);
 
+        this.canUserGo = false;
         // const address = ['https', 'https:'].includes(location.protocol) ?
         //     `wss://${location.host}/ws` :
         //     `ws://${location.host}/ws`;
@@ -23,99 +24,96 @@ export default class MultiPlayerStrategy extends Strategy {
         //     //console.log(this.ws);
         // }
 
-        this.ws = new WebSocket('ws://localhost:8001/game');     //TODO
+        this.ws = new WebSocket('ws://localhost:8001/game'); //TODO
         this.ws.onmessage = function(event) {
             const message = JSON.parse(event.data);
             bus.emit(message.event, message.payload);
         };
-        // ws.onerror = function(error) {
-        //     console.log("Ошибка " + error.message);
-        // };
-        // ws.onclose = function(event) {
-        //     if (event.wasClean) {
-        //         console.log('Соединение закрыто');
-        //     } else {
-        //         console.log('Обрыв соединения');
-        //     }
-        //     console.log('Код: ' + event.code + ' причина: ' + event.reason);
-        // };
-        // ws.onopen = () => {
-        //     this.ws.send(JSON.stringify({event:'startGame', payload: {}}));
-        //
-        //     this.btnPassEl.onclick = () => {
-        //           this.ws.send(JSON.stringify({event:'pass', payload: {}}));
-        //     };
-        //
-            this.state = {
-                playerName: 'User',
-                roundWin: 0,
-                roundScores: 0,
-                line1: [],
-                line2: [],
-                line3: [],
-                line4: []
-            };
-            this.btnPassEl.onclick = () => {
+
+        this.ws.onclose = function() {
+            alert('Игра оборвалась');
+            //this.router.go('/');
+        };
+        this.state = {
+            playerName: 'User',
+            roundWin: 0,
+            roundScores: 0,
+            line1: [],
+            line2: [],
+            line3: [],
+            line4: []
+        };
+        this.btnPassEl.onclick = () => {
+            if (this.canUserGo) {
                 this.ws.send('ROUND');
-            };
-        //
-        //     this.ws.send(JSON.stringify({event:'dealCards', payload: {}}));
-        //
-            bus.on('DEALCARDS', (payload) => {
-                const data = payload.payload;
-                //console.log(data);
-                data.forEach((card) => {
-                    const cardEl = this.createCardImg(card.type, card.score);
-                    this.cardfield.appendChild(cardEl);
-                    this.state.line4.push({
-                      type: card.type,
-                      score: card.score,
-                      domEl: cardEl,
-                      index: card.index
+                this.canUserGo = false;
+            }
+        };
+
+        bus.on('DEALCARDS', (payload) => {
+            const data = payload.payload;
+            //console.log(data);
+            data.forEach((card) => {
+                const cardEl = this.createCardImg(card.type, card.score);
+                this.cardfield.appendChild(cardEl);
+                this.state.line4.push({
+                    type: card.type,
+                    score: card.score,
+                    domEl: cardEl,
+                    index: card.index
+                });
+                cardEl.onclick = (e) => {
+                    //console.log(e.target);
+                    bus.emit('CHOOSECARD', {
+                        card
                     });
-                    const index = card.index;
-                    cardEl.onclick = (e) => {
-                        //console.log(e.target);
-                        bus.emit('CHOOSECARD', { card });
-                        e.target.onclick = null;
-                        //console.log(card);
-                    };
-                })
+                    e.target.onclick = null;
+                    //console.log(card);
+                };
             });
+        });
         //}
+
+        bus.on('OPPORTUNITY_TO_GO', (payload) => {
+            const data = payload.payload;
+            this.canUserGo = data;
+        });
 
         bus.on('CHOOSECARD', (payload) => {
             const data = payload.payload.card;
-            this.userGo(data);
-            this.ws.send(JSON.stringify({
-                event: 'userGo',
-                payload: data.index
-            }));
+            if (this.canUserGo) {
+                this.userGo(data);
+                this.ws.send(JSON.stringify({
+                    event: 'userGo',
+                    payload: data.index
+                }));
+                this.canUserGo = false;
+            }
         });
 
         bus.on('OPPONENTGO', (payload) => {
-            console.log('opponentgo');
             const data = payload.payload; //&
             this.opponentGo(data.card);
             this.printScore(data.score);
-        })
+            this.canUserGo = true;
+        });
 
         bus.on('ROUND', (payload) => {
             const data = payload.payload;
-            //console.log(data);
             this.printScore(data);
             this.state.roundWin = data.userRounds;
             this.state.roundScores = 0;
-        })
+            this.cleanBoard();
+            this.cleanState(this.state);
+        });
 
-        // bus.on('GAMEOVER', (payload) => {
-        //     const data = payload.payload;
-        //     this.showResult(data);
-        // })
+        bus.on('GAMEOVER', (payload) => {
+            const data = payload.payload;
+            this.showResult(data);
+        });
     }
 
-//}
-    userGo(data){
+    userGo(data) {
         this.state.line4.forEach((card, cardIndex) => {
             if (card.index === data.index) {
                 card.domEl.remove();
@@ -124,9 +122,9 @@ export default class MultiPlayerStrategy extends Strategy {
                 this.state.roundScores += card.score;
                 this.state.line4.splice(cardIndex, 1);
             }
-        })
-            this.userScoreField.innerHTML = 'Очков за раунд: ' + this.state.roundScores +
-                '<br/><br/>Выиграно раундов:  ' + this.state.roundWin;
+        });
+        this.userScoreField.innerHTML = 'Очков за раунд: ' + this.state.roundScores +
+            '<br/><br/>Выиграно раундов:  ' + this.state.roundWin;
     }
 
     opponentGo(card) {

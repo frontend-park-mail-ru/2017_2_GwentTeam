@@ -64,7 +64,6 @@ export default class SinglePlayerStrategy extends Strategy {
             const data = payload.payload;
             let arrayOfCards = data.cards; //
             let player = data.player; //
-            console.log(arrayOfCards);
             arrayOfCards.forEach((card) => {
                 const cardEl = this.createCardImg(card.type, card.score);
                 player.line4.push({
@@ -82,7 +81,7 @@ export default class SinglePlayerStrategy extends Strategy {
                         e.target.onclick = null;
                     };
                 }
-            })
+            });
         });
 
         this.dealCards(this.state[0], this.userCards, 8);
@@ -91,7 +90,7 @@ export default class SinglePlayerStrategy extends Strategy {
         bus.on('ROUND', (payload) => {
             const data = payload.payload;
             this.printScore(data);
-        })
+        });
 
         bus.on('CHOOSECARD', (payload) => {
             const data = payload.payload.card;
@@ -125,19 +124,16 @@ export default class SinglePlayerStrategy extends Strategy {
                 this.state[0].roundScores += card.score;
                 this.state[0].line4.splice(cardIndex, 1);
             }
-        })
+        });
     }
 
     opponentCard() {
         let maxCard = this.state[1].line4[0];
-        let index = 0;
-        this.state[1].line4.forEach((card, cardIndex) => {
+        this.state[1].line4.forEach((card) => {
             if (maxCard.score < card.score) {
                 maxCard = card;
-                index = cardIndex;
             }
         });
-        //console.log(maxCard);
         this.opponentGo(maxCard);
     }
 
@@ -149,7 +145,7 @@ export default class SinglePlayerStrategy extends Strategy {
                 this.state[1].roundScores += card.score;
                 this.state[1].line4.splice(cardIndex, 1);
             }
-        })
+        });
         this.printScore({
             userScore: this.state[0].roundScores,
             userRounds: this.state[0].roundWin,
@@ -159,7 +155,6 @@ export default class SinglePlayerStrategy extends Strategy {
     }
 
     createArrayOfCards(deck, cardsCount) {
-        console.log('dealCards');
         let arrayOfCards = [];
         for (let i = 0; i < cardsCount; i++) {
             const cardIndex = Math.floor(Math.random() * deck.length);
@@ -187,8 +182,6 @@ export default class SinglePlayerStrategy extends Strategy {
     isUserWinRound() {
         let userScores = this.countScores(this.state[0]);
         let opponentScores = this.countScores(this.state[1]);
-        console.log(userScores);
-        console.log(opponentScores);
         return (userScores >= opponentScores);
     }
 
@@ -228,13 +221,13 @@ export default class SinglePlayerStrategy extends Strategy {
         let scores = 0;
         player.line1.forEach((card) => {
             scores += card.score;
-        })
+        });
         player.line2.forEach((card) => {
             scores += card.score;
-        })
+        });
         player.line3.forEach((card) => {
             scores += card.score;
-        })
+        });
         return scores;
     }
 

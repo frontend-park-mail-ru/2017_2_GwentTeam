@@ -7,7 +7,6 @@
  */
 export default class GameStrategy {
     constructor(router, el) {
-        //console.log('GameStrategy.constructor');
         this.router = router;
         this.el = el;
 
@@ -77,7 +76,7 @@ export default class GameStrategy {
             userRounds: 0,
             opponentScore: 0,
             opponentRounds: 0
-        })
+        });
 
     }
 

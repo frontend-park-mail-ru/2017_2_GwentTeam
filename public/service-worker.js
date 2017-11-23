@@ -1,34 +1,35 @@
 const CACHE_VERSION = 'app_sw_v1';
 
 const cacheUrls = [
-    '/game',
-    '/about',
-    '/login',
-    '/signup',
-    '/',
+    // '/game',
+    // '/singleplayer',
+    // '/about',
+    // '/login',
+    // '/signup',
+    // '/',
 
-    '/client.bundle.js',
-		'/img/'
+    '/build/client.bundle.js',
+    '/build/img/'
 ];
 
-this.addEventListener('install', function (event) {
+this.addEventListener('install', (event) => {
     console.log('sw  install', event);
     event.waitUntil(
         caches.open(CACHE_VERSION)
-            .then(function (cache) {
-                return cache.addAll(cacheUrls);
-            }),
+        .then((cache) => {
+            return cache.addAll(cacheUrls);
+        })
     );
 });
 
-this.addEventListener('fetch', function (event) {
-    console.log('sw  fetch', event);
+this.addEventListener('fetch', (event) => {
+    //console.log('sw  fetch', event);
     event.respondWith(
-        caches.match(event.request).then(function (cachedResponse) {
+        caches.match(event.request).then((cachedResponse) => {
             if (cachedResponse) {
                 return cachedResponse;
             }
             return fetch(event.request);
-        }),
+        })
     );
 });
