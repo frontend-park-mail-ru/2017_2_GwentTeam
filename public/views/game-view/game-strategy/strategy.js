@@ -77,7 +77,7 @@ export default class GameStrategy {
         this.cardfield = document.createElement('div');
         this.cardfield.setAttribute('class', 'game-view__cardfield');
 
-        this.wrapper = [];
+        this.wrapper = new Array(8);
 
         // for (let i = 0; i < 8; ++i) {
         //     this.wrapper.push(document.createElement('div'));

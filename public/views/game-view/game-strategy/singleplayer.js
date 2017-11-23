@@ -65,17 +65,19 @@ export default class SinglePlayerStrategy extends Strategy {
                     const data = payload.payload;
                     let arrayOfCards = data.cards;   //
                     let player = data.player;        //
-                    console.log(arrayOfCards);
+                    console.log(arrayOfCards, this.wrapper);
                     arrayOfCards.forEach((card, cardIndex) => {
-                        this.wrapper.push(document.createElement('div'));
-                        this.wrapper[cardIndex].setAttribute('class', 'cardfield__wrapper');
-                        this.cardfield.appendChild(this.wrapper[cardIndex]);
                         const cardEl = this.createCardImg(card.type, card.score);
 
                         if (player.playerName === 'User') {
-                            this.cardfield.children[cardIndex].appendChild(cardEl);//когда два, не заполняется, потому что удаляются wrapper
+                            //когда два, не заполняется, потому что удаляются wrapper
+                            this.wrapper[cardIndex] = (document.createElement('div'));
+                            this.wrapper[cardIndex].setAttribute('class', 'cardfield__wrapper');
+                            this.cardfield.appendChild(this.wrapper[cardIndex]);
+                            console.warn('card', this.cardfield.children[cardIndex]);
+                            this.cardfield.children[cardIndex].appendChild(cardEl);
                         }
-
+                        console.log('wrapper', this.cardfield, this.wrapper);
                         player.line4.push({
                             type: card.type,
                             score: card.score,
@@ -153,7 +155,7 @@ export default class SinglePlayerStrategy extends Strategy {
       }
 
       drag(cardEl, card, cardIndex) {
-        let number = cardEl.parentNode;
+        let number = null;
           cardEl.onmousedown = (e) => {
               //console.log('ku1');
               let shiftX = null;
@@ -209,7 +211,8 @@ export default class SinglePlayerStrategy extends Strategy {
                                   bus.emit('CHOOSECARD', {card});
                                   console.log('metka', this.cardfield, this.wrapper, cardIndex)
                                    this.cardfield.removeChild(card.parentEl);
-                                   this.wrapper.splice(cardIndex, 1);
+                                  number = this.wrapper.indexOf(card.parentEl);
+                                   this.wrapper.splice(number, 1);
                                   cardEl.onmousedown = null;
                                   return true;
                               }
@@ -217,8 +220,8 @@ export default class SinglePlayerStrategy extends Strategy {
                                   target.setAttribute('style', '');
                                   bus.emit('CHOOSECARD', {card});
                                   this.cardfield.removeChild(card.parentEl);
-                                  this.wrapper.splice(cardIndex, 1);
-                                  console.log('metka', this.cardfield, this.wrapper, cardIndex)
+                                  number = this.wrapper.indexOf(card.parentEl);
+                                  this.wrapper.splice(number, 1);
                                   cardEl.onmousedown = null;
                                   return true;
                               }
@@ -226,14 +229,16 @@ export default class SinglePlayerStrategy extends Strategy {
                                   target.setAttribute('style', '');
                                   bus.emit('CHOOSECARD', {card});
                                   this.cardfield.removeChild(card.parentEl);
-                                  this.wrapper.splice(cardIndex, 1);
+                                  number = this.wrapper.indexOf(card.parentEl);
+                                  this.wrapper.splice(number, 1);
                                   console.log('metka', this.cardfield, this.wrapper, this.cardfield.children[cardIndex])
                                   cardEl.onmousedown = null;
                                   return true;
                               } else {
                                   target.setAttribute('style', '');
                                   target.setAttribute('class', 'cardfield__card-img');
-                                  this.cardfield.children[cardIndex].appendChild(target);
+                                  number = this.wrapper.indexOf(card.parentEl);
+                                  this.cardfield.children[number].appendChild(target);
                                   cardEl.onmousedown = null;
                                   return false;
                               }
@@ -242,7 +247,8 @@ export default class SinglePlayerStrategy extends Strategy {
                   } else {
                       target.setAttribute('style', '');
                       target.setAttribute('class', 'cardfield__card-img');
-                      this.cardfield.children[cardIndex].appendChild(target);
+                      number = this.wrapper.indexOf(card.parentEl);
+                      this.cardfield.children[number].appendChild(target);
                   }
                   console.log('end');
               }
@@ -267,6 +273,7 @@ export default class SinglePlayerStrategy extends Strategy {
           this.state[0].line4.forEach((card, cardIndex) => {
                 if (card.index === data.index) {
                     console.log('card', card);
+                  card.domEl.remove();
                   card.domEl.remove();
                   console.log('card', card)
                   this.pushCardInLine(this.userInnerGamefield, card, cardIndex);
