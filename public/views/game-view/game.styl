@@ -11,7 +11,8 @@
     background-size: 300px;
 }
 
-.game-view {
+
+.game-view
     display: flex;
     margin: auto;
     width: 1050px;
@@ -19,12 +20,23 @@
     border-color: turquoise;
     border-radius: 27px;
     padding: 5px;
-}
 
-.game-view__board {
-    margin: auto;
-    width: 500px;
-}
+
+.game-view
+    &__board
+        margin: auto;
+        width: 500px;
+    &__cardfield
+        margin: auto;
+        width: 600px;
+        display: block;
+    &__gamefield
+        margin: auto;
+    &__profilefield
+        height: 440px;
+        display: inline;
+        width: 300px;
+
 
 .cardfield__card-img {
     width: 50px;
@@ -55,11 +67,6 @@
         transform: translateX(20px);
     }
 }
-.game-view__cardfield {
-    margin: auto;
-    width: 600px;
-    display: block;
-}
 
 .cardfield__wrapper {
     background-color: black;
@@ -67,15 +74,7 @@
     width: 55px;
     display: inline-block;
 }
-.game-view__gamefield {
-    margin: auto;
-}
 
-.game-view__profilefield {
-    height: 440px;
-    display: inline;
-    width: 300px;
-}
 
 .game-board__board-item {
     background-color: #22170f;
@@ -111,6 +110,7 @@
 
 .profilefield__btn-pass {
     text-align: center;
+    cursor: pointer;
 }
 
 .game-view__btn-exit {

@@ -1,7 +1,7 @@
 'use strict';
 
 export function validate(form, selector) {
-    var password;
+    let password;
     if (selector === document.querySelector('.signin-form-js'))
         password = document.getElementById('Signin');
     else {
@@ -47,5 +47,3 @@ export function validate(form, selector) {
         }
     });
 }
-
-

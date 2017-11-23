@@ -12,9 +12,9 @@ import TrainingView from './views/training-view/training-view.js';
 import UserService from './services/user-service.js';
 import Router from './modules/router.js';
 
-import './blocks/form/index.css';
-import './styles.css';
 import {Training} from './views/training-view/training-view';
+import './blocks/form/index.styl';
+import './styles.styl';
 
 const loader = document.createElement('div');
 const back = document.createElement('div');

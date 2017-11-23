@@ -1,6 +1,6 @@
 'use strict';
 
-import './profile.css';
+import './profile.styl';
 import BaseView from '../../modules/view.js';
 import bus from '../../modules/event-bus.js';
 import UserService from '../../services/user-service.js';

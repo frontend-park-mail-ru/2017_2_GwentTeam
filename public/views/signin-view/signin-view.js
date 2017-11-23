@@ -1,6 +1,6 @@
 'use strict';
 
-import './signin.css';
+import './signin.styl';
 import BaseView from '../../modules/view.js';
 import UserService from '../../services/user-service.js';
 import Form from '../../blocks/form/form.js';
