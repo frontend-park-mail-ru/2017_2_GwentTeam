@@ -112,12 +112,8 @@ class Game {
         ];
         let ind = 0;
         let typeOfCards = ['b', 'c', 'd'];
-        this.createCards('b', 8, ind, this.allCards[0]);
-        this.createCards('c', 7, ind, this.allCards[0]);
-        this.createCards('d', 9, ind, this.allCards[0]);
-        this.createCards('b', 8, ind, this.allCards[1]);
-        this.createCards('c', 7, ind, this.allCards[1]);
-        this.createCards('d', 9, ind, this.allCards[1]);
+        this.createArray(this.allCards[0]);
+        this.createArray(this.allCards[1]);
 
 
         this.state = [{
