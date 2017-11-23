@@ -21,20 +21,24 @@ export default class SignupView extends BaseView {
         this.form = new Form(this.el.querySelector('.signup-form-js'), ['login', 'email', 'password']);
         validate(this.form.el);
         this.form.onsubmit(((formdata) => {
+            this.back.style.display = 'flex';
+            this.loader.style.display = 'flex';
             bus.emit('signup-user', formdata);
-        }).bind(this));
+        }));
         bus.on('user:authorized', (() => {
             this.form.reset();
-        }).bind(this));
+        }));
 
         this.user = null;
         bus.on('user:authorized', ((data) => {
             this.user = data.payload;
             this.resume();
-        }).bind(this));
+            this.back.style.display = 'none';
+            this.loader.style.display = 'none';
+        }));
         bus.on('user:unauthorized', (() => {
             this.user = null;
-        }).bind(this));
+        }));
     }
 
     render() {
