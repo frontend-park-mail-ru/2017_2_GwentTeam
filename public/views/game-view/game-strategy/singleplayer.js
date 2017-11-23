@@ -146,6 +146,7 @@ export default class SinglePlayerStrategy extends Strategy {
       }
 
       drag(cardEl, card, cardIndex) {
+        let number = cardEl.parentNode;
           cardEl.onmousedown = (e) => {
               //console.log('ku1');
               let shiftX = null;
@@ -197,30 +198,43 @@ export default class SinglePlayerStrategy extends Strategy {
                               && (d.pageY >= lineCoords.top && d.pageY <= lineCoords.bottom)) {
 
                               if (elIndex === 5 && card.type === 'b') {
-                                  console.log('ku', this.lines[5].firstChild);
                                   target.setAttribute('style', '');
                                   bus.emit('CHOOSECARD', {card});
-                                  // this.lines[5].firstChild.appendChild(target);
-                                   this.cardfield.removeChild(this.cardfield.children[cardIndex]);
+                                  console.log('metka', this.cardfield, this.wrapper, cardIndex)
+                                   this.cardfield.removeChild(target.parentNode);
+                                   this.wrapper.splice(cardIndex, 1);
+                                  cardEl.onmousedown = null;
                                   return true;
                               }
                               if (elIndex === 4 && card.type === 'c') {
-                                  this.cardfield.removeChild(this.cardfield.children[cardIndex]);
+                                  target.setAttribute('style', '');
+                                  bus.emit('CHOOSECARD', {card});
+                                  this.cardfield.removeChild(target.parentNode);
+                                  this.wrapper.splice(cardIndex, 1);
+                                  console.log('metka', this.cardfield, this.wrapper, cardIndex)
+                                  cardEl.onmousedown = null;
                                   return true;
                               }
                               if (elIndex === 3 && card.type === 'd') {
+                                  target.setAttribute('style', '');
+                                  bus.emit('CHOOSECARD', {card});
                                   this.cardfield.removeChild(this.cardfield.children[cardIndex]);
+                                  this.wrapper.splice(cardIndex, 1);
+                                  console.log('metka', this.cardfield, this.wrapper, this.cardfield.children[cardIndex])
+                                  cardEl.onmousedown = null;
                                   return true;
                               } else {
                                   target.setAttribute('style', '');
+                                  target.setAttribute('class', 'cardfield__card-img');
                                   this.cardfield.children[cardIndex].appendChild(target);
-                                  console.log('false')
+                                  cardEl.onmousedown = null;
                                   return false;
                               }
                           }
                       });
                   } else {
                       target.setAttribute('style', '');
+                      target.setAttribute('class', 'cardfield__card-img');
                       this.cardfield.children[cardIndex].appendChild(target);
                   }
                   console.log('end');
@@ -239,7 +253,6 @@ export default class SinglePlayerStrategy extends Strategy {
                       bottom: box.bottom + pageYOffset
                   };
               }
-            cardEl.onmousedown = null;
           }
       }
 
@@ -273,7 +286,7 @@ export default class SinglePlayerStrategy extends Strategy {
         opponentGo(data) {
             this.state[1].line4.forEach((card, cardIndex) => {
             if (card.index === data.index) {
-              this.pushCardInLine(this.opponentGamefield, card);
+              this.pushCardInLine(this.opponentInnerGamefield, card);
               this.pushCardInState(this.state[1], card);
             this.state[1].roundScores += card.score;
             this.state[1].line4.splice(cardIndex, 1);
