@@ -1,46 +1,53 @@
 .game
-    margin-top: 75px;
+    margin-top: 75px
 
 
 .game-view
-    display: flex;
-    margin: auto;
-    width: 700px;
+    display: flex
+    margin: auto
+    width: 700px
 
 
 .game-view
     &__board
-        margin: auto;
-        width: 500px;
+        margin: auto
+        width: 500px
     &__cardfield
-        margin: auto;
-        width: 600px;
-        display: block;
+        margin: auto
+        width: 600px
+        display: block
     &__gamefield
-        margin: auto;
+        margin: auto
     &__profilefield
         height: 440px;
-        display: inline;
+        display: inline
         width: 170px;
+    &__btn-exit
+        width: 200px
+        display: block
+        margin: 10px
+        background-color: #595
+        color: #111
+        height: 50px
+        border-width: 0
+        opacity: 0.9
+        box-shadow: 0 0 15px
+        cursor: pointer
+        border-radius: 9px
+
+.cardfield
+    &__card-img
+        width: 35px
+        height: 50px
+        padding: 5px
 
 
-.cardfield__card-img {
-    width: 35px;
-    height: 50px;
-    padding: 5px;
-}
-
-
-
-
-
-.game-board__board-item {
-    background-color: #22170f;
-    opacity: 0.9;
-    height: 57px;
-    margin: 10px 0;
-}
-
+.game-board
+    &__board-item
+        background-color: #22170f
+        opacity: 0.9
+        height: 57px
+        margin: 10px 0
 
 .profilefield__score,
 .profilefield__btn-pass,
@@ -53,26 +60,12 @@
     color: white;
 }
 
-.profilefield__btn-exit {
-    background-color: #595;
-    cursor: pointer;
-}
+.profilefield
+    &__btn-exit
+        background-color: #595
+        cursor: pointer
 
-.profilefield__btn-pass {
-    text-align: center;
-    cursor: pointer;
-}
-
-.game-view__btn-exit {
-    width: 200px;
-    display: block;
-    margin: 10px;
-    background-color: #595;
-    color: #111;
-    height: 50px;
-    border-width: 0;
-    opacity: 0.9;
-    box-shadow: 0 0 15px;
-    cursor: pointer;
-    border-radius: 9px;
-}
+.profilefield
+    &__btn-pass
+        text-align: center
+        cursor: pointer

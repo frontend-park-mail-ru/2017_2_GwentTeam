@@ -17,30 +17,12 @@ export default class SinglePlayerStrategy extends Strategy {
 
         let ind = 0;
         this.userCards = [];
-        let typeOfCards = ['b', 'c', 'd'];
-        typeOfCards.forEach((type) => {
-            for (let i = 1; i < 9; i++) {
-                this.userCards.push({
-                    type: type,
-                    score: i,
-                    index: ind
-                });
-                ind++;
-            }
-        });
-
         this.compCards = [];
-        ind = 0;
-        typeOfCards.forEach((type) => {
-            for (let i = 1; i < 9; i++) {
-                this.compCards.push({
-                    type: type,
-                    score: i,
-                    index: ind
-                });
-                ind++;
-            }
-        });
+        let typeOfCards = ['b', 'c', 'd'];
+        this.createArray(this.userCards);
+        this.createArray(this.compCards);
+
+        console.log(this.userCards, this.compCards);
 
         this.state = [{
             playerName: 'User',
@@ -65,7 +47,7 @@ export default class SinglePlayerStrategy extends Strategy {
             let arrayOfCards = data.cards; //
             let player = data.player; //
             arrayOfCards.forEach((card) => {
-                const cardEl = this.createCardImg(card.type, card.score);
+                const cardEl = this.createCardImg(card.index);
                 player.line4.push({
                     type: card.type,
                     score: card.score,
@@ -101,18 +83,6 @@ export default class SinglePlayerStrategy extends Strategy {
             }
         });
 
-        // bus.on('OPPONENTGO', (payload) => {
-        //   const data = payload.payload;   //&
-        //   //console.log(data);
-        //   this.opponentGo(data.card);
-        //   this.printScore(data.score);
-        // })
-
-
-        // bus.on('GAMEOVER', (payload) => {
-        //   const data = payload.payload;
-        //   this.showResult(data);
-        // })
     }
 
     userGo(data) {
@@ -241,5 +211,43 @@ export default class SinglePlayerStrategy extends Strategy {
     gameOver() {
         this.showResult(this.isUserWin());
         this.cleanBoard();
+    }
+
+    createCard(type, score, index, array) {
+        array.push({
+            type: type,
+            score: score,
+            index: index
+        });
+    }
+
+    createArray(array) {
+        let ind = 0;
+        this.createCard('b', 2, ind, array);  ind++;
+        this.createCard('b', 4, ind, array);  ind++;
+        this.createCard('b', 8, ind, array);  ind++;
+        this.createCard('b', 8, ind, array);  ind++;
+        this.createCard('b', 9, ind, array);  ind++;
+        this.createCard('b', 11, ind, array);  ind++;
+        this.createCard('b', 12, ind, array);  ind++;
+        this.createCard('b', 12, ind, array);  ind++;
+
+        this.createCard('b', 1, ind, array);  ind++;
+        this.createCard('b', 2, ind, array);  ind++;
+        this.createCard('b', 5, ind, array);  ind++;
+        this.createCard('b', 7, ind, array);  ind++;
+        this.createCard('b', 9, ind, array);  ind++;
+        this.createCard('b', 10, ind, array);  ind++;
+        this.createCard('b', 11, ind, array);  ind++;
+
+        this.createCard('d', 1, ind, array);  ind++;
+        this.createCard('d', 2, ind, array);  ind++;
+        this.createCard('d', 3, ind, array);  ind++;
+        this.createCard('d', 3, ind, array);  ind++;
+        this.createCard('d', 4, ind, array);  ind++;
+        this.createCard('d', 5, ind, array);  ind++;
+        this.createCard('d', 6, ind, array);  ind++;
+        this.createCard('d', 6, ind, array);  ind++;
+        this.createCard('d', 7, ind, array);  ind++;
     }
 }

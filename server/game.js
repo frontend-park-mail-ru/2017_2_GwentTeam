@@ -11,21 +11,13 @@ class Game {
         ];
         let ind = 0;
         let typeOfCards = ['b', 'c', 'd'];
-        typeOfCards.forEach((type) => {
-            for (let i = 1; i < 9; i++) {
-                this.allCards[0].push({
-                    type: type,
-                    score: i,
-                    index: ind
-                });
-                this.allCards[1].push({
-                    type: type,
-                    score: i,
-                    index: ind
-                });
-                ind++;
-            }
-        });
+        this.createCards('b', 8, ind, this.allCards[0]);
+        this.createCards('c', 7, ind, this.allCards[0]);
+        this.createCards('d', 9, ind, this.allCards[0]);
+        this.createCards('b', 8, ind, this.allCards[1]);
+        this.createCards('c', 7, ind, this.allCards[1]);
+        this.createCards('d', 9, ind, this.allCards[1]);
+
         this.state = [{
             roundWin: 0,
             roundScores: 0,
@@ -56,19 +48,12 @@ class Game {
         }
 
         player.id = id;
+        console.log(`Add player ${player.id}`);
 
-        let array = this.dealCards(player.id, 8);
-        player.send(JSON.stringify({
-            event: 'DEALCARDS',
-            payload: array
-        }));
-
-        if (player.id === 0) {
-            player.send(JSON.stringify({
-                event: 'OPPORTUNITY_TO_GO',
-                payload: true
-            }));
+        if(this.player1 && this.player2) {
+            this.startGame();
         }
+
 
         player.on('close', () => {
             this.stop();
@@ -93,6 +78,34 @@ class Game {
             }
         });
     }
+
+    startGame() {
+        this.player1.send(JSON.stringify({
+            event: 'START_GAME'
+        }));
+        this.player2.send(JSON.stringify({
+            event: 'START_GAME'
+        }));
+
+        let array = this.dealCards(this.player1.id, 8);
+        this.player1.send(JSON.stringify({
+            event: 'DEALCARDS',
+            payload: array
+        }));
+
+        array = this.dealCards(this.player2.id, 8);
+        this.player2.send(JSON.stringify({
+            event: 'DEALCARDS',
+            payload: array
+        }));
+
+        this.player1.send(JSON.stringify({
+                event: 'OPPORTUNITY_TO_GO',
+                payload: true
+            }));
+
+    }
+
     stop() {
         this.reset();
     }
@@ -115,21 +128,13 @@ class Game {
         ];
         let ind = 0;
         let typeOfCards = ['b', 'c', 'd'];
-        typeOfCards.forEach((type) => {
-            for (let i = 1; i < 9; i++) {
-                this.allCards[0].push({
-                    type: type,
-                    score: i,
-                    index: ind
-                });
-                this.allCards[1].push({
-                    type: type,
-                    score: i,
-                    index: ind
-                });
-                ind++;
-            }
-        });
+        this.createCards('b', 8, ind, this.allCards[0]);
+        this.createCards('c', 7, ind, this.allCards[0]);
+        this.createCards('d', 9, ind, this.allCards[0]);
+        this.createCards('b', 8, ind, this.allCards[1]);
+        this.createCards('c', 7, ind, this.allCards[1]);
+        this.createCards('d', 9, ind, this.allCards[1]);
+
 
         this.state = [{
             roundWin: 0,
@@ -270,6 +275,17 @@ class Game {
         }
         if (card.type === 'd') {
             playerState.line3.push(card);
+        }
+    }
+
+    createCards(type, count, index, array) {
+        for (let i = 1; i < count; i++) {
+            array.push({
+                type: type,
+                score: i,
+                index: index
+            });
+            index++;
         }
     }
 }

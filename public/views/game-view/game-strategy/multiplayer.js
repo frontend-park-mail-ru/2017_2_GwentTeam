@@ -54,7 +54,7 @@ export default class MultiPlayerStrategy extends Strategy {
             const data = payload.payload;
             //console.log(data);
             data.forEach((card) => {
-                const cardEl = this.createCardImg(card.type, card.score);
+                const cardEl = this.createCardImg(card.index);
                 this.cardfield.appendChild(cardEl);
                 this.state.line4.push({
                     type: card.type,
@@ -128,7 +128,7 @@ export default class MultiPlayerStrategy extends Strategy {
     }
 
     opponentGo(card) {
-        card.domEl = this.createCardImg(card.type, card.score);
+        card.domEl = this.createCardImg(card.index);
         this.pushCardInLine(this.opponentGamefield, card);
     }
 

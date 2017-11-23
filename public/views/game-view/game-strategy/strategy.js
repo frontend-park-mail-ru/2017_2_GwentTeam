@@ -80,9 +80,9 @@ export default class GameStrategy {
 
     }
 
-    createCardImg(type, score) {
+    createCardImg(index) {
         const cardEl = document.createElement('img');
-        const src = './img/cards/' + type + score + '.jpg';
+        const src = './img/cards/'+ index + '.png';
         cardEl.setAttribute('src', src);
         cardEl.setAttribute('class', 'cardfield__card-img');
         return cardEl;
