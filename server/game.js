@@ -9,7 +9,6 @@ class Game {
             [],
             []
         ];
-        let ind = 0;
         this.createArray(this.allCards[0]);
         this.createArray(this.allCards[1]);
 
@@ -43,9 +42,9 @@ class Game {
         }
 
         player.id = id;
-        console.log(`Add player ${player.id}`);
+        //console.log(`Add player ${player.id}`);
 
-        if(this.player1 && this.player2) {
+        if (this.player1 && this.player2) {
             this.startGame();
         }
 
@@ -84,9 +83,9 @@ class Game {
         this.deal(8);
 
         this.player1.send(JSON.stringify({
-                event: 'OPPORTUNITY_TO_GO',
-                payload: true
-            }));
+            event: 'OPPORTUNITY_TO_GO',
+            payload: true
+        }));
 
     }
 
@@ -110,8 +109,7 @@ class Game {
             [],
             []
         ];
-        let ind = 0;
-        let typeOfCards = ['b', 'c', 'd'];
+        
         this.createArray(this.allCards[0]);
         this.createArray(this.allCards[1]);
 
@@ -235,19 +233,19 @@ class Game {
             opponentState.roundWin += 1;
         }
     }
-     deal(count) {
-         let array = this.dealCards(this.player1.id, count);
-         this.player1.send(JSON.stringify({
-             event: 'DEALCARDS',
-             payload: array
-         }));
+    deal(count) {
+        let array = this.dealCards(this.player1.id, count);
+        this.player1.send(JSON.stringify({
+            event: 'DEALCARDS',
+            payload: array
+        }));
 
-         array = this.dealCards(this.player2.id, count);
-         this.player2.send(JSON.stringify({
-             event: 'DEALCARDS',
-             payload: array
-         }));
-     }
+        array = this.dealCards(this.player2.id, count);
+        this.player2.send(JSON.stringify({
+            event: 'DEALCARDS',
+            payload: array
+        }));
+    }
 
     dealCards(id, cardsCount) {
         let arrayOfCards = [];
@@ -282,32 +280,56 @@ class Game {
 
     createArray(array) {
         let ind = 1;
-        this.createCard('b', 2, ind, array);  ind++;
-        this.createCard('b', 4, ind, array);  ind++;
-        this.createCard('b', 8, ind, array);  ind++;
-        this.createCard('b', 8, ind, array);  ind++;
-        this.createCard('b', 9, ind, array);  ind++;
-        this.createCard('b', 11, ind, array);  ind++;
-        this.createCard('b', 12, ind, array);  ind++;
-        this.createCard('b', 12, ind, array);  ind++;
+        this.createCard('b', 2, ind, array);
+        ind++;
+        this.createCard('b', 4, ind, array);
+        ind++;
+        this.createCard('b', 8, ind, array);
+        ind++;
+        this.createCard('b', 8, ind, array);
+        ind++;
+        this.createCard('b', 9, ind, array);
+        ind++;
+        this.createCard('b', 11, ind, array);
+        ind++;
+        this.createCard('b', 12, ind, array);
+        ind++;
+        this.createCard('b', 12, ind, array);
+        ind++;
 
-        this.createCard('b', 1, ind, array);  ind++;
-        this.createCard('b', 2, ind, array);  ind++;
-        this.createCard('b', 5, ind, array);  ind++;
-        this.createCard('b', 7, ind, array);  ind++;
-        this.createCard('b', 9, ind, array);  ind++;
-        this.createCard('b', 10, ind, array);  ind++;
-        this.createCard('b', 11, ind, array);  ind++;
+        this.createCard('b', 1, ind, array);
+        ind++;
+        this.createCard('b', 2, ind, array);
+        ind++;
+        this.createCard('b', 5, ind, array);
+        ind++;
+        this.createCard('b', 7, ind, array);
+        ind++;
+        this.createCard('b', 9, ind, array);
+        ind++;
+        this.createCard('b', 10, ind, array);
+        ind++;
+        this.createCard('b', 11, ind, array);
+        ind++;
 
-        this.createCard('d', 1, ind, array);  ind++;
-        this.createCard('d', 2, ind, array);  ind++;
-        this.createCard('d', 3, ind, array);  ind++;
-        this.createCard('d', 3, ind, array);  ind++;
-        this.createCard('d', 4, ind, array);  ind++;
-        this.createCard('d', 5, ind, array);  ind++;
-        this.createCard('d', 6, ind, array);  ind++;
-        this.createCard('d', 6, ind, array);  ind++;
-        this.createCard('d', 7, ind, array);  ind++;
+        this.createCard('d', 1, ind, array);
+        ind++;
+        this.createCard('d', 2, ind, array);
+        ind++;
+        this.createCard('d', 3, ind, array);
+        ind++;
+        this.createCard('d', 3, ind, array);
+        ind++;
+        this.createCard('d', 4, ind, array);
+        ind++;
+        this.createCard('d', 5, ind, array);
+        ind++;
+        this.createCard('d', 6, ind, array);
+        ind++;
+        this.createCard('d', 6, ind, array);
+        ind++;
+        this.createCard('d', 7, ind, array);
+        ind++;
     }
 }
 module.exports = Game;

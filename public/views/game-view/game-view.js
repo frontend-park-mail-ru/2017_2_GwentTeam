@@ -9,7 +9,7 @@ import MultiPlayerStrategy from './game-strategy/multiplayer.js';
 * @module GameView
 * @extends BaseView
 */
-let Finishresult = null;
+
 export default class GameView extends BaseView {
     constructor(parentElement) {
         const router = new Router();

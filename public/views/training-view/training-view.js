@@ -6,10 +6,10 @@ import BaseView from '../../modules/view.js';
 import Router from '../../modules/router';
 
 let arrayCards = ['mityam', 'navr', 'ostapenko'];
-let currentStep = null;
+//let currentStep = null;
 let firstStep = document.createElement('div');
-let secondStep = null;
-let thirdStep = null;
+//let secondStep = null;
+//let thirdStep = null;
 let button = document.createElement('div');
 button.setAttribute('class', 'button_3d');
 button.innerHTML = 'Дальше';
@@ -72,7 +72,7 @@ export default class TrainingView extends BaseView {
         this.gameEl.appendChild(this.zoomEl);
 
         this.gamefield = [];
-        this.cell = []; //поч так нельзя?
+        this.cell = [];
         for (let i = 0; i < 6; i++) {
             this.gamefield.push(document.createElement('div'));
         }

@@ -15,14 +15,11 @@ export default class SinglePlayerStrategy extends Strategy {
             this.round();
         };
 
-        let ind = 0;
         this.userCards = [];
         this.compCards = [];
-        let typeOfCards = ['b', 'c', 'd'];
         this.createArray(this.userCards);
         this.createArray(this.compCards);
 
-        console.log(this.userCards, this.compCards);
 
         this.state = [{
             playerName: 'User',
