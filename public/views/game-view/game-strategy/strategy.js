@@ -79,11 +79,11 @@ export default class GameStrategy {
 
         this.wrapper = [];
 
-        for (let i = 0; i < 8; ++i) {
-            this.wrapper.push(document.createElement('div'));
-            this.wrapper[i].setAttribute('class', 'cardfield__wrapper');
-            this.cardfield.appendChild(this.wrapper[i]);
-        }
+        // for (let i = 0; i < 8; ++i) {
+        //     this.wrapper.push(document.createElement('div'));
+        //     this.wrapper[i].setAttribute('class', 'cardfield__wrapper');
+        //     this.cardfield.appendChild(this.wrapper[i]);
+        // }
 
         this.boardEl.appendChild(this.cardfield);
 
