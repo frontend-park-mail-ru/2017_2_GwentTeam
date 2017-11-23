@@ -222,7 +222,7 @@ export default class SinglePlayerStrategy extends Strategy {
     }
 
     createArray(array) {
-        let ind = 0;
+        let ind = 1;
         this.createCard('b', 2, ind, array);  ind++;
         this.createCard('b', 4, ind, array);  ind++;
         this.createCard('b', 8, ind, array);  ind++;
