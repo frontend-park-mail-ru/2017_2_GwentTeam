@@ -135,13 +135,9 @@ export default class GameStrategy {
     }
 
     pushCardInLine(arrayOfLines, card, cardIndex) {
-      // if (card.type === 'b') {
-      //     console.log('carddom', card.domEl)
-      //     card.domEl.setAttribute('style', '');
-      //     //this.lines[5].firstChild.appendChild(card.domEl);
-      //   arrayOfLines[2].appendChild(card.domEl);
-      //     this.cardfield.removeChild(this.cardfield.children[cardIndex]);
-      // }
+      if (card.type === 'b') {
+        arrayOfLines[2].appendChild(card.domEl);
+      }
       if (card.type === 'c') {
         arrayOfLines[1].appendChild(card.domEl);
       }

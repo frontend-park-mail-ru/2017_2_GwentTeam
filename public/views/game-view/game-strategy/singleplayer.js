@@ -76,26 +76,43 @@ export default class SinglePlayerStrategy extends Strategy {
                         if (player.playerName === 'User') {
                             this.cardfield.children[cardIndex].appendChild(cardEl);
                         }
-                        cardEl.onmousedown = (event) => {
-                            console.log('card', card);
-                            // function result(callback) {
-                            //     const res = this.drag(card, cardIndex, event);
-                            //     callback(res);
-                            // }
-                            // result((res) => {
-                            //     if (res === true) {
-                            //         cardEl.onmousedown = null;
-                            //         bus.emit('CHOOSECARD', {card});
-                            //     }
-                            // });
-                            const result = this.drag(card, cardIndex, event);
-                            if (result === true) {//because result = undefined
-                                cardEl.onmousedown = null;
-                                bus.emit('CHOOSECARD', {card});
-                            }
-                        }
+
+                        this.drag(cardEl, card, cardIndex);
+                        // cardEl.onmousedown = (event) => {
+                        //     console.warn('result', this.drag(card, cardIndex, event));
+                        //     // let result = (() => {
+                        //     //    return this.drag(card, cardIndex, event);
+                        //     // });
+                        //     // result()
+                        //     //     .then((res) => {
+                        //     //         if (res === true) {
+                        //     //             cardEl.onmousedown = null;
+                        //     //             bus.emit('CHOOSECARD', {card});
+                        //     //         }
+                        //     //     });////////////
+                        //     // let result = ((callback) => {
+                        //     //     let res = this.drag(card, cardIndex, event);
+                        //     //     console.log('res', res);
+                        //     //     //setTimeout(callback(res), 3000);
+                        //     //     callback(res);
+                        //     // });
+                        //     // console.log('card', card);
+                        //     // result((res) => {
+                        //     //     if (res === true) {
+                        //     //         cardEl.onmousedown = null;
+                        //     //         bus.emit('CHOOSECARD', {card});
+                        //     //     }
+                        //     // });
+                        //     //const result = this.drag(card, cardIndex, event);
+                        //     // if (result === true) {//because result = undefined
+                        //     //     cardEl.onmousedown = null;
+                        //     //     bus.emit('CHOOSECARD', {card});
+                        //     // }
+                        //     }
+
+
+                        })
                     });
-                });
 
                 this.dealCards(this.state[0], this.userCards, 8);
                 this.dealCards(this.state[1], this.compCards, 8);
@@ -128,99 +145,102 @@ export default class SinglePlayerStrategy extends Strategy {
             // })
       }
 
-      drag(card, cardIndex, e) {
-          //console.log('ku1');
-          let shiftX = null;
-          let shiftY = null;
-                      console.log('cardEl', getCoords(e.target));
-                      const target = e.target;
-                      target.style.cursor = "pointer";
-                      target.setAttribute('class', 'cardfield__card-img__mousedown');
+      drag(cardEl, card, cardIndex) {
+          cardEl.onmousedown = (e) => {
+              //console.log('ku1');
+              let shiftX = null;
+              let shiftY = null;
+              console.log('cardEl', getCoords(e.target));
+              const target = e.target;
+              target.style.cursor = "pointer";
+              target.setAttribute('class', 'cardfield__card-img__mousedown');
 
-                      console.log('car', target, card);
-                      let coords = getCoords(target);
-                      shiftX = e.pageX - coords.left;
-                      shiftY = e.pageY - coords.top;
-                      target.style.position = 'absolute';
+              console.log('car', target, card);
+              let coords = getCoords(target);
+              shiftX = e.pageX - coords.left;
+              shiftY = e.pageY - coords.top;
+              target.style.position = 'absolute';
 
 
-                      //document.body.appendChild(cardEl);
-                      moveAt(e);
+              //document.body.appendChild(cardEl);
+              moveAt(e);
 
-                      function moveAt(e) {
-                          target.style.left = e.pageX - shiftX + 'px';
-                          target.style.top = e.pageY - shiftY + 'px';
-                      }
+              function moveAt(e) {
+                  target.style.left = e.pageX - shiftX + 'px';
+                  target.style.top = e.pageY - shiftY + 'px';
+              }
 
-                      document.onmousemove = (e) => {
-                          moveAt(e);
-                      };
-                      let startX = null;
-                      let startY = null;
-                      let finishX = null;
-                      let finishY = null;
-                      let lineIndex = null;
-                      let cellIndex = null;
-                      target.onmouseup = (d) => {
-                          console.log('kuup');
-                          document.onmousemove = null;
-                          d.target.onmouseup = null;
-                          console.log('cords', getCoords(this.lines[5]));
-                          const needFirstCoords = getCoords(this.lines[5]);
-                          const needSecondCoords = getCoords(this.lines[3]);
-                          if ((d.pageX >= needFirstCoords.left && d.pageX <= needFirstCoords.right)
-                              && (d.pageY >= needFirstCoords.top && d.pageY <= needSecondCoords.bottom)) {
-                              console.log('ku1');
+              document.onmousemove = (e) => {
+                  moveAt(e);
+              };
+              let startX = null;
+              let startY = null;
+              let finishX = null;
+              let finishY = null;
+              let lineIndex = null;
+              let cellIndex = null;
+              target.onmouseup = (d) => {
+                  console.log('kuup');
+                  document.onmousemove = null;
+                  d.target.onmouseup = null;
+                  console.log('cords', getCoords(this.lines[5]));
+                  const needFirstCoords = getCoords(this.lines[5]);
+                  const needSecondCoords = getCoords(this.lines[3]);
+                  if ((d.pageX >= needFirstCoords.left && d.pageX <= needFirstCoords.right)
+                      && (d.pageY >= needFirstCoords.top && d.pageY <= needSecondCoords.bottom)) {
+                      console.log('ku1');
 
-                              Object.keys(this.lines).forEach((el, elIndex) => {
-                                  console.log(this.lines[0], this.lines[el])
-                                  const lineCoords = getCoords(this.lines[el]);
-                                  if ((d.pageX >= lineCoords.left && d.pageX <= lineCoords.right)
-                                      && (d.pageY >= lineCoords.top && d.pageY <= lineCoords.bottom)) {
+                      Object.keys(this.lines).forEach((el, elIndex) => {
+                          console.log(this.lines[0], this.lines[el])
+                          const lineCoords = getCoords(this.lines[el]);
+                          if ((d.pageX >= lineCoords.left && d.pageX <= lineCoords.right)
+                              && (d.pageY >= lineCoords.top && d.pageY <= lineCoords.bottom)) {
 
-                                      if (elIndex === 5 && card.type === 'b') {
-                                          console.log('ku', this.lines[5].firstChild);
-                                          target.setAttribute('style', '');
-                                          this.lines[5].firstChild.appendChild(target);
-                                          this.cardfield.removeChild(this.cardfield.children[cardIndex]);
-                                          return true;
-                                      }
-                                      if (elIndex === 4 && card.type === 'c') {
-                                          this.cardfield.removeChild(this.cardfield.children[cardIndex]);
-                                          return true;
-                                      }
-                                      if (elIndex === 3 && card.type === 'd') {
-                                          this.cardfield.removeChild(this.cardfield.children[cardIndex]);
-                                          return true;
-                                      } else {
-                                          target.setAttribute('style', '');
-                                          this.cardfield.children[cardIndex].appendChild(target);
-                                          console.log('false')
-                                          return false;
-                                      }
-                                  }
-                              });
-                          } else {
-                              target.setAttribute('style', '');
-                              this.cardfield.children[cardIndex].appendChild(target);
+                              if (elIndex === 5 && card.type === 'b') {
+                                  console.log('ku', this.lines[5].firstChild);
+                                  target.setAttribute('style', '');
+                                  bus.emit('CHOOSECARD', {card});
+                                  // this.lines[5].firstChild.appendChild(target);
+                                   this.cardfield.removeChild(this.cardfield.children[cardIndex]);
+                                  return true;
+                              }
+                              if (elIndex === 4 && card.type === 'c') {
+                                  this.cardfield.removeChild(this.cardfield.children[cardIndex]);
+                                  return true;
+                              }
+                              if (elIndex === 3 && card.type === 'd') {
+                                  this.cardfield.removeChild(this.cardfield.children[cardIndex]);
+                                  return true;
+                              } else {
+                                  target.setAttribute('style', '');
+                                  this.cardfield.children[cardIndex].appendChild(target);
+                                  console.log('false')
+                                  return false;
+                              }
                           }
-                          console.log('end')
-                      }
+                      });
+                  } else {
+                      target.setAttribute('style', '');
+                      this.cardfield.children[cardIndex].appendChild(target);
+                  }
+                  console.log('end');
+              }
 
-                      e.target.ondragstart = () => {
-                          return false;
-                      };
+              e.target.ondragstart = () => {
+                  return false;
+              };
 
-                      function getCoords(element) {
-                          let box = element.getBoundingClientRect();
-                          return {
-                              left: box.left + pageXOffset,
-                              right: box.right + pageXOffset,
-                              top: box.top + pageYOffset,
-                              bottom: box.bottom + pageYOffset
-                          };
-                      }
-
+              function getCoords(element) {
+                  let box = element.getBoundingClientRect();
+                  return {
+                      left: box.left + pageXOffset,
+                      right: box.right + pageXOffset,
+                      top: box.top + pageYOffset,
+                      bottom: box.bottom + pageYOffset
+                  };
+              }
+            cardEl.onmousedown = null;
+          }
       }
 
         userGo(data) {
@@ -229,7 +249,7 @@ export default class SinglePlayerStrategy extends Strategy {
                     console.log('card', card);
                   card.domEl.remove();
                   console.log('card', card)
-                  //this.pushCardInLine(this.userGamefield, card, cardIndex);
+                  this.pushCardInLine(this.userGamefield, card, cardIndex);
                   this.pushCardInState(this.state[0], card);
                   this.state[0].roundScores += card.score;
                   this.state[0].line4.splice(cardIndex, 1);
