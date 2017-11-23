@@ -76,8 +76,8 @@ export default class GameStrategy {
 
         this.cardfield = document.createElement('div');
         this.cardfield.setAttribute('class', 'game-view__cardfield');
-
-        this.wrapper = new Array(8);
+        this.boardEl.appendChild(this.cardfield);
+        //this.wrapper = new Array(8);
 
         // for (let i = 0; i < 8; ++i) {
         //     this.wrapper.push(document.createElement('div'));
@@ -85,7 +85,7 @@ export default class GameStrategy {
         //     this.cardfield.appendChild(this.wrapper[i]);
         // }
 
-        this.boardEl.appendChild(this.cardfield);
+
 
         this.compScoreField = document.createElement('div');
         this.compScoreField.setAttribute('class', 'profilefield__score');
@@ -165,13 +165,21 @@ export default class GameStrategy {
     }
 
     cleanBoard() {
-      this.userGamefield.forEach((elem) => this.removeChildren(elem));
-      this.opponentGamefield.forEach((elem) => this.removeChildren(elem));
+      this.userInnerGamefield.forEach((elem) => {
+          console.log('elem', elem)
+          this.removeChildren(elem);
+      });
+      this.opponentInnerGamefield.forEach((elem) => this.removeChildren(elem));
     }
 
-    removeChildren(elem) {
-      while (elem.lastChild) {
-         elem.removeChild(elem.lastChild);
-      }
+    removeChildren(elem) {//крутится вечно
+      // if (elem.lastChild) {
+      //    elem.removeChild(elem.lastChild);
+      // }
+        Object.keys(elem.children).forEach((child) => {
+            console.warn('attention', elem)
+             elem.lastChild.parentNode.removeChild(elem.lastChild);
+            console.warn('attention1', elem);
+        });
     }
 }

@@ -2,6 +2,7 @@
 
 import Http from '../modules/http.js';
 import bus from '../modules/event-bus.js';
+import '../styles.styl';
 
 const url = 'https://technogwent-api-011.herokuapp.com/api';
 
