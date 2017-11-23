@@ -1,6 +1,6 @@
 'use strict';
 
-import './menu.css';
+import './menu.styl';
 import UserService from '../../services/user-service.js';
 import BaseView from '../../modules/view.js';
 import menuTemplate from './menu.pug';
