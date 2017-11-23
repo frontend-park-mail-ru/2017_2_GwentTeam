@@ -249,7 +249,7 @@ export default class SinglePlayerStrategy extends Strategy {
                     console.log('card', card);
                   card.domEl.remove();
                   console.log('card', card)
-                  this.pushCardInLine(this.userGamefield, card, cardIndex);
+                  this.pushCardInLine(this.userInnerGamefield, card, cardIndex);
                   this.pushCardInState(this.state[0], card);
                   this.state[0].roundScores += card.score;
                   this.state[0].line4.splice(cardIndex, 1);
