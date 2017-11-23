@@ -1,7 +1,6 @@
 'use strict';
 
 import Strategy from './strategy.js';
-import GameScene from './game-scene.js';
 import bus from '../../../modules/event-bus.js';
 /**
 * @module GameView
@@ -12,7 +11,7 @@ export default class MultiPlayerStrategy extends Strategy {
 
       super(router, el);
 
-      const ws = new WebSocket('ws://localhost:8001/game');
+      const ws = new WebSocket('ws://localhost:8001/game');     //TODO
       ws.onmessage = function(event){
           const message = JSON.parse(event.data);
           bus.emit(message.event, message.payload);
@@ -59,8 +58,10 @@ export default class MultiPlayerStrategy extends Strategy {
                     index: card.index
                   });
                   const index = card.index;
-                  cardEl.onclick = () => {
+                  cardEl.onclick = (e) => {
+                      //console.log(e.target);
                       bus.emit('CHOOSECARD', { card });
+                      e.target.onclick = null;
                       //console.log(card);
                   };
               })
@@ -96,18 +97,8 @@ export default class MultiPlayerStrategy extends Strategy {
         this.state.line4.forEach((card, cardIndex) => {
               if (card.index === data.index) {
                 card.domEl.remove();
-                if (card.type === 'b') {
-                  this.state.line1.push(card);
-                  this.userGamefield[2].appendChild(card.domEl);
-                }
-                if (card.type === 'c') {
-                  this.state.line2.push(card);
-                  this.userGamefield[1].appendChild(card.domEl);
-                }
-                if (card.type === 'd') {
-                  this.state.line3.push(card);
-                  this.userGamefield[0].appendChild(card.domEl);
-                }
+                this.pushCardInLine(this.userGamefield, card);
+                this.pushCardInState(this.state, card);
                 this.state.roundScores += card.score;
                 this.state.line4.splice(cardIndex, 1);
               }
@@ -117,14 +108,5 @@ export default class MultiPlayerStrategy extends Strategy {
       opponentGo(card) {
           card.domEl = this.createCardImg(card.type, card.score);
           this.pushCardInLine(this.opponentGamefield, card);
-          // if (card.type === 'b') {
-          //   this.opponentGamefield[2].appendChild(card.domEl);
-          // }
-          // if (card.type === 'c') {
-          //   this.opponentGamefield[1].appendChild(card.domEl);
-          // }
-          // if (card.type === 'd') {
-          //   this.opponentGamefield[0].appendChild(card.domEl);
-          // }
       }
 }

@@ -38,21 +38,21 @@
         width: 300px;
 
 
-.cardfield__card-img {
+.cardfield__card-imgbig {
     width: 50px;
     height: 65px;
 }
-.cardfield__card-img:hover {
+.cardfield__card-imgbig:hover {
     transform: translateY(-20px);
     transition-duration: 0.3s;
     cursor: pointer;
 }
-.cardfield__card-img-mousedown {
+.cardfield__card-imgbig-mousedown {
     width: 50px;
     height: 65px;
 }
 
-.cardfield__card-img-modified {
+.cardfield__card-img, .cardfield__card-img__mousedown {
     width: 35px;
     height: 50px;
     padding: 5px;
@@ -67,21 +67,26 @@
         transform: translateX(20px);
     }
 }
+.cardfield__card-img:hover {
+    transform: translateY(-20px);
+    transition-duration: 0.3s;
+    cursor: pointer;
+}
 
 .cardfield__wrapper {
     background-color: black;
     height: 65px;
     width: 55px;
-    display: inline-block;
+    display: inline-flex;
 }
 
 
 .game-board__board-item {
-    background-color: #22170f;
-    opacity: 0.9;
-    height: 65px;
+    background-color: rgba(34, 23, 15, 0.9);
+    height: 57px;
     margin: 10px 0;
     width: 600px;
+    display: flex;
 }
 
 .game-view__board-item-cell {
@@ -89,6 +94,10 @@
     display: inline-block;
     height: 65px;
     width: 75px;
+}
+
+.board-item__inneritem {
+    margin: 0 auto;
 }
 
 

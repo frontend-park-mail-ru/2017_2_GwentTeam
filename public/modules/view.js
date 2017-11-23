@@ -25,6 +25,15 @@ export default class BaseView {
         this.router = router;
         this.pause();
         parentElement.appendChild(this.el);
+
+        this.loader = document.createElement('div');
+        this.loader.setAttribute('class', 'loader');
+        this.back = document.createElement('div');
+        this.back.setAttribute('class', 'background-loader');
+        document.body.appendChild(this.back);
+        this.back.appendChild(this.loader);
+        this.back.style.display = 'none';
+        this.loader.style.display = 'none';
     }
 
     render() {
