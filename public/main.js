@@ -19,18 +19,18 @@ import './styles.styl';
 const userService = new UserService();
 const application = new ApplicationView(document.body);
 
-// if ('serviceWorker' in navigator) {
-//     //console.log(navigator);
-//     navigator.serviceWorker.register('./service-worker.js', {
-//             scope: '/'
-//         })
-//         .then(registration => {
-//             console.log('ServiceWorker registration: ${registration}');
-//         })
-//         .catch(error => {
-//             console.log('${error}');
-//         });
-// }
+if ('serviceWorker' in navigator) {
+    //console.log(navigator);
+    navigator.serviceWorker.register('./service-worker.js', {
+            scope: '/'
+        })
+        .then(registration => {
+            console.log('ServiceWorker registration: ${registration}');
+        })
+        .catch(error => {
+            console.log('${error}');
+        });
+}
 
 
 

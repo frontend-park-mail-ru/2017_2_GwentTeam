@@ -55,6 +55,9 @@ export default class MultiPlayerStrategy extends Strategy {
                 line3: [],
                 line4: []
             };
+            this.btnPassEl.onclick = () => {
+                this.ws.send('ROUND');
+            };
         //
         //     this.ws.send(JSON.stringify({event:'dealCards', payload: {}}));
         //
@@ -91,25 +94,27 @@ export default class MultiPlayerStrategy extends Strategy {
         });
 
         bus.on('OPPONENTGO', (payload) => {
-            //console.log('opponentgo');
+            console.log('opponentgo');
             const data = payload.payload; //&
             this.opponentGo(data.card);
             this.printScore(data.score);
         })
-    //
-    //     bus.on('ROUND', (payload) => {
-    //         const data = payload.payload;
-    //         //console.log(data);
-    //         this.printScore(data);
-    //     })
-    //
-    //     bus.on('GAMEOVER', (payload) => {
-    //         const data = payload.payload;
-    //         this.showResult(data);
-    //     })
-    // }
-    //
-}
+
+        bus.on('ROUND', (payload) => {
+            const data = payload.payload;
+            //console.log(data);
+            this.printScore(data);
+            this.state.roundWin = data.userRounds;
+            this.state.roundScores = 0;
+        })
+
+        // bus.on('GAMEOVER', (payload) => {
+        //     const data = payload.payload;
+        //     this.showResult(data);
+        // })
+    }
+
+//}
     userGo(data){
         this.state.line4.forEach((card, cardIndex) => {
             if (card.index === data.index) {
@@ -120,6 +125,8 @@ export default class MultiPlayerStrategy extends Strategy {
                 this.state.line4.splice(cardIndex, 1);
             }
         })
+            this.userScoreField.innerHTML = 'Очков за раунд: ' + this.state.roundScores +
+                '<br/><br/>Выиграно раундов:  ' + this.state.roundWin;
     }
 
     opponentGo(card) {

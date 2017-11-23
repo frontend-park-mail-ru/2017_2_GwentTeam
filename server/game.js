@@ -4,7 +4,7 @@
 
 class Game {
     constructor() {
-        console.log('constr');
+        //console.log('constr');
         //debug('Создаём инстанс игры');
         this.player1 = null;
         this.player2 = null;
@@ -87,31 +87,99 @@ class Game {
             if (id === 0) {
                 oppon = this.player2;
             }
-            const message = JSON.parse(msg);
-            if (msg === 'update') {
-                return;
-             }
-            else if (message.event === 'userGo') {
-                //console.log(this);
-                oppon.send(JSON.stringify({
-                    event: 'OPPONENTGO',
-                    payload: {
-                        card: this.allCards[0][0],
-                        score: {
-                            userScore: this.state[0].roundScores,
-                            userRounds: this.state[0].roundWin,
-                            opponentScore: this.state[1].roundScores,
-                            opponentRounds: this.state[1].roundWin
-                        }
-                    }
-                }));
+            if (msg === 'ROUND') {
+                this.round(player, oppon);
+            } else {
+
+                const message = JSON.parse(msg);
+                if (message.event === 'userGo') {
+                    this.userGo(player, oppon, message.payload);
+                }
             }
             //this.handleMessageFromPlayer(id, JSON.parse(msg));
         }.bind(this));
     }
 
-    userGo(player, opponent, cardIndex) {
-        
+    userGo(player, opponent, cardId) {
+        //console.log(opponent.id);
+
+        this.state[player.id].line4.forEach((card, cardIndex) => {
+            //console.log(card);
+            if (card.index === cardId) {
+                console.log(card);
+                this.pushCardInState(this.state[player.id], card);
+                this.state[player.id].roundScores += card.score;
+                this.state[player.id].line4.splice(cardIndex, 1);
+
+                opponent.send(JSON.stringify({
+                    event: 'OPPONENTGO',
+                    payload: {
+                        card: card,
+                        score: {
+                            userScore: this.state[opponent.id].roundScores,
+                            userRounds: this.state[opponent.id].roundWin,
+                            opponentScore: this.state[player.id].roundScores,
+                            opponentRounds: this.state[player.id].roundWin
+                        }
+                    }
+                }));
+            }
+        })
+    }
+
+    round(player, opponent) {
+        this.roundScoresCount(this.state[player.id], this.state[opponent.id]);
+        if (this.isGameOver()) {
+            this.gameOver();
+        } else {
+            this.cleanState();
+            player.send(JSON.stringify({
+                event: 'ROUND',
+                payload: {
+                    userScore: this.state[player.id].roundScores,
+                    userRounds: this.state[player.id].roundWin,
+                    opponentScore: this.state[opponent.id].roundScores,
+                    opponentRounds: this.state[opponent.id].roundWin
+                }
+            }));
+            opponent.send(JSON.stringify({
+                event: 'ROUND',
+                payload: {
+                    userScore: this.state[opponent.id].roundScores,
+                    userRounds: this.state[opponent.id].roundWin,
+                    opponentScore: this.state[player.id].roundScores,
+                    opponentRounds: this.state[player.id].roundWin
+                }
+            }));
+        }
+    }
+
+    cleanState() {
+        this.state.forEach((player) => {
+            player.line1 = [];
+            player.line2 = [];
+            player.line3 = [];
+            player.roundScores = 0;
+        })
+    }
+
+    isGameOver() {
+
+    }
+
+    gameOver() {
+
+    }
+
+    roundScoresCount(playerState, opponentState) {
+        if (playerState.roundScores > opponentState.roundScores) {
+            playerState.roundWin += 1;
+        } else if (playerState.roundScores < opponentState.roundScores) {
+            opponentState.roundWin += 1;
+        } else {
+            playerState.roundWin += 1;
+            opponentState.roundWin += 1;
+        }
     }
 
     dealCards(id, cardsCount) {
@@ -124,6 +192,18 @@ class Game {
             this.allCards[id].splice(cardIndex, 1);
         }
         return arrayOfCards;
+    }
+
+    pushCardInState(playerState, card) {
+        if (card.type === 'b') {
+            playerState.line1.push(card);
+        }
+        if (card.type === 'c') {
+            playerState.line2.push(card);
+        }
+        if (card.type === 'd') {
+            playerState.line3.push(card);
+        }
     }
 
     // stop(id) {
