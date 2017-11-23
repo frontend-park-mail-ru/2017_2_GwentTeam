@@ -1,10 +1,10 @@
 'use strict';
 
 /**
-* GameStrategy
-* @name GameStrategy
-* @class GameStrategy
-*/
+ * GameStrategy
+ * @name GameStrategy
+ * @class GameStrategy
+ */
 export default class GameStrategy {
     constructor(router, el) {
         //console.log('GameStrategy.constructor');
@@ -38,8 +38,8 @@ export default class GameStrategy {
         this.opponentGamefield = [];
 
         for (let i = 0; i < 3; i++) {
-          this.opponentGamefield.push(document.createElement('div'));
-          this.userGamefield.push(document.createElement('div'));
+            this.opponentGamefield.push(document.createElement('div'));
+            this.userGamefield.push(document.createElement('div'));
         }
 
         this.opponentGamefield.forEach((field) => {
@@ -48,10 +48,10 @@ export default class GameStrategy {
         });
 
         this.userGamefield.forEach((field) => {
-          field.setAttribute('class', 'game-board__board-item');
+            field.setAttribute('class', 'game-board__board-item');
         });
         for (let i = 2; i >= 0; i--) {
-          this.boardEl.appendChild(this.userGamefield[i]);
+            this.boardEl.appendChild(this.userGamefield[i]);
         }
 
         this.cardfield = document.createElement('div');
@@ -73,10 +73,10 @@ export default class GameStrategy {
         this.profilefield.appendChild(this.userScoreField);
 
         this.printScore({
-          userScore: 0,
-          userRounds: 0,
-          opponentScore: 0,
-          opponentRounds: 0
+            userScore: 0,
+            userRounds: 0,
+            opponentScore: 0,
+            opponentRounds: 0
         })
 
     }
@@ -90,59 +90,58 @@ export default class GameStrategy {
     }
 
     printScore(score) {
-      this.userScoreField.innerHTML = 'Очков за раунд: ' + score.userScore +
-      '<br/><br/>Выиграно раундов:  ' + score.userRounds;
-      this.compScoreField.innerHTML = 'Очков за раунд: ' + score.opponentScore +
-      '<br/><br/>Выиграно раундов:  ' + score.opponentRounds;
+        this.userScoreField.innerHTML = 'Очков за раунд: ' + score.userScore +
+            '<br/><br/>Выиграно раундов:  ' + score.userRounds;
+        this.compScoreField.innerHTML = 'Очков за раунд: ' + score.opponentScore +
+            '<br/><br/>Выиграно раундов:  ' + score.opponentRounds;
     }
 
     showResult(isUserWin) {
-      if (isUserWin) {
-        alert('Вы выиграли!');
-      }
-      else {
-        alert('Вы проиграли:(');
-      }
+        if (isUserWin) {
+            alert('Вы выиграли!');
+        } else {
+            alert('Вы проиграли:(');
+        }
     }
 
     pushCardInLine(arrayOfLines, card) {
-      if (card.type === 'b') {
-        arrayOfLines[2].appendChild(card.domEl);
-      }
-      if (card.type === 'c') {
-        arrayOfLines[1].appendChild(card.domEl);
-      }
-      if (card.type === 'd') {
-        arrayOfLines[0].appendChild(card.domEl);
-      }
+        if (card.type === 'b') {
+            arrayOfLines[2].appendChild(card.domEl);
+        }
+        if (card.type === 'c') {
+            arrayOfLines[1].appendChild(card.domEl);
+        }
+        if (card.type === 'd') {
+            arrayOfLines[0].appendChild(card.domEl);
+        }
     }
 
     pushCardInState(playerState, card) {
-      if (card.type === 'b') {
-        playerState.line1.push(card);
-      }
-      if (card.type === 'c') {
-        playerState.line2.push(card);
-      }
-      if (card.type === 'd') {
-        playerState.line3.push(card);
-      }
+        if (card.type === 'b') {
+            playerState.line1.push(card);
+        }
+        if (card.type === 'c') {
+            playerState.line2.push(card);
+        }
+        if (card.type === 'd') {
+            playerState.line3.push(card);
+        }
     }
 
     cleanState(playerState) {
-      playerState.line1 = [];
-      playerState.line2 = [];
-      playerState.line3 = [];
+        playerState.line1 = [];
+        playerState.line2 = [];
+        playerState.line3 = [];
     }
 
     cleanBoard() {
-      this.userGamefield.forEach((elem) => this.removeChildren(elem));
-      this.opponentGamefield.forEach((elem) => this.removeChildren(elem));
+        this.userGamefield.forEach((elem) => this.removeChildren(elem));
+        this.opponentGamefield.forEach((elem) => this.removeChildren(elem));
     }
 
     removeChildren(elem) {
-      while (elem.lastChild) {
-         elem.removeChild(elem.lastChild);
-      }
+        while (elem.lastChild) {
+            elem.removeChild(elem.lastChild);
+        }
     }
 }
