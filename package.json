@@ -21,7 +21,8 @@
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "express-history-api-fallback": "^2.2.1",
-    "express-ws": "^3.0.0"
+    "express-ws": "^3.0.0",
+    "ws": "^3.3.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -29,7 +30,7 @@
     "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.24.1",
     "clean-webpack-plugin": "^0.1.17",
-    "copy-webpack-plugin": "^4.2.0",
+    "copy-webpack-plugin": "^4.2.3",
     "css-loader": "^0.28.7",
     "eslint": "^4.9.0",
     "extract-text-webpack-plugin": "^3.0.1",

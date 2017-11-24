@@ -53,7 +53,11 @@ const clientConfig = {
         new CopyWebpackPlugin([{
             from: path.join(__dirname, 'public', 'images'),
             to: path.join(__dirname, 'build', 'img')
+        }, {
+            from: 'public/service-worker.js',
+            to: 'service-worker.js'
         }])
+
     ],
 };
 

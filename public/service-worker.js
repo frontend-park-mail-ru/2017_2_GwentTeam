@@ -1,15 +1,9 @@
-const CACHE_VERSION = 'app_sw_v1';
+const CACHE_VERSION = 'app_sw_v2';
 
 const cacheUrls = [
-    // '/game',
-    // '/singleplayer',
-    // '/about',
-    // '/login',
-    // '/signup',
-    // '/',
 
-    '/build/client.bundle.js',
-    '/build/img/'
+    '/client.bundle.js',
+    '/img/'
 ];
 
 this.addEventListener('install', (event) => {
