@@ -13,7 +13,6 @@ const url = 'https://technogwent-api-011.herokuapp.com/api';
 export default class UserService {
     constructor() {
         this.result = new Info();
-        console.log('res', this.result)
         if (UserService.__instance) {
             return UserService.__instance;
         }

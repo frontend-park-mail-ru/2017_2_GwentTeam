@@ -19,9 +19,8 @@ export default class MultiPlayerStrategy extends Strategy {
             bus.emit(message.event, message.payload);
         };
 
-        this.ws.onclose = function() {
-            alert('Игра оборвалась');
-            //this.router.go('/');
+        this.ws.onclose = () => {
+            this.showMessage('Игра оборвалась');
         };
         this.state = {
             playerName: 'User',
@@ -41,7 +40,6 @@ export default class MultiPlayerStrategy extends Strategy {
 
         bus.on('DEALCARDS', (payload) => {
             const data = payload.payload;
-            //console.log(data);
             data.forEach((card) => {
                 const cardEl = this.createCardImg(card.index);
                 this.cardfield.appendChild(cardEl);
@@ -52,16 +50,13 @@ export default class MultiPlayerStrategy extends Strategy {
                     index: card.index
                 });
                 cardEl.onclick = (e) => {
-                    //console.log(e.target);
                     bus.emit('CHOOSECARD', {
                         card
                     });
                     e.target.onclick = null;
-                    //console.log(card);
                 };
             });
         });
-        //}
 
         bus.on('OPPORTUNITY_TO_GO', (payload) => {
             const data = payload.payload;
@@ -120,5 +115,4 @@ export default class MultiPlayerStrategy extends Strategy {
         card.domEl = this.createCardImg(card.index);
         this.pushCardInLine(this.opponentGamefield, card);
     }
-
 }
