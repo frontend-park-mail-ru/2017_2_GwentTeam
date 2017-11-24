@@ -9,12 +9,12 @@ export function validate(form, selector) {
     }
     const passwordinput = form.querySelector('.password-validate');
     passwordinput.innerHTML = 'Must be more than 4 symbols';
-    const Arraylogin = document.getElementsByName('login');
-    var login = Arraylogin[0];
-    if (Arraylogin.length > 1) {
-        login = Arraylogin[1];
-    }
-    form.addEventListener('input', function (event) {
+    // const Arraylogin = document.getElementsByName('login');
+    // let login = Arraylogin[0];
+    // if (Arraylogin.length > 1) {
+    //     login = Arraylogin[1];
+    // }
+    form.addEventListener('input', (event) => {
         event.preventDefault();
         if (event.target === password && password.value.length >= 4) {
             passwordinput.style.color = 'aquamarine';
@@ -22,7 +22,7 @@ export function validate(form, selector) {
             passwordinput.innerHTML = 'Done!';
         }
     });
-    form.addEventListener('change', function (event) {
+    form.addEventListener('change', (event) => {
         event.preventDefault();
         if (event.target === password && password.value.length < 4) {
             passwordinput.style.color = 'lightcoral';

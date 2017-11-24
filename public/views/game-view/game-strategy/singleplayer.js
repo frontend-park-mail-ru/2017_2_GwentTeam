@@ -41,8 +41,8 @@ export default class SinglePlayerStrategy extends Strategy {
 
         bus.on('DEALCARDS', (payload) => {
             const data = payload.payload;
-            let arrayOfCards = data.cards; //
-            let player = data.player; //
+            let arrayOfCards = data.cards;
+            let player = data.player;
             arrayOfCards.forEach((card) => {
                 const cardEl = this.createCardImg(card.index);
                 player.line4.push({

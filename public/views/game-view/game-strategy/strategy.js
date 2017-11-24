@@ -1,5 +1,5 @@
 'use strict';
-
+import Info from '../../../modules/info.js';
 /**
  * GameStrategy
  * @name GameStrategy
@@ -10,12 +10,12 @@ export default class GameStrategy {
         this.router = router;
         this.el = el;
 
+        this.infoWindow = new Info();
+
         this.gameEl = document.createElement('div');
         this.gameEl.setAttribute('class', 'game-view');
         this.el.appendChild(this.gameEl);
 
-        //let html = document.documentElement;
-        //this.fullscreen(html);
         this.profilefield = document.createElement('div');
         this.profilefield.setAttribute('class', 'game-view__profilefield');
         this.gameEl.appendChild(this.profilefield);
@@ -97,10 +97,14 @@ export default class GameStrategy {
 
     showResult(isUserWin) {
         if (isUserWin) {
-            this.turnonInfo('Вы выиграли!');
+            this.showMessage('Вы выиграли!');
         } else {
-            this.turnonInfo('Вы проиграли:(');
+            this.showMessage('Вы проиграли:(');
         }
+    }
+
+    showMessage(msg) {
+        this.infoWindow.turnonInfo(msg);
     }
 
     pushCardInLine(arrayOfLines, card) {

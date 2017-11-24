@@ -42,7 +42,6 @@ class Game {
         }
 
         player.id = id;
-        //console.log(`Add player ${player.id}`);
 
         if (this.player1 && this.player2) {
             this.startGame();
@@ -109,7 +108,7 @@ class Game {
             [],
             []
         ];
-        
+
         this.createArray(this.allCards[0]);
         this.createArray(this.allCards[1]);
 

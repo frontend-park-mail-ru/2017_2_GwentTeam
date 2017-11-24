@@ -30,7 +30,6 @@ webSocketServer.on('connection', (ws) => {
 
     let id = Math.random();
     clients[id] = ws;
-    //console.log('новое соединение ' + id);
 
     game.addPlayer(ws);
 });
