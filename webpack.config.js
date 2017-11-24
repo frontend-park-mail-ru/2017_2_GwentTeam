@@ -27,15 +27,6 @@ const clientConfig = {
                 test: /\.styl$/,
                 loader: 'style-loader!css-loader!stylus-loader'
             }, {
-                // test: /\.css/,
-                // loader: 'style-loader!css-loader'
-
-                // loader: ExtractTextPlugin.extract({
-                //     fallback: 'style-loader',
-                //     use: [
-                //         'css-loader',
-                //     ]
-                // }),
             }, {
                 test: /\.(jp?g|png|gif|svg|)$/i,
                 loader: 'file-loader?name=img/[name].[hash].[ext]'

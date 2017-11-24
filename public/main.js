@@ -13,7 +13,7 @@ import SignoutView from './views/signout-view/signout-view.js';
 import UserService from './services/user-service.js';
 import Router from './modules/router.js';
 
-//import ServiceWorker from './service-worker.js';
+import ServiceWorker from './service-worker.js';
 
 import './blocks/form/index.styl';
 import './styles.styl';
