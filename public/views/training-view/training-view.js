@@ -1,7 +1,7 @@
 'use strict';
 
-import '../game-view/game.css';
-import './training.css';
+import '../game-view/game.styl';
+import './training.styl';
 import BaseView from '../../modules/view.js';
 import Router from '../../modules/router';
 

@@ -1,16 +1,14 @@
-.training {
+.training
     margin: 20px;
     overflow-x: hidden;
-}
 
-.training-view__cardfield {
+.training-view__cardfield
     margin: auto;
     margin-left: 0px;
     width: 166px;
     display: block;
-}
 
-.firstStep {
+.firstStep
     width: 170px;
     height: 110px;
     border: 4px solid #FDEAA8;
@@ -18,9 +16,15 @@
     border-radius: 3px;
     background-color: lightgray;
     animation: firstDiscription 1s;
-}
 
-.button_3d {
+    &__cardfield
+        margin: auto;
+        margin-left: 0px;
+        width: 166px;
+        display: block;
+        animation: scaling 1.5s linear;
+
+.button_3d
     position: relative;
     width: 100px;
     color: #ecf0f1;
@@ -33,51 +37,32 @@
     display: block;
     margin: auto;
     cursor: pointer;
-}
 
-.firstStep__cardfield {
-    margin: auto;
-    margin-left: 0px;
-    width: 166px;
-    display: block;
-    animation: scaling 1.5s linear;
-}
 
-@keyframes scaling  {
-    0% {
+
+@keyframes scaling
+    0%
         transform: scale(1);
-    }
-    25% {
+    25%
         transform: scale(1.1);
-    }
-    50% {
+    50%
         transform: scale(1.25);
-    }
-    75% {
+    75%
         transform: scale(1.1);
-    }
-    100% {
+    100%
         transform: scale(1);
-    }
-}
 
-@keyframes firstDiscription {
-    0% {
+@keyframes firstDiscription
+    0%
         opacity: 0;
-    }
-    33% {
+    33%
         opacity: 0.3;
-    }
-    66% {
+    66%
         opacity: 0.6;
-    }
-    100% {
+    100%
         opacity: 1;
-    }
-}
 
 .text-typing
-{
     width: 40em;
     color:black;
     font-size: 18px;
@@ -88,13 +73,14 @@
     -webkit-animation: type 3s steps(50, end);
     animation: type 3s steps(50, end);
     margin: 18px 2px 6px 4px;
-}
-@keyframes type{
-    from { width: 0; }
-}
 
-@-webkit-keyframes type{
-    from { width: 0; }
-}
+@keyframes type
+    from
+        width: 0;
+
+
+@-webkit-keyframes type
+    from
+        width: 0;
 
 
