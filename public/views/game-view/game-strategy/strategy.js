@@ -97,9 +97,9 @@ export default class GameStrategy {
 
     showResult(isUserWin) {
         if (isUserWin) {
-            alert('Вы выиграли!');
+            this.turnonInfo('Вы выиграли!');
         } else {
-            alert('Вы проиграли:(');
+            this.turnonInfo('Вы проиграли:(');
         }
     }
 

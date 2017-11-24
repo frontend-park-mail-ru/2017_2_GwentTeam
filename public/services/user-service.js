@@ -2,6 +2,7 @@
 
 import Http from '../modules/http.js';
 import bus from '../modules/event-bus.js';
+import Info from  '../modules/info.js';
 
 const url = 'https://technogwent-api-011.herokuapp.com/api';
 
@@ -11,6 +12,8 @@ const url = 'https://technogwent-api-011.herokuapp.com/api';
  */
 export default class UserService {
     constructor() {
+        this.result = new Info();
+        console.log('res', this.result)
         if (UserService.__instance) {
             return UserService.__instance;
         }
@@ -48,7 +51,7 @@ export default class UserService {
                     // err.json().then((obj) => {
                     //     console.log(obj.message);
                     // });
-                    alert('Пользователь уже существует :(');
+                    this.result.turnonInfo('Пользователь уже существует :(');
                 }
             });
     }
@@ -66,8 +69,9 @@ export default class UserService {
                 return response;
             })
             .catch((err) => {
-                if (err.status === 403)
-                    alert('Неверные данные :(');
+                if (err.status === 403) {
+                    this.result.turnonInfo('Неверные данные :(');
+                }
             });
     }
     /**
