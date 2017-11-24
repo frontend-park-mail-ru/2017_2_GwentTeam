@@ -10,7 +10,7 @@ const BUILD_DIR = 'build';
 const clientConfig = {
     target: 'web',
     entry: {
-        client: path.resolve(__dirname, SRC_DIR, 'main.js'),
+        client: path.resolve(__dirname, SRC_DIR, 'main.js')
     },
     output: {
         path: path.join(__dirname, BUILD_DIR),
@@ -22,15 +22,11 @@ const clientConfig = {
             {
                 test: /\.js/,
                 loader: 'babel-loader',
-                exclude: [/node_modules/, /dist*/],
+                exclude: [/node_modules/],
             }, {
-                test: /\.css/,
-                loader: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [
-                        'css-loader',
-                    ]
-                }),
+                test: /\.styl$/,
+                loader: 'style-loader!css-loader!stylus-loader'
+            }, {
             }, {
                 test: /\.(jp?g|png|gif|svg|)$/i,
                 loader: 'file-loader?name=img/[name].[hash].[ext]'
@@ -43,6 +39,7 @@ const clientConfig = {
             },
         ]
     },
+
     plugins: [
         new CleanWebpackPlugin([BUILD_DIR]),
         new webpack.NoEmitOnErrorsPlugin(),
@@ -56,6 +53,9 @@ const clientConfig = {
         new CopyWebpackPlugin([{
             from: path.join(__dirname, 'public', 'images'),
             to: path.join(__dirname, 'build', 'img')
+        }, {
+            from: path.join(__dirname, 'public', 'service-worker.js'),
+            to: path.join(__dirname, 'build', 'service-worker.js')
         }])
     ],
 };

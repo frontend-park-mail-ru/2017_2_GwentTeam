@@ -1,11 +1,12 @@
 'use strict';
 
-import './signup.css';
+import './signup.styl';
 import BaseView from '../../modules/view.js';
 import UserService from '../../services/user-service.js';
 import Form from '../../blocks/form/form.js';
 import signupTemplate from './signup.pug';
 import bus from '../../modules/event-bus.js';
+import {validate} from '../../modules/validate.js';
 
 const userService = new UserService();
 
@@ -18,6 +19,8 @@ export default class SignupView extends BaseView {
     start() {
         this.render();
         this.form = new Form(this.el.querySelector('.signup-form-js'), ['login', 'email', 'password']);
+        validate(this.form.el, document.querySelector('.signup-form-js'));
+        this.check();
         this.form.onsubmit(((formdata) => {
             bus.emit('signup-user', formdata);
         }).bind(this));
@@ -48,5 +51,18 @@ export default class SignupView extends BaseView {
             return;
         }
         super.resume();
+    }
+
+    check() {
+        document.querySelector('.form-check').addEventListener('mouseover', (event) => {
+            event.preventDefault();
+            //if (event.target === document.querySelector('.form-check'))
+            document.getElementById('Signup').setAttribute('type', 'text');
+        });
+        document.querySelector('.form-check').addEventListener('mouseout', (event) => {
+            event.preventDefault();
+            //if (event.target === document.querySelector('.form-check'))
+            document.getElementById('Signup').setAttribute('type', 'password');
+        });
     }
 }

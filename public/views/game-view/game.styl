@@ -1,0 +1,123 @@
+.game
+    margin-top: 20px
+
+
+.game-view
+    display: flex
+    margin: auto
+    width: 700px
+
+
+.game-view
+    &__zoomEl
+        padding-top: 78px;
+        background: url("../../images/cards/1.png") no-repeat center bottom;
+        width: 940px;
+        height: 400px;
+        background-size: 300px;
+    &__board
+        margin: auto
+        width: 500px
+    &__board-item-cell
+        background-color: #c5c5c5;
+        display: inline-block;
+        height: 65px;
+        width: 75px;
+    &__cardfield
+        margin: auto
+        width: 600px
+        display: block
+    &__gamefield
+        margin: auto
+    &__profilefield
+        height: 440px;
+        display: inline
+        width: 170px;
+    &__btn-exit
+        width: 200px
+        display: block
+        margin: 10px
+        background-color: #595
+        color: #111
+        height: 50px
+        border-width: 0
+        opacity: 0.9
+        box-shadow: 0 0 15px
+        cursor: pointer
+        border-radius: 9px
+
+.cardfield
+    &__card-img
+        width: 45px
+        height: 65px
+        padding: 5px
+    &__wrapper
+        background-color: black;
+        height: 65px;
+        width: 55px;
+        display: inline-block;
+        &__card-imgbig
+            width: 50px;
+            height: 65px;
+    &__card-imgbig:hover
+        transform: translateY(-20px);
+        transition-duration: 0.3s;
+        cursor: pointer;
+    &__card-imgbig-mousedown
+        width: 50px;
+        height: 65px;
+    &__card-imgbig-modified
+        width: 35px;
+        height: 50px;
+        padding: 5px;
+        animation: append 2s linear;
+
+
+
+.game-board
+    &__board-item
+        background-color: #22170f
+        opacity: 0.9
+        height: 75px
+        margin: 10px 0
+
+.profilefield__score,
+.profilefield__btn-pass,
+.profilefield__btn-exit {
+    background-color: #22170f;
+    margin: 10px;
+    opacity: 0.9;
+    padding: 7px;
+    box-shadow: 0 0 15px black;
+    color: white;
+}
+
+.profilefield
+    &__btn-exit
+        background-color: #595
+        cursor: pointer
+
+.profilefield
+    &__btn-pass
+        text-align: center
+        cursor: pointer
+.okButton
+    background-color #8298a9;
+    box-shadow: 0 0 10px #ecf0f1;
+    color: #111111;
+    font-family "Tibetan Machine Uni";
+    font-style italic;
+    margin: auto;
+    width: 20%;
+    height: 30%;
+    cursor: pointer;
+
+
+
+
+@keyframes append
+    0%
+        transform: translateX(0px);
+    100%
+        transform: translateX(20px);
+

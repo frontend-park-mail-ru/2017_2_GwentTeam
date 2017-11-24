@@ -1,10 +1,11 @@
 'use strict';
 
-import './signin.css';
+import './signin.styl';
 import BaseView from '../../modules/view.js';
 import UserService from '../../services/user-service.js';
 import Form from '../../blocks/form/form.js';
 import signinTemplate from './signin.pug';
+import {validate} from '../../modules/validate.js';
 import bus from '../../modules/event-bus.js';
 
 const userService = new UserService();
@@ -18,6 +19,7 @@ export default class SigninView extends BaseView {
     start() {
         this.render();
         this.form = new Form(this.el.querySelector('.signin-form-js'), ['login', 'password']);
+        validate(this.form.el, document.querySelector('.signin-form-js'));
         this.form.onsubmit((formdata) => {
             bus.emit('signin-user', formdata);
         });
