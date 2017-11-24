@@ -17,7 +17,7 @@ export function validate(form, selector) {
     form.addEventListener('input', (event) => {
         event.preventDefault();
         if (event.target === password && password.value.length >= 4) {
-            passwordinput.style.color = 'aquamarine';
+            //passwordinput.style.color = 'aquamarine';
             passwordinput.parentElement.style.borderColor = '#32cd32';
             passwordinput.innerHTML = 'Done!';
         }
@@ -30,7 +30,7 @@ export function validate(form, selector) {
             passwordinput.innerHTML = 'Too short!';
         }
         if (event.target !== password && password.value.length >= 4) {
-            passwordinput.style.color = 'aquamarine';
+            //passwordinput.style.color = 'aquamarine';
         }
     });
 }
