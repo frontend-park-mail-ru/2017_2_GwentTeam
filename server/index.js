@@ -2,6 +2,7 @@
 
 const express = require('express');
 const fallback = require('express-history-api-fallback');
+
 const Game = require('./game');
 
 const app = express();
@@ -16,15 +17,14 @@ let clients = {};
 
 const port = process.env.PORT || 8000;
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`Server listening port ${port}`);
 });
-
 
 const WebSocketServer = new require('ws');
 
 const webSocketServer = new WebSocketServer.Server({
-    port: 8001
+    server: server
 });
 webSocketServer.on('connection', (ws) => {
 

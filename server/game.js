@@ -73,12 +73,12 @@ class Game {
     }
 
     startGame() {
-        this.player1.send(JSON.stringify({
-            event: 'START_GAME'
-        }));
-        this.player2.send(JSON.stringify({
-            event: 'START_GAME'
-        }));
+        // this.player1.send(JSON.stringify({
+        //     event: 'START_GAME'
+        // }));
+        // this.player2.send(JSON.stringify({
+        //     event: 'START_GAME'
+        // }));
         this.deal(8);
 
         this.player1.send(JSON.stringify({

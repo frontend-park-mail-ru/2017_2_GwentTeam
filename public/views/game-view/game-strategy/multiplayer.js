@@ -13,7 +13,7 @@ export default class MultiPlayerStrategy extends Strategy {
 
         this.canUserGo = false;
 
-        this.ws = new WebSocket('ws://localhost:8001/game');
+        this.ws = new WebSocket('ws://localhost:8000/ws');
         this.ws.onmessage = function(event) {
             const message = JSON.parse(event.data);
             bus.emit(message.event, message.payload);
