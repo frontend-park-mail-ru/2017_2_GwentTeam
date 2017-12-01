@@ -12,8 +12,11 @@ export default class MultiPlayerStrategy extends Strategy {
         super(router, el);
 
         this.canUserGo = false;
+        const address = ['https', 'https:'].includes(location.protocol) ?
+            `wss://${location.host}/ws` :
+            `ws://${location.host}/ws`;
 
-        this.ws = new WebSocket('ws://localhost:8001/game');
+        this.ws = new WebSocket(address);
         this.ws.onmessage = function(event) {
             const message = JSON.parse(event.data);
             bus.emit(message.event, message.payload);

@@ -1,9 +1,10 @@
-const CACHE_VERSION = 'app_sw_v2';
+const CACHE_VERSION = 'app_sw_v1';
 
 const cacheUrls = [
 
     '/client.bundle.js',
-    '/img/'
+    '/img/',
+    '/index.html'
 ];
 
 this.addEventListener('install', (event) => {

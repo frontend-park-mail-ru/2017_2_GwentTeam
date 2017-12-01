@@ -10,7 +10,7 @@ const BUILD_DIR = 'build';
 const clientConfig = {
     target: 'web',
     entry: {
-        client: path.resolve(__dirname, SRC_DIR, 'main.js'),
+        client: path.resolve(__dirname, SRC_DIR, 'main.js')
     },
     output: {
         path: path.join(__dirname, BUILD_DIR),
@@ -54,10 +54,9 @@ const clientConfig = {
             from: path.join(__dirname, 'public', 'images'),
             to: path.join(__dirname, 'build', 'img')
         }, {
-            from: 'public/service-worker.js',
-            to: 'service-worker.js'
+            from: path.join(__dirname, 'public', 'service-worker.js'),
+            to: path.join(__dirname, 'build', 'service-worker.js')
         }])
-
     ],
 };
 

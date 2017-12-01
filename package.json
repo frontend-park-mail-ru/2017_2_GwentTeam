@@ -12,7 +12,8 @@
     "lint": "eslint .",
     "test": "jest",
     "build": "webpack",
-    "build-dev": "webpack --watch"
+    "build-dev": "webpack --watch",
+    "postinstall": "webpack -p --config ./webpack.config.js --progress"
   },
   "author": "",
   "license": "ISC",

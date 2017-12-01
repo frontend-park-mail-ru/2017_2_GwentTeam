@@ -73,12 +73,6 @@ class Game {
     }
 
     startGame() {
-        this.player1.send(JSON.stringify({
-            event: 'START_GAME'
-        }));
-        this.player2.send(JSON.stringify({
-            event: 'START_GAME'
-        }));
         this.deal(8);
 
         this.player1.send(JSON.stringify({
@@ -289,26 +283,26 @@ class Game {
         ind++;
         this.createCard('b', 9, ind, array);
         ind++;
-        this.createCard('b', 11, ind, array);
+        this.createCard('b', 1100, ind, array);
         ind++;
         this.createCard('b', 12, ind, array);
         ind++;
         this.createCard('b', 12, ind, array);
         ind++;
 
-        this.createCard('b', 1, ind, array);
+        this.createCard('c', 1, ind, array);
         ind++;
-        this.createCard('b', 2, ind, array);
+        this.createCard('c', 2, ind, array);
         ind++;
-        this.createCard('b', 5, ind, array);
+        this.createCard('c', 5, ind, array);
         ind++;
-        this.createCard('b', 7, ind, array);
+        this.createCard('c', 7, ind, array);
         ind++;
-        this.createCard('b', 9, ind, array);
+        this.createCard('c', 9, ind, array);
         ind++;
-        this.createCard('b', 10, ind, array);
+        this.createCard('c', 10, ind, array);
         ind++;
-        this.createCard('b', 11, ind, array);
+        this.createCard('c', 11, ind, array);
         ind++;
 
         this.createCard('d', 1, ind, array);
