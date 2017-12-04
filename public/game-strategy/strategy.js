@@ -39,9 +39,9 @@ export default class GameStrategy {
         this.boardEl.setAttribute('class', 'game-view__game-board');
         this.gameEl.appendChild(this.boardEl);
 
-         let b = new GameBoard();      //TODO ?
-         let c = new GameBoard();
-         let d = new GameBoard();
+        let b = new GameBoard(); //TODO ?
+        let c = new GameBoard();
+        let d = new GameBoard();
 
         this.userGamefield = {
             b, c, d
@@ -53,10 +53,10 @@ export default class GameStrategy {
             d, c, b
         };
 
-        for(let key in this.opponentGamefield) {
+        for (let key in this.opponentGamefield) {
             this.boardEl.appendChild(this.opponentGamefield[key].el);
         }
-        for(let key in this.userGamefield) {
+        for (let key in this.userGamefield) {
             this.boardEl.appendChild(this.userGamefield[key].el);
         }
 
@@ -82,13 +82,13 @@ export default class GameStrategy {
         });
 
         this.userState = {
-            playerName: 'User',     //TODO
+            playerName: 'User', //TODO
             roundWin: 0,
             roundScores: 0,
             lines: {
-                b:[],
-                c:[],
-                d:[]
+                b: [],
+                c: [],
+                d: []
             },
             gameCards: []
         };
@@ -96,7 +96,7 @@ export default class GameStrategy {
 
     createCardImg(index) {
         const cardEl = document.createElement('img');
-        const src = './img/cards/'+ index + '.png';
+        const src = './img/cards/' + index + '.png';
         cardEl.setAttribute('src', src);
         cardEl.setAttribute('class', 'cardfield__card-img');
         return cardEl;

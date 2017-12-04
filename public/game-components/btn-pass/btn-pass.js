@@ -11,5 +11,7 @@ export default class ButtonPass {
         this.el.setAttribute('class', 'profilefield__btn-pass');
         this.el.setAttribute('value', 'ПАС');
         this.el.innerText = 'ПАС';
+
+        this.availible = true;
     }
 }

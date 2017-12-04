@@ -25,16 +25,8 @@ export default class MultiPlayerStrategy extends Strategy {
         this.ws.onclose = () => {
             this.showMessage('Игра оборвалась');
         };
-        this.state = {
-            playerName: 'User',
-            roundWin: 0,
-            roundScores: 0,
-            line1: [],
-            line2: [],
-            line3: [],
-            line4: []
-        };
-        this.btnPassEl.onclick = () => {
+
+        this.btnPassEl.el.onclick = () => {
             if (this.canUserGo) {
                 this.ws.send('ROUND');
                 this.canUserGo = false;
@@ -45,8 +37,8 @@ export default class MultiPlayerStrategy extends Strategy {
             const data = payload.payload;
             data.forEach((card) => {
                 const cardEl = this.createCardImg(card.index);
-                this.cardfield.appendChild(cardEl);
-                this.state.line4.push({
+                this.cardfield.el.appendChild(cardEl);
+                this.userState.gameCards.push({
                     type: card.type,
                     score: card.score,
                     domEl: cardEl,
@@ -81,17 +73,27 @@ export default class MultiPlayerStrategy extends Strategy {
         bus.on('OPPONENTGO', (payload) => {
             const data = payload.payload; //&
             this.opponentGo(data.card);
-            this.printScore(data.score);
+            this.compScoreField.printScore({
+                score: data.score.opponentScore,
+                rounds: data.score.opponentRounds
+            });
             this.canUserGo = true;
         });
 
         bus.on('ROUND', (payload) => {
             const data = payload.payload;
-            this.printScore(data);
-            this.state.roundWin = data.userRounds;
-            this.state.roundScores = 0;
+            this.compScoreField.printScore({
+                score: data.opponentScore,
+                rounds: data.opponentRounds
+            });
+            this.userScoreField.printScore({
+                score: data.userScore,
+                rounds: data.userRounds
+            });
+            this.userState.roundScores = 0;
+            this.userState.roundWin = data.userRounds;
             this.cleanBoard();
-            this.cleanState(this.state);
+            this.cleanState(this.userState);
         });
 
         bus.on('GAMEOVER', (payload) => {
@@ -101,19 +103,21 @@ export default class MultiPlayerStrategy extends Strategy {
     }
 
     userGo(data) {
-        this.state.line4.forEach((card, cardIndex) => {
+        this.userState.gameCards.forEach((card, cardIndex) => {
             if (card.index === data.index) {
                 card.domEl.remove();
                 this.pushCardInLine(this.userGamefield, card);
-                this.pushCardInState(this.state, card);
-                this.state.roundScores += card.score;
-                this.state.line4.splice(cardIndex, 1);
+                this.pushCardInState(this.userState, card);
+                this.userState.roundScores += card.score;
+                this.userState.gameCards.splice(cardIndex, 1);
             }
         });
-        this.userScoreField.innerHTML = 'Очков за раунд: ' + this.state.roundScores +
-            '<br/><br/>Выиграно раундов:  ' + this.state.roundWin;
-    }
+        this.userScoreField.printScore({
+            score: this.userState.roundScores,
+            rounds: this.userState.roundWin
+        });
 
+    }
     opponentGo(card) {
         card.domEl = this.createCardImg(card.index);
         this.pushCardInLine(this.opponentGamefield, card);

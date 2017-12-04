@@ -21,10 +21,8 @@ export default class SinglePlayerStrategy extends Strategy {
         const types = [b, b, b, b, b, b, b, b, c, c, c, c, c, c, c, d, d, d, d, d, d, d, d, d];
         const scores = [2, 4, 8, 8, 9, 1100, 12, 12, 1, 2, 5, 7, 9, 10, 11, 1, 2, 3, 3, 4, 5, 6, 6, 7];
 
-        this.userCards = [];
-        this.compCards = [];
-        this.createArray(this.userCards, types, scores);
-        this.createArray(this.compCards, types, scores);
+        this.userCards = this.createArray(types, scores);
+        this.compCards = this.createArray(types, scores);
 
         this.compState = {
             playerName: 'Opponent',
@@ -98,7 +96,7 @@ export default class SinglePlayerStrategy extends Strategy {
         this.userScoreField.printScore({
             score: this.userState.roundScores,
             rounds: this.userState.roundWin
-        })
+        });
     }
 
     opponentCard() {
@@ -176,10 +174,10 @@ export default class SinglePlayerStrategy extends Strategy {
         }
     }
 
-    countScores(player) {
+    countScores(playerState) {
         let scores = 0;
-        for (let line in player.lines) {
-            player.lines[line].forEach((card) => {
+        for (let line in playerState.lines) {
+            playerState.lines[line].forEach((card) => {
                 scores += card.score;
             });
         }
@@ -203,9 +201,11 @@ export default class SinglePlayerStrategy extends Strategy {
         });
     }
 
-    createArray(arrayOfResult, types, scores) {
+    createArray(types, scores) {
+        let arrayOfResult = [];
         scores.forEach((score, index) => {
             this.createCard(types[index], score, index + 1, arrayOfResult);
-        })
+        });
+        return arrayOfResult;
     }
 }

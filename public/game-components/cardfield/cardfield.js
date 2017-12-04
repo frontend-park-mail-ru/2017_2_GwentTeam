@@ -15,5 +15,9 @@ export default class Cardfield {
         this.el.appendChild(card);
     }
 
-    //TODO функцию очистки поля в конце игры
+    clean() {        //
+        while (this.el.lastChild) {
+            this.el.removeChild(this.el.lastChild);
+        }
+    }
 }
