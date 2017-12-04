@@ -95,7 +95,6 @@ export default class GameStrategy {
         };
 
         bus.on('DEALCARDS', (payload) => {            //отрисовка карт пользователя
-            console.log(payload);
             let arrayOfCards = payload.payload;
             arrayOfCards.forEach((card) => {
                     let newCard = this.createCard(card);
@@ -108,6 +107,22 @@ export default class GameStrategy {
                         e.target.onclick = null;
                     };
             });
+        });
+
+        bus.on('ROUND', (payload) => {
+            const data = payload.payload;
+            this.compScoreField.printScore({
+                score: data.opponentScore,
+                rounds: data.opponentRounds
+            });
+            this.userScoreField.printScore({
+                score: data.userScore,
+                rounds: data.userRounds
+            });
+            this.userState.roundScores = 0;
+            this.userState.roundWin = data.userRounds;
+            this.cleanBoard();
+            this.cleanState(this.userState);
         });
     }
 
@@ -158,5 +173,21 @@ export default class GameStrategy {
             domEl: cardEl,
             index: card.index
         };
+    }
+
+    userGo(data) {
+        this.userState.gameCards.forEach((card, cardIndex) => {
+            if (card.index === data.index) {
+                card.domEl.remove();
+                this.pushCardInLine(this.userGamefield, card);
+                this.pushCardInState(this.userState, card);
+                this.userState.roundScores += card.score;
+                this.userState.gameCards.splice(cardIndex, 1);
+            }
+        });
+        this.userScoreField.printScore({
+            score: this.userState.roundScores,
+            rounds: this.userState.roundWin
+        });
     }
 }

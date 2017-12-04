@@ -42,17 +42,6 @@ export default class SinglePlayerStrategy extends Strategy {
 
         this.dealCards(this.startCardsCount);
 
-        bus.on('ROUND', (payload) => {
-            this.userScoreField.printScore({
-                score: this.userState.roundScores,
-                rounds: this.userState.roundWin
-            });
-            this.compScoreField.printScore({
-                score: this.compState.roundScores,
-                rounds: this.compState.roundWin
-            });
-        });
-
         bus.on('CHOOSECARD', (payload) => {
             const data = payload.payload.card;
             this.userGo(data);
@@ -61,21 +50,6 @@ export default class SinglePlayerStrategy extends Strategy {
         });
     }
 
-    userGo(data) {
-        this.userState.gameCards.forEach((card, cardIndex) => {
-            if (card.index === data.index) {
-                card.domEl.remove();
-                this.pushCardInLine(this.userGamefield, card);
-                this.pushCardInState(this.userState, card);
-                this.userState.roundScores += card.score;
-                this.userState.gameCards.splice(cardIndex, 1);
-            }
-        });
-        this.userScoreField.printScore({
-            score: this.userState.roundScores,
-            rounds: this.userState.roundWin
-        });
-    }
 
     opponentCard() {
         let maxCard = this.compState.gameCards[0];
@@ -129,19 +103,21 @@ export default class SinglePlayerStrategy extends Strategy {
 
     round() {
         this.isUserWinRound() ? this.userState.roundWin++ : this.compState.roundWin++;
-        this.userState.roundScores = 0;
         this.compState.roundScores = 0;
-        bus.emit('ROUND', {});
+        bus.emit('ROUND', {
+            opponentScore : this.compState.roundScores,
+            opponentRounds : this.compState.roundWin,
+            userScore : this.userState.roundScores,
+            userRounds : this.userState.roundWin
+        });
 
-        this.cleanBoard();
-        this.cleanState(this.userState);
         this.cleanState(this.compState);
         this.isGameOver() ? this.gameOver() : this.dealCards(this.roundCardsCount);
     }
 
     dealCards(cardsCount) {
         let arrayOfUserCards = this.createArrayOfCards(this.userCards, cardsCount);
-        bus.emit('DEALCARDS', { cards: arrayOfUserCards});
+        bus.emit('DEALCARDS', arrayOfUserCards);
         this.createArrayOfCards(this.compCards, cardsCount).forEach((card) => {
             this.compState.gameCards.push(this.createCard(card));
         });
