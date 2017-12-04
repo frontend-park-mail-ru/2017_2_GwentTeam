@@ -15,6 +15,10 @@ export default class SinglePlayerStrategy extends Strategy {
             this.round();
         };
 
+        this.startCardsCount = 8;
+        this.roundCardsCount = 2;
+        this.roundsCount = 2;
+
         const b = 'b';
         const c = 'c';
         const d = 'd';
@@ -36,35 +40,9 @@ export default class SinglePlayerStrategy extends Strategy {
             gameCards: []
         };
 
-        bus.on('DEALCARDS', (payload) => {
-            const data = payload.payload;
-            let arrayOfCards = data.cards;
-            let player = data.player;
-            arrayOfCards.forEach((card) => {
-                const cardEl = this.createCardImg(card.index);
-                player.gameCards.push({
-                    type: card.type,
-                    score: card.score,
-                    domEl: cardEl,
-                    index: card.index
-                });
-                if (player.playerName === 'User') {
-                    this.cardfield.addCard(cardEl);
-                    cardEl.onclick = (e) => {
-                        bus.emit('CHOOSECARD', {
-                            card
-                        });
-                        e.target.onclick = null;
-                    };
-                }
-            });
-        });
-
-        this.dealCards(this.userState, this.userCards, 8);
-        this.dealCards(this.compState, this.compCards, 8);
+        this.dealCards(this.startCardsCount);
 
         bus.on('ROUND', (payload) => {
-            const data = payload.payload;
             this.userScoreField.printScore({
                 score: this.userState.roundScores,
                 rounds: this.userState.roundWin
@@ -134,13 +112,6 @@ export default class SinglePlayerStrategy extends Strategy {
         return arrayOfCards;
     }
 
-    dealCards(player, deck, cardsCount) {
-        let arr = this.createArrayOfCards(deck, cardsCount);
-        bus.emit('DEALCARDS', {
-            player: player,
-            cards: arr
-        });
-    }
 
     isRound() {
         return (this.userState.gameCards.length === 0 || this.compState.gameCards.length === 0);
@@ -156,7 +127,6 @@ export default class SinglePlayerStrategy extends Strategy {
         return (this.userState.roundWin >= this.compState.roundWin);
     }
 
-
     round() {
         this.isUserWinRound() ? this.userState.roundWin++ : this.compState.roundWin++;
         this.userState.roundScores = 0;
@@ -166,12 +136,15 @@ export default class SinglePlayerStrategy extends Strategy {
         this.cleanBoard();
         this.cleanState(this.userState);
         this.cleanState(this.compState);
-        if (this.isGameOver()) {
-            this.gameOver();
-        } else {
-            this.dealCards(this.userState, this.userCards, 2);
-            this.dealCards(this.compState, this.compCards, 2);
-        }
+        this.isGameOver() ? this.gameOver() : this.dealCards(this.roundCardsCount);
+    }
+
+    dealCards(cardsCount) {
+        let arrayOfUserCards = this.createArrayOfCards(this.userCards, cardsCount);
+        bus.emit('DEALCARDS', { cards: arrayOfUserCards});
+        this.createArrayOfCards(this.compCards, cardsCount).forEach((card) => {
+            this.compState.gameCards.push(this.createCard(card));
+        });
     }
 
     countScores(playerState) {
@@ -185,7 +158,7 @@ export default class SinglePlayerStrategy extends Strategy {
     }
 
     isGameOver() {
-        return (this.userState.roundWin > 2 || this.compState.roundWin > 2);
+        return (this.userState.roundWin > this.roundsCount || this.compState.roundWin > this.roundsCount);
     }
 
     gameOver() {
@@ -193,18 +166,10 @@ export default class SinglePlayerStrategy extends Strategy {
         this.cleanBoard();
     }
 
-    createCard(type, score, index, array) {
-        array.push({
-            type: type,
-            score: score,
-            index: index
-        });
-    }
-
     createArray(types, scores) {
         let arrayOfResult = [];
         scores.forEach((score, index) => {
-            this.createCard(types[index], score, index + 1, arrayOfResult);
+            arrayOfResult.push({ type: types[index], score: score, index:index + 1});
         });
         return arrayOfResult;
     }

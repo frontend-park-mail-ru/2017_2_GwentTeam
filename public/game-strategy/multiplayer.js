@@ -33,25 +33,25 @@ export default class MultiPlayerStrategy extends Strategy {
             }
         };
 
-        bus.on('DEALCARDS', (payload) => {
-            const data = payload.payload;
-            data.forEach((card) => {
-                const cardEl = this.createCardImg(card.index);
-                this.cardfield.el.appendChild(cardEl);
-                this.userState.gameCards.push({
-                    type: card.type,
-                    score: card.score,
-                    domEl: cardEl,
-                    index: card.index
-                });
-                cardEl.onclick = (e) => {
-                    bus.emit('CHOOSECARD', {
-                        card
-                    });
-                    e.target.onclick = null;
-                };
-            });
-        });
+        // bus.on('DEALCARDS', (payload) => {
+        //     const data = payload.payload;
+        //     data.forEach((card) => {
+        //         const cardEl = this.createCardImg(card.index);
+        //         this.cardfield.el.appendChild(cardEl);
+        //         this.userState.gameCards.push({
+        //             type: card.type,
+        //             score: card.score,
+        //             domEl: cardEl,
+        //             index: card.index
+        //         });
+        //         cardEl.onclick = (e) => {
+        //             bus.emit('CHOOSECARD', {
+        //                 card
+        //             });
+        //             e.target.onclick = null;
+        //         };
+        //     });
+        // });
 
         bus.on('OPPORTUNITY_TO_GO', (payload) => {
             const data = payload.payload;
