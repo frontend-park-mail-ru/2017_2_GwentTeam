@@ -3,7 +3,7 @@
 import './game.styl';
 import BaseView from '../../modules/view.js';
 import Router from '../../modules/router.js';
-import MultiPlayerStrategy from './game-strategy/multiplayer.js';
+import MultiPlayerStrategy from '../../game-strategy/multiplayer.js';
 
 /**
 * @module GameView

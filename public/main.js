@@ -23,11 +23,11 @@ document.body.appendChild(Background);
 const userService = new UserService();
 const application = new ApplicationView(document.body);
 
-if ('serviceWorker' in navigator) {
-
-    navigator.serviceWorker.register('./service-worker.js', {scope: '/'});
-
-}
+// if ('serviceWorker' in navigator) {
+//
+//     navigator.serviceWorker.register('./service-worker.js', {scope: '/'});
+//
+// }
 
 const router = new Router(application.getElement(), application.getViewsContainerElement());
 

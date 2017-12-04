@@ -1,7 +1,7 @@
 'use strict';
 
 import Strategy from './strategy.js';
-import bus from '../../../modules/event-bus.js';
+import bus from '../modules/event-bus.js';
 /**
  * @module GameView
  * @extends BaseView
