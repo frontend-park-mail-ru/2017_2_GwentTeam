@@ -45,11 +45,10 @@ export default class SinglePlayerStrategy extends Strategy {
         bus.on('CHOOSECARD', (payload) => {
             const data = payload.payload.card;
             this.userGo(data);
-            this.opponentCard();
+            this.opponentGo();
             this.isRound() ? this.round() : {};
         });
     }
-
 
     opponentCard() {
         let maxCard = this.compState.gameCards[0];
@@ -58,25 +57,28 @@ export default class SinglePlayerStrategy extends Strategy {
                 maxCard = card;
             }
         });
-        this.opponentGo(maxCard);
+        return maxCard;
     }
 
-    opponentGo(data) {
+    opponentGo() {
+        let opponentCard = this.opponentCard();
         this.compState.gameCards.forEach((card, cardIndex) => {
-            if (card.index === data.index) {
-                this.pushCardInLine(this.opponentGamefield, card);
+            if (card.index === opponentCard.index) {
                 this.pushCardInState(this.compState, card);
                 this.compState.roundScores += card.score;
                 this.compState.gameCards.splice(cardIndex, 1);
             }
         });
-        this.compScoreField.printScore({
-            score: this.compState.roundScores,
-            rounds: this.compState.roundWin
+        bus.emit('OPPONENTGO', {
+            card: opponentCard,
+            score: {
+                opponentScore: this.compState.roundScores,
+                opponentRounds: this.compState.roundWin
+            }
         });
     }
 
-    createArrayOfCards(deck, cardsCount) {
+    createArrayOfDealCards(deck, cardsCount) {
         let arrayOfCards = [];
         for (let i = 0; i < cardsCount; i++) {
             const cardIndex = Math.floor(Math.random() * deck.length);
@@ -86,15 +88,12 @@ export default class SinglePlayerStrategy extends Strategy {
         return arrayOfCards;
     }
 
-
     isRound() {
         return (this.userState.gameCards.length === 0 || this.compState.gameCards.length === 0);
     }
 
     isUserWinRound() {
-        let userScores = this.countScores(this.userState);
-        let opponentScores = this.countScores(this.compState);
-        return (userScores >= opponentScores);
+        return (this.userState.roundScores >= this.compState.roundScores);
     }
 
     isUserWin() {
@@ -112,34 +111,19 @@ export default class SinglePlayerStrategy extends Strategy {
         });
 
         this.cleanState(this.compState);
-        this.isGameOver() ? this.gameOver() : this.dealCards(this.roundCardsCount);
+        this.isGameOver() ? bus.emit('GAMEOVER', this.isUserWin()) : this.dealCards(this.roundCardsCount);
     }
 
     dealCards(cardsCount) {
-        let arrayOfUserCards = this.createArrayOfCards(this.userCards, cardsCount);
+        let arrayOfUserCards = this.createArrayOfDealCards(this.userCards, cardsCount);
         bus.emit('DEALCARDS', arrayOfUserCards);
-        this.createArrayOfCards(this.compCards, cardsCount).forEach((card) => {
+        this.createArrayOfDealCards(this.compCards, cardsCount).forEach((card) => {
             this.compState.gameCards.push(this.createCard(card));
         });
     }
 
-    countScores(playerState) {
-        let scores = 0;
-        for (let line in playerState.lines) {
-            playerState.lines[line].forEach((card) => {
-                scores += card.score;
-            });
-        }
-        return scores;
-    }
-
     isGameOver() {
         return (this.userState.roundWin > this.roundsCount || this.compState.roundWin > this.roundsCount);
-    }
-
-    gameOver() {
-        this.showResult(this.isUserWin());
-        this.cleanBoard();
     }
 
     createArray(types, scores) {

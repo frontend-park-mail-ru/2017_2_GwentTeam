@@ -34,40 +34,19 @@ export default class MultiPlayerStrategy extends Strategy {
         };
 
         bus.on('OPPORTUNITY_TO_GO', (payload) => {
-            const data = payload.payload;
-            this.canUserGo = data;
+            this.canUserGo = payload.payload.data;
         });
 
         bus.on('CHOOSECARD', (payload) => {
-            const data = payload.payload.card;
+            const card = payload.payload.card;
             if (this.canUserGo) {
-                this.userGo(data);
+                this.userGo(card);
                 this.ws.send(JSON.stringify({
                     event: 'userGo',
-                    payload: data.index
+                    payload: card.index
                 }));
                 this.canUserGo = false;
             }
         });
-
-        bus.on('OPPONENTGO', (payload) => {
-            const data = payload.payload; //&
-            this.opponentGo(data.card);
-            this.compScoreField.printScore({
-                score: data.score.opponentScore,
-                rounds: data.score.opponentRounds
-            });
-            this.canUserGo = true;
-        });
-
-        bus.on('GAMEOVER', (payload) => {
-            const data = payload.payload;
-            this.showResult(data);
-        });
-    }
-
-    opponentGo(card) {
-        card.domEl = this.createCardImg(card.index);
-        this.pushCardInLine(this.opponentGamefield, card);
     }
 }

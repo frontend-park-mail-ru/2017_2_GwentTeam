@@ -15,7 +15,7 @@ export default class Cardfield {
         this.el.appendChild(card);
     }
 
-    clean() {        //
+    clean() {
         while (this.el.lastChild) {
             this.el.removeChild(this.el.lastChild);
         }

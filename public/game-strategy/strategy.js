@@ -124,6 +124,25 @@ export default class GameStrategy {
             this.cleanBoard();
             this.cleanState(this.userState);
         });
+
+        bus.on('OPPONENTGO', (payload) => {
+            const data = payload.payload;
+            const card = data.card;
+            card.domEl = this.createCardImg(card.index);
+            this.pushCardInLine(this.opponentGamefield, card);
+            this.compScoreField.printScore({
+                score: data.score.opponentScore,
+                rounds: data.score.opponentRounds
+            });
+            this.canUserGo = true;
+        });
+
+        bus.on('GAMEOVER', (payload) => {
+            const data = payload.payload;
+            this.cleanBoard();
+            this.cardfield.clean();
+            this.showResult(data);
+        });
     }
 
     createCardImg(index) {
