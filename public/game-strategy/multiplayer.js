@@ -1,6 +1,7 @@
 'use strict';
 
 import Strategy from './strategy.js';
+
 import bus from '../modules/event-bus.js';
 /**
  * @module GameView
@@ -11,11 +12,12 @@ export default class MultiPlayerStrategy extends Strategy {
 
         super(router, el);
 
-        this.canUserGo = false;
         const address = ['https', 'https:'].includes(location.protocol) ?
             `wss://${location.host}/ws` :
             `ws://${location.host}/ws`;
 
+        this.canUserGo = false;
+        //console.log(this.canUserGo);
         this.ws = new WebSocket(address);
         this.ws.onmessage = function(event) {
             const message = JSON.parse(event.data);
@@ -34,7 +36,7 @@ export default class MultiPlayerStrategy extends Strategy {
         };
 
         bus.on('OPPORTUNITY_TO_GO', (payload) => {
-            this.canUserGo = payload.payload.data;
+            this.canUserGo = payload.payload;
         });
 
         bus.on('CHOOSECARD', (payload) => {

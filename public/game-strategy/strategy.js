@@ -5,6 +5,7 @@ import GameBoard from '../game-components/gameboard/gameboard.js';
 import Cardfield from '../game-components/cardfield/cardfield.js';
 import Scorefield from '../game-components/scorefield/scorefield.js';
 import ButtonPass from '../game-components/btn-pass/btn-pass.js';
+
 import bus from '../modules/event-bus.js';
 /**
  * GameStrategy
@@ -94,18 +95,18 @@ export default class GameStrategy {
             gameCards: []
         };
 
-        bus.on('DEALCARDS', (payload) => {            //отрисовка карт пользователя
+        bus.on('DEALCARDS', (payload) => { //отрисовка карт пользователя
             let arrayOfCards = payload.payload;
             arrayOfCards.forEach((card) => {
-                    let newCard = this.createCard(card);
-                    this.userState.gameCards.push(newCard);
-                    this.cardfield.addCard(newCard.domEl);
-                    newCard.domEl.onclick = (e) => {
-                        bus.emit('CHOOSECARD', {
-                            card
-                        });
-                        e.target.onclick = null;
-                    };
+                let newCard = this.createCard(card);
+                this.userState.gameCards.push(newCard);
+                this.cardfield.addCard(newCard.domEl);
+                newCard.domEl.onclick = (e) => {
+                    bus.emit('CHOOSECARD', {
+                        card
+                    });
+                    e.target.onclick = null;
+                };
             });
         });
 
