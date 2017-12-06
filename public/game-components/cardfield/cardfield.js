@@ -12,7 +12,6 @@ export default class Cardfield {
     }
 
     addCard(card) {
-        //console.log(card);
         this.el.appendChild(card.domEl);
     }
 

@@ -95,19 +95,13 @@ export default class GameStrategy {
             gameCards: []
         };
 
-        bus.on('DEALCARDS', (payload) => { //отрисовка карт пользователя
+        bus.on('DEALCARDS', (payload) => {
             let arrayOfCards = payload.payload;
             arrayOfCards.forEach((card) => {
-               //  let newCard = this.createCard(card);
-               // this.userState.gameCards.push(newCard);
-               // this.cardfield.addCard(newCard.domEl);
                 let newCard = new Card(card);
-                //console.log(newCard.domEl);
-                //newCard.createImg();               //TODO
                 this.userState.gameCards.push(newCard);
                 this.cardfield.addCard(newCard);
                 newCard.domEl.onclick = (e) => {
-                    console.log('click');
                     bus.emit('CHOOSECARD', {
                         card: newCard
                     });
@@ -134,9 +128,6 @@ export default class GameStrategy {
 
         bus.on('OPPONENTGO', (payload) => {
             const data = payload.payload;
-            const card = data.card;
-            // card.domEl = this.createCardImg(card.index);
-            // this.pushCardInLine(this.opponentGamefield, card);
             const newCard = new Card(data.card);
             this.pushCardInLine(this.opponentGamefield, newCard);
             this.compScoreField.printScore({
@@ -153,14 +144,6 @@ export default class GameStrategy {
             this.showResult(data);
         });
     }
-
-    // createCardImg(index) {            //TODO
-    //     const cardEl = document.createElement('img');
-    //     const src = './img/new-cards/' + index + '.png';
-    //     cardEl.setAttribute('src', src);
-    //     cardEl.setAttribute('class', 'cardfield__card-img');
-    //     return cardEl;
-    // }
 
     showResult(isUserWin) {
         isUserWin ? this.showMessage('Вы выиграли!') : this.showMessage('Вы проиграли:(');
@@ -193,18 +176,7 @@ export default class GameStrategy {
         }
     }
 
-    // createCard(card) {      //TODO
-    //     let cardEl = this.createCardImg(card.index);
-    //     return {
-    //         type: card.type,
-    //         score: card.score,
-    //         domEl: cardEl,
-    //         index: card.index
-    //     };
-    // }
-
     userGo(data) {
-        //console.log(data);
         this.userState.gameCards.forEach((card, cardIndex) => {
             if (card.index === data.index) {
                 card.domEl.remove();

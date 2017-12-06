@@ -1,9 +1,7 @@
 'use strict';
 
-//import Block from '../../modules/block.js';
 import './gameboard.styl';
 
-//export default class GameBoard extends Block {
 export default class GameBoard {
     /**
      * @constructor
@@ -21,6 +19,5 @@ export default class GameBoard {
 
     addCard(card) {
         this.el.appendChild(card.domEl);
-        //this.el.appendChild(card);
     }
 }
