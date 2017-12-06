@@ -19,7 +19,8 @@ export default class GameBoard {
         }
     }
 
-    addCard(elem) {
-        this.el.appendChild(elem);
+    addCard(card) {
+        this.el.appendChild(card.domEl);
+        //this.el.appendChild(card);
     }
 }

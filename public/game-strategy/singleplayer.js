@@ -119,7 +119,8 @@ export default class SinglePlayerStrategy extends Strategy {
         let arrayOfUserCards = this.createArrayOfDealCards(this.userCards, cardsCount);
         bus.emit('DEALCARDS', arrayOfUserCards);
         this.createArrayOfDealCards(this.compCards, cardsCount).forEach((card) => {
-            this.compState.gameCards.push(this.createCard(card));
+            //this.compState.gameCards.push(this.createCard(card));
+            this.compState.gameCards.push(card);
         });
     }
 

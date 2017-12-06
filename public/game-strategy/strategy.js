@@ -5,6 +5,7 @@ import GameBoard from '../game-components/gameboard/gameboard.js';
 import Cardfield from '../game-components/cardfield/cardfield.js';
 import Scorefield from '../game-components/scorefield/scorefield.js';
 import ButtonPass from '../game-components/btn-pass/btn-pass.js';
+import Card from '../game-components/card/card.js';
 
 import bus from '../modules/event-bus.js';
 /**
@@ -84,7 +85,6 @@ export default class GameStrategy {
         });
 
         this.userState = {
-            playerName: 'User', //TODO
             roundWin: 0,
             roundScores: 0,
             lines: {
@@ -98,12 +98,18 @@ export default class GameStrategy {
         bus.on('DEALCARDS', (payload) => { //отрисовка карт пользователя
             let arrayOfCards = payload.payload;
             arrayOfCards.forEach((card) => {
-                let newCard = this.createCard(card);
+               //  let newCard = this.createCard(card);
+               // this.userState.gameCards.push(newCard);
+               // this.cardfield.addCard(newCard.domEl);
+                let newCard = new Card(card);
+                //console.log(newCard.domEl);
+                //newCard.createImg();               //TODO
                 this.userState.gameCards.push(newCard);
-                this.cardfield.addCard(newCard.domEl);
+                this.cardfield.addCard(newCard);
                 newCard.domEl.onclick = (e) => {
+                    console.log('click');
                     bus.emit('CHOOSECARD', {
-                        card
+                        card: newCard
                     });
                     e.target.onclick = null;
                 };
@@ -129,8 +135,10 @@ export default class GameStrategy {
         bus.on('OPPONENTGO', (payload) => {
             const data = payload.payload;
             const card = data.card;
-            card.domEl = this.createCardImg(card.index);
-            this.pushCardInLine(this.opponentGamefield, card);
+            // card.domEl = this.createCardImg(card.index);
+            // this.pushCardInLine(this.opponentGamefield, card);
+            const newCard = new Card(data.card);
+            this.pushCardInLine(this.opponentGamefield, newCard);
             this.compScoreField.printScore({
                 score: data.score.opponentScore,
                 rounds: data.score.opponentRounds
@@ -146,13 +154,13 @@ export default class GameStrategy {
         });
     }
 
-    createCardImg(index) {
-        const cardEl = document.createElement('img');
-        const src = './img/cards/' + index + '.png';
-        cardEl.setAttribute('src', src);
-        cardEl.setAttribute('class', 'cardfield__card-img');
-        return cardEl;
-    }
+    // createCardImg(index) {            //TODO
+    //     const cardEl = document.createElement('img');
+    //     const src = './img/new-cards/' + index + '.png';
+    //     cardEl.setAttribute('src', src);
+    //     cardEl.setAttribute('class', 'cardfield__card-img');
+    //     return cardEl;
+    // }
 
     showResult(isUserWin) {
         isUserWin ? this.showMessage('Вы выиграли!') : this.showMessage('Вы проиграли:(');
@@ -163,7 +171,7 @@ export default class GameStrategy {
     }
 
     pushCardInLine(arrayOfLines, card) {
-        arrayOfLines[card.type].addCard(card.domEl);
+        arrayOfLines[card.type].addCard(card);
     }
 
     pushCardInState(playerState, card) {
@@ -185,17 +193,18 @@ export default class GameStrategy {
         }
     }
 
-    createCard(card) {
-        let cardEl = this.createCardImg(card.index);
-        return {
-            type: card.type,
-            score: card.score,
-            domEl: cardEl,
-            index: card.index
-        };
-    }
+    // createCard(card) {      //TODO
+    //     let cardEl = this.createCardImg(card.index);
+    //     return {
+    //         type: card.type,
+    //         score: card.score,
+    //         domEl: cardEl,
+    //         index: card.index
+    //     };
+    // }
 
     userGo(data) {
+        //console.log(data);
         this.userState.gameCards.forEach((card, cardIndex) => {
             if (card.index === data.index) {
                 card.domEl.remove();
