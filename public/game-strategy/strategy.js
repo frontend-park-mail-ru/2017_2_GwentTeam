@@ -5,7 +5,11 @@ import GameBoard from '../game-components/gameboard/gameboard.js';
 import Cardfield from '../game-components/cardfield/cardfield.js';
 import Scorefield from '../game-components/scorefield/scorefield.js';
 import ButtonPass from '../game-components/btn-pass/btn-pass.js';
+import ButtonExit from '../game-components/btn-exit/btn-exit.js';
 import Card from '../game-components/card/card.js';
+import GameWrapper from '../game-components/game-wrapper/game-wrapper.js';
+import Profilefield from '../game-components/profilefield/profilefield.js';
+import BoardWrapper from '../game-components/board-wrapper/board-wrapper.js';
 
 import bus from '../modules/event-bus.js';
 /**
@@ -21,26 +25,17 @@ export default class GameStrategy {
 
         this.infoWindow = new Info();
 
-        this.gameEl = document.createElement('div');
-        this.gameEl.setAttribute('class', 'game-view');
-        this.el.appendChild(this.gameEl);
+        this.gameEl = new GameWrapper();
+        this.el.appendChild(this.gameEl.el);
 
-        this.profilefield = document.createElement('div');
-        this.profilefield.setAttribute('class', 'game-view__profilefield');
-        this.gameEl.appendChild(this.profilefield);
+        this.profilefield = new Profilefield();
+        this.gameEl.addEl(this.profilefield);
 
-        this.btnExitEl = document.createElement('div');
-        this.btnExitEl.setAttribute('class', 'profilefield__btn-exit');
-        this.btnExitEl.innerHTML = 'В главное меню';
-        this.profilefield.appendChild(this.btnExitEl);
+        this.btnExitEl = new ButtonExit(this.router);
+        this.profilefield.addEl(this.btnExitEl);
 
-        this.btnExitEl.onclick = () => {
-            this.router.go('/');
-        };
-
-        this.boardEl = document.createElement('div');
-        this.boardEl.setAttribute('class', 'game-view__game-board');
-        this.gameEl.appendChild(this.boardEl);
+        this.boardEl = new BoardWrapper();
+        this.gameEl.addEl(this.boardEl);
 
         let b = new GameBoard(); //TODO ?
         let c = new GameBoard();
@@ -57,23 +52,23 @@ export default class GameStrategy {
         };
 
         for (let key in this.opponentGamefield) {
-            this.boardEl.appendChild(this.opponentGamefield[key].el);
+            this.boardEl.addEl(this.opponentGamefield[key]);
         }
         for (let key in this.userGamefield) {
-            this.boardEl.appendChild(this.userGamefield[key].el);
+            this.boardEl.addEl(this.userGamefield[key]);
         }
 
         this.cardfield = new Cardfield();
-        this.boardEl.appendChild(this.cardfield.el);
+        this.boardEl.addEl(this.cardfield);
 
         this.compScoreField = new Scorefield();
-        this.profilefield.appendChild(this.compScoreField.el);
+        this.profilefield.addEl(this.compScoreField);
 
         this.btnPassEl = new ButtonPass();
-        this.profilefield.appendChild(this.btnPassEl.el);
+        this.profilefield.addEl(this.btnPassEl);
 
         this.userScoreField = new Scorefield();
-        this.profilefield.appendChild(this.userScoreField.el);
+        this.profilefield.addEl(this.userScoreField);
 
         this.userScoreField.printScore({
             score: 0,
