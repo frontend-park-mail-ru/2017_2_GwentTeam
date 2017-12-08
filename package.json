@@ -5,7 +5,7 @@
   "main": "main.js",
   "engines": {
     "node": "9.2.0",
-    "npm": "5.5.1"
+    "npm": "5.6.0"
   },
   "scripts": {
     "start": "node server/index.js",
@@ -13,9 +13,9 @@
     "test": "jest",
     "build": "webpack",
     "build-dev": "webpack --watch",
-    "postinstall": "webpack -p --config ./webpack.config.js --progress"
+    "postinstall": "npm run build"
   },
-  "author": "",
+  "author": "GwentTeam",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.4",
@@ -32,8 +32,8 @@
     "clean-webpack-plugin": "^0.1.17",
     "copy-webpack-plugin": "^4.2.3",
     "css-loader": "^0.28.7",
-    "eslint": "^4.9.0",
-    "extract-text-webpack-plugin": "^3.0.1",
+    "eslint": "^4.12.1",
+    "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.5",
     "html-loader": "^0.5.1",
     "html-webpack-plugin": "^2.30.1",
@@ -43,6 +43,6 @@
     "style-loader": "^0.19.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
-    "webpack": "^3.7.1"
+    "webpack": "^3.10.0"
   }
 }
