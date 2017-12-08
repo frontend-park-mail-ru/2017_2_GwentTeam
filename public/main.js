@@ -3,6 +3,7 @@
 import ApplicationView from './views/application-view/application-view.js';
 import MenuView from './views/menu-view/menu-view.js';
 import AboutView from './views/about-view/about-view.js';
+import ScoreboardView from './views/scoreboard-view/scoreboard-view.js';
 import ProfileView from './views/profile-view/profile-view.js';
 import GameView from './views/game-view/game-view.js';
 import SingleplayerView from './views/game-view/singleplayer-view.js';
@@ -47,6 +48,7 @@ router
     .register('/profile', ProfileView)
     .register('/singleplayer', SingleplayerView)
     .register('/login', SigninView)
+    .register('/score', ScoreboardView)
     .register('/signup', SignupView)
     .register('/logout', SignoutView)
     .start();

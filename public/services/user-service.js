@@ -105,10 +105,23 @@ export default class UserService {
 
         return Http.Get(url + '/auth')
             .then((userdata) => {
+                console.warn(userdata);
                 this.user = userdata;
                 bus.emit('user:authorized', this.user);
                 return userdata;
             });
+    }
+
+    getUsers(limit, offset) {
+        return Http.Get(url + `/users?limit=${limit}&offset=${offset}`)
+            .then((res) =>{
+                console.warn('res', res);
+                return res;
+            });
+    }
+
+    getUser() {
+        return Http.Get(url + '/user');
     }
 
 }
