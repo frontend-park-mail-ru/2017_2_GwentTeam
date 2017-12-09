@@ -4,7 +4,7 @@ import Http from '../modules/http.js';
 import bus from '../modules/event-bus.js';
 import Info from  '../modules/info.js';
 
-const url = 'https://technogwent-api-011.herokuapp.com/api';
+const url = 'https://technogwent-api-012.herokuapp.com/api';
 
 /**
  * Сервис для работы с юзерами
@@ -116,12 +116,20 @@ export default class UserService {
         return Http.Get(url + `/users?limit=${limit}&offset=${offset}`)
             .then((res) =>{
                 console.warn('res', res);
+                bus.emit('users:fetch', res);
                 return res;
+            })
+            .catch((err) => {
+                return err;
             });
     }
 
-    getUser() {
-        return Http.Get(url + '/user');
+    getUser(hasPosition) {
+        return Http.Get(url + `/auth?hasPosition=${hasPosition}`)
+            .then((res) => {
+               bus.emit('user:fetch', res);
+               return res;
+            });
     }
 
 }

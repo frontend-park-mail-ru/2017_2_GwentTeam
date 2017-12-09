@@ -1,12 +1,10 @@
 import './scoreboard.styl';
 import BaseView from '../../modules/view.js';
+import Info from '../../modules/info.js';
 import scoreboardTemplate from './scoreboard.pug';
 import UserService from '../../services/user-service.js';
 import bus from '../../modules/event-bus.js';
 import Http from "../../modules/http";
-
-const url = 'https://technogwent-api-011.herokuapp.com/api';
-const limit = 10;
 
 //let users = {};
 //let user = {};
@@ -15,43 +13,53 @@ const userService = new UserService();
 export default class ScoreboardView extends BaseView {
 
     start() {
+        this.limit = 3;
+        this.offset = 0;
         this.flag = true;
-        this.users = [{
-            login: 'a1',
-            email: 'a@mail.ru',
-            password: 1234,
-            scores: 12
-        }, {
-            login: 'a2',
-            email: 'a2@mail.ru',
-            password: 1234,
-            scores: 10
-        }, {
-            login: 'a3',
-            email: 'a3@mail.ru',
-            password: 1234,
-            scores: 11
-        }];
-        this.user = {
-            login: 'a4',
-            email: 'a@mail.ru',
-            password: 1234,
-            scores: 12
-        };
+        userService.getUser(true);
+        bus.on('user:fetch', (data) => {
+            this.user = data.payload;
+            userService.getUsers(this.limit, this.offset);
+        });
+        bus.on('users:fetch', (data) => {
+           this.users = data.payload;
+            console.warn('this.users', this.users);
+           this.check();
+           this.render(this.users, this.user, this.flag);
+        });
+        // this.users = [{
+        //     login: 'a1',
+        //     email: 'a@mail.ru',
+        //     password: 1234,
+        //     scores: 12
+        // }, {
+        //     login: 'a2',
+        //     email: 'a2@mail.ru',
+        //     password: 1234,
+        //     scores: 10
+        // }, {
+        //     login: 'a3',
+        //     email: 'a3@mail.ru',
+        //     password: 1234,
+        //     scores: 11
+        // }];
+        // this.user = {
+        //     login: 'a4',
+        //     email: 'a@mail.ru',
+        //     password: 1234,
+        //     scores: 12
+        // };
         //bus.on('users:fetch')
         //bus.on('user:authorized')
     }
 
     render(users, user, flag) {
-        console.log('ku')
+        console.log('ku');
         this.el.innerHTML = scoreboardTemplate({users, user, flag});
         this.logic();
     }
 
     resume() {
-        // if (Http.Get(url + '/auth').catch((res) => {
-        //     return res.statusCode;
-        // }) === 401)
         if (!userService.isLoggedIn())
         {//при загрузке /score в урле срабатывает быстрее
             this.pause();
@@ -59,10 +67,9 @@ export default class ScoreboardView extends BaseView {
             this.router.go('/');
             return;
         }
-        this.check();
-        //this.users = userService.getUsers(limit, 1);
-        //this.user = userService.getUser();
-        this.render(this.users, this.user, this.flag);
+        //this.user = userService.getUser(true);
+        //this.check();
+
         //const us = userService.getUsers();
         console.log('2');
         super.resume();
@@ -80,11 +87,35 @@ export default class ScoreboardView extends BaseView {
 
     logic() {
         let buttonUser = document.getElementById('user');
+        let buttonPage = document.getElementById('page');
+        let buttonBack = document.getElementById('back');
+        let buttonForward = document.getElementById('forward');
+        if (this.offset === 0) {
+            buttonBack.setAttribute('hidden', 'hidden');
+        } else {
+            buttonBack.removeAttribute('hidden');
+        }
+
         console.log('butt', buttonUser);
         buttonUser.addEventListener('click', (event) => {
             //this.users = userService.getUsers(limit, this.user.place)
        });
-        let buttonBack = document.getElementById('back');
-        let buttonForward = document.getElementById('forward');
+        buttonForward.addEventListener('click', (event) => {
+            this.offset += 3;
+            userService.getUsers(this.limit, this.offset)
+                .then((err) => {
+                    if (err.status === 404) {
+                        this.info = new Info();
+                        this.info.turnonInfo('Это последняя страничка!');
+                        buttonForward.setAttribute('hidden', 'hidden');
+                    }
+                });
+            // us.then((err) => {
+            //     console.warn('err', err);
+            //     return err;
+            // });
+                //можно еще раз делать запрос на юзера
+        });
+
     }
 }

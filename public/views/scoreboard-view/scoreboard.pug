@@ -3,28 +3,29 @@
     table
         thead
             tr
-                td
+                td Место
                 td Игрок
                 td Очки
         tbody
             if flag
                 tr#user
-                    td
+                    td #{user.position}
                     td #{user.login}
-                    td #{user.scores}
+                    td #{user.wins}
             unless flag
             each gamer in users
                 case gamer.login
                     when user.login
                         tr#user
-                            td
+                            td #{user.position}
                             td #{gamer.login}
-                            td #{gamer.scores}
+                            td #{gamer.wins}
                     default
                         tr
                             td
                             td #{gamer.login}
-                            td #{gamer.scores}
+                            td #{gamer.wins}
     div.scoreboard-view__buttons
         div#back Назад
+        div#page
         div#forward Вперед
