@@ -13,7 +13,7 @@ export default class Http {
         return fetch(address, {
             method: 'GET',
             mode: 'cors',
-            credentials: 'include',
+            credentials: 'include'
         }).then((response) => {
             if (response.status >= 400) {
                 throw response;

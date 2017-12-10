@@ -1,0 +1,31 @@
+.scoreboard-view
+    h2.scoreboard-view__header Таблица лидеров
+    table#t01
+        thead
+            tr
+                td Место
+                td Игрок
+                td Очки
+        tbody
+            if flag
+                tr#user
+                    td #{user.position}
+                    td #{user.login}
+                    td #{user.wins}
+            unless flag
+            each gamer in users
+                case gamer.login
+                    when user.login
+                        tr#user
+                            td #{user.position}
+                            td #{gamer.login}
+                            td #{gamer.wins}
+                    default
+                        tr
+                            td
+                            td #{gamer.login}
+                            td #{gamer.wins}
+    div.scoreboard-view__buttons
+        div#back Назад
+        div#page
+        div#forward Вперед
