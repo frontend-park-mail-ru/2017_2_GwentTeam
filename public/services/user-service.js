@@ -105,9 +105,31 @@ export default class UserService {
 
         return Http.Get(url + '/auth')
             .then((userdata) => {
+                console.warn(userdata);
                 this.user = userdata;
                 bus.emit('user:authorized', this.user);
                 return userdata;
+            });
+    }
+
+    getUsers(limit, offset) {
+        return Http.Get(url + `/users?limit=${limit}&offset=${offset}`)
+            .then((res) =>{
+                console.warn('res', res);
+                bus.emit('users:fetch', res);
+                return res;
+            })
+            .catch((err) => {
+                console.log('errror', err);
+                return err;
+            });
+    }
+
+    getUser(hasPosition) {
+        return Http.Get(url + `/auth?hasPosition=${hasPosition}`)
+            .then((res) => {
+               bus.emit('user:fetch', res);
+               return res;
             });
     }
 

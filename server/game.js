@@ -185,7 +185,7 @@ class Game {
     }
 
     isGameOver() {
-        if (this.allCards[0].length === 0 || this.allCards[1].lenght === 0) {
+        if (this.allCards[0].length === 0 || this.allCards[1].length === 0) {
             return true;
         }
         if (this.state[0].roundWin > 2 || this.state[1].roundWin > 2) {

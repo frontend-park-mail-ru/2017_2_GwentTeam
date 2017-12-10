@@ -6,6 +6,7 @@ mixin item(title, href)
     if authorized
         +item('Играть', '/game')
         +item('Посмотреть мой профиль', '/profile')
+        +item('Лидеры', '/score')
         +item('Выйти', '/logout')
     unless authorized
         +item('Вход','/login')
