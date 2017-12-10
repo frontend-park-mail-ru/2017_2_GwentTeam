@@ -13,6 +13,8 @@ const userService = new UserService();
 export default class ScoreboardView extends BaseView {
 
     start() {
+        this.valueofPage = 'notlast';
+        this.info = new Info();
         this.limit = 3;
         this.offset = 0;
         this.flag = true;
@@ -87,27 +89,49 @@ export default class ScoreboardView extends BaseView {
 
     logic() {
         let buttonUser = document.getElementById('user');
-        let buttonPage = document.getElementById('page');
+        this.currentPage =  document.getElementById('page');
         let buttonBack = document.getElementById('back');
         let buttonForward = document.getElementById('forward');
-        if (this.offset === 0) {
-            buttonBack.setAttribute('hidden', 'hidden');
-        } else {
-            buttonBack.removeAttribute('hidden');
+        //buttonUser.style.border = '2px solid black';
+        this.offset === 0
+            ? buttonBack.setAttribute('hidden', 'hidden')
+            : buttonBack.removeAttribute('hidden');
+        console.log('butt', buttonForward);
+        if (buttonUser !== null) {
+            buttonUser.addEventListener('click', (event) => {
+                if (this.offset === this.user.position || this.offset === this.user.position - (this.user.position % 3)) {
+                    console.log('return');
+                    return;
+                }
+                (this.user.position % 3 === 0)
+                    ? this.offset = this.user.position
+                    : this.offset = this.user.position - (this.user.position % 3);
+                userService.getUsers(this.limit, this.offset);
+            });
         }
 
-        console.log('butt', buttonUser);
-        buttonUser.addEventListener('click', (event) => {
-            //this.users = userService.getUsers(limit, this.user.place)
-       });
+        buttonBack.addEventListener(('click'), (event) => {
+            if (this.valueofPage === 'last') {
+                this.valueofPage = 'notlast';
+                this.offset -= 3*2;
+            } else {
+                this.offset -= 3;
+            }
+            (this.offset === 0) ? this.flag = true : false;
+            userService.getUsers(this.limit, this.offset);
+        });
+
         buttonForward.addEventListener('click', (event) => {
             this.offset += 3;
             userService.getUsers(this.limit, this.offset)
                 .then((err) => {
                     if (err.status === 404) {
-                        this.info = new Info();
                         this.info.turnonInfo('Это последняя страничка!');
+                        this.check();
+                        this.render(this.users, this.user, this.flag);
+                        buttonForward = document.getElementById('forward');
                         buttonForward.setAttribute('hidden', 'hidden');
+                        this.valueofPage = 'last';
                     }
                 });
             // us.then((err) => {
