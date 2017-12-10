@@ -10,6 +10,7 @@ import Card from '../game-components/card/card.js';
 import GameWrapper from '../game-components/game-wrapper/game-wrapper.js';
 import Profilefield from '../game-components/profilefield/profilefield.js';
 import BoardWrapper from '../game-components/board-wrapper/board-wrapper.js';
+import SelectedCard from '../game-components/selected-card/selected-card.js';
 
 import bus from '../modules/event-bus.js';
 /**
@@ -36,6 +37,9 @@ export default class GameStrategy {
 
         this.boardEl = new BoardWrapper();
         this.gameEl.addEl(this.boardEl);
+
+        this.selectedCardEl = new SelectedCard();
+        this.gameEl.addEl(this.selectedCardEl);
 
         let b = new GameBoard(); //TODO ?
         let c = new GameBoard();

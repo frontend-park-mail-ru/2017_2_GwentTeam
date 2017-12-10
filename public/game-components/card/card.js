@@ -2,6 +2,8 @@
 
 import './card.styl';
 
+import bus from '../../modules/event-bus.js';
+
 export default class Card {
     /**
      * @constructor
@@ -10,7 +12,14 @@ export default class Card {
         this.score = data.score;
         this.type = data.type;
         this.index = data.index;
+
         this.domEl = this.createImg();
+        this.domEl.onmouseover = (event) => {
+            bus.emit('SHOWCARD', this);
+        };
+        this.domEl.onmouseout = (event) => {
+            bus.emit('HIDECARD');
+        };
     }
 
     createImg() {

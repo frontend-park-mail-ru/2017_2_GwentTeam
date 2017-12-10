@@ -12,6 +12,6 @@ export default class Profilefield {
     }
 
     addEl(element) {
-         this.el.appendChild(element.el);
+        this.el.appendChild(element.el);
     }
 }
