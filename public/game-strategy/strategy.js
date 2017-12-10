@@ -154,6 +154,7 @@ export default class GameStrategy {
 
     pushCardInLine(arrayOfLines, card) {
         arrayOfLines[card.type].addCard(card);
+        card.onboard = true;
     }
 
     pushCardInState(playerState, card) {

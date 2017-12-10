@@ -13,6 +13,8 @@ export default class Card {
         this.type = data.type;
         this.index = data.index;
 
+        this.onboard = false;
+
         this.domEl = this.createImg();
         this.domEl.onmouseover = (event) => {
             bus.emit('SHOWCARD', this);

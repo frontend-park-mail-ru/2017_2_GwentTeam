@@ -13,8 +13,13 @@ export default class SelectedCard {
         this.el.setAttribute('class', 'game-view__sel-card');
 
         bus.on('SHOWCARD', (payload) => {
-            this.clean();
-            this.el.appendChild(this.createImg(payload.payload.index));
+            const card = payload.payload;
+            if (card.onboard === false) {   //
+                this.el.appendChild(this.createImg(card.index));
+            }
+            else {
+                card.domEl.onmouseover = null;
+            }
         });
 
         bus.on('HIDECARD', () => {
