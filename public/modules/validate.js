@@ -1,36 +1,119 @@
 'use strict';
 
-export function validate(form, selector) {
-    let password;
-    if (selector === document.querySelector('.signin-form-js'))
-        password = document.getElementById('Signin');
-    else {
-        password = document.getElementById('Signup');
+const DEFAULT_INFO = 'Must be more than 4 symbols';
+const TOO_SHORT_INFO = 'Too short!';
+const DONE_INFO = 'Done!';
+const YES_COLOR = '#32cd32';
+const NO_COLOR = 'lightcoral';
+const UP = 'up';
+const IN = 'in';
+
+export default class Validate {
+    constructor(form, selector) {
+        //this.res = true;
+        this.form = form;
+        if (selector === document.querySelector('.signin-form-js')) {
+            this.flag = IN;
+            this.password = document.getElementById('Signin');
+        } else {
+            this.flag = UP;
+            this.password = document.getElementById('Signup');
+            this.email = document.getElementsByName('email');
+        }
+        this.resUp = {
+            login: true,
+            password: false,
+            email: true
+        };
+        this.resIn = {
+            login: true,
+            password: false,
+        };
+        this.eye = document.querySelector('.form-check');
+
+
+        if (this.eye !== null) {
+            this.eye.addEventListener('mouseover', () => {
+                this.password.setAttribute('type', 'text');
+            });
+
+            this.eye.addEventListener('mouseout', () => {
+                this.password.setAttribute('type', 'password');
+            });
+        }
+
+        this.info = this.form.querySelector('.password-validate');
+        this.changeInfo(DEFAULT_INFO);
+
+        this.login = document.getElementsByName('login');
+        this.err = this.form.querySelector('.info-text');
+
     }
-    const passwordinput = form.querySelector('.password-validate');
-    passwordinput.innerHTML = 'Must be more than 4 symbols';
-    // const Arraylogin = document.getElementsByName('login');
-    // let login = Arraylogin[0];
-    // if (Arraylogin.length > 1) {
-    //     login = Arraylogin[1];
-    // }
-    form.addEventListener('input', (event) => {
-        event.preventDefault();
-        if (event.target === password && password.value.length >= 4) {
-            //passwordinput.style.color = 'aquamarine';
-            passwordinput.parentElement.style.borderColor = '#32cd32';
-            passwordinput.innerHTML = 'Done!';
+
+    changeInfo(mes) {//сделать для других полей
+        this.info.innerHTML = mes;
+    }
+
+    changeColor(color) {
+        this.info.parentElement.style.borderColor = color;
+        this.info.style.color = color;
+    }
+
+    fieldsIsCorrect() {
+        if (this.flag === UP) {
+            this.resultable = Object.values(this.resUp).every(element => element === true);
+            return this.resultable;
+        } else {
+            this.resultable = Object.values(this.resIn).every(element => element === true);
+            return this.resultable;
         }
-    });
-    form.addEventListener('change', (event) => {
-        event.preventDefault();
-        if (event.target === password && password.value.length < 4) {
-            passwordinput.style.color = 'lightcoral';
-            passwordinput.parentElement.style.borderColor = 'lightcoral';
-            passwordinput.innerHTML = 'Too short!';
-        }
-        if (event.target !== password && password.value.length >= 4) {
-            //passwordinput.style.color = 'aquamarine';
-        }
-    });
+    }
+    printErrors(error) {
+
+    }
+
+    currentHandlers() {
+        this.form.addEventListener('input', (event) => {
+            event.preventDefault();
+            if (event.target === this.password && this.password.value.length < 4) {
+                this.changeColor(NO_COLOR);
+                this.changeInfo(TOO_SHORT_INFO);
+                this.resUp.password = false;
+            }
+            if (event.target === this.password && this.password.value.length >= 4) {
+                this.changeColor(YES_COLOR);
+                this.changeInfo(DONE_INFO);
+                this.resUp.password = true;
+            }
+        });
+    }
+
+    analize() {
+    //     if (this.email) {
+    //         if (this.login.value.length > 0) {
+    //             this.res *= true;
+    //         } else {
+    //             this.res *= false;
+    //             this.errors += 'Too short login!';
+    //         }
+    //         if (this.email.value.match('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$')) {
+    //             this.res *= true;
+    //         } else {
+    //             this.res *= false;
+    //             this.errors += 'Not valid email!';
+    //         }
+    //         if (this.password.value.match('^\\S{4,}$')) {
+    //             this.res *= true;
+    //         } else {
+    //             this.res *= false;
+    //             this.errors += 'Not valid password!';
+    //         }
+    //     } else {
+    //         if (this.login.value.length > 0
+    //             && (this.password.value.match('^\\S{4,}$'))) {
+    //
+    //         }
+    //     }
+    }
+
 }

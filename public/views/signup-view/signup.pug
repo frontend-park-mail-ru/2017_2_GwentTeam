@@ -1,13 +1,14 @@
 .form-section
     h2.signup-view__header Регистрация
     form.signup-view__form.signup-form-js
+        ul.info-text
         div.form-field
             label.form-label Login
             input(type="text", required="required", name="login", placeholder="Example")
             div.login-validate
         div.form-field
             label.form-label Email
-            input(type="email", required="required", name="email", placeholder="example@mail.ru")
+            input(type="email", required="required", name="email", placeholder="example@mail.ru", pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")
             div.email-validate
         div.form-inline
             div.form-field
