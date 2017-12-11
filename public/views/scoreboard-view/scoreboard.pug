@@ -22,10 +22,10 @@
                             td #{gamer.wins}
                     default
                         tr
-                            td
+                            td #{gamer.position}
                             td #{gamer.login}
                             td #{gamer.wins}
     div.scoreboard-view__buttons
         div#back Назад
-        div#page
+        div#page #{users[2].position/3}
         div#forward Вперед

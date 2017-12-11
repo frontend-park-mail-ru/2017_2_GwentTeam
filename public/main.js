@@ -12,6 +12,7 @@ import SigninView from './views/signin-view/signin-view.js';
 import SignoutView from './views/signout-view/signout-view.js';
 import UserService from './services/user-service.js';
 import Router from './modules/router.js';
+import Loader from './modules/loader.js';
 
 import './blocks/form/index.styl';
 import './styles.styl';
@@ -20,6 +21,7 @@ import './views/application-view/application.styl';
 const Background = document.createElement('div');
 Background.setAttribute('class', 'background__img');
 document.body.appendChild(Background);
+const loader = new Loader();
 
 const userService = new UserService();
 const application = new ApplicationView(document.body);

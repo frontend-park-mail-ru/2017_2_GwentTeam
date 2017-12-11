@@ -5,6 +5,7 @@ import UserService from '../../services/user-service.js';
 import BaseView from '../../modules/view.js';
 import menuTemplate from './menu.pug';
 import bus from '../../modules/event-bus.js';
+import Loader from '../../modules/loader.js';
 
 const userService = new UserService();
 
@@ -15,12 +16,15 @@ const userService = new UserService();
 */
 export default class MenuView extends BaseView {
     start() {
+        this.loader = new Loader();
         this.user = null;
         bus.on('user:authorized', ((data) => {
+            this.loader.hideEl();
             this.user = data.payload;
             this.resume();
         }));
         bus.on('user:unauthorized', (() => {
+            this.loader.hideEl();
             this.user = null;
             this.resume();
         }));
