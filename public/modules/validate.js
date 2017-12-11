@@ -2,6 +2,8 @@
 
 const DEFAULT_INFO = 'Must be more than 4 symbols';
 const TOO_SHORT_INFO = 'Too short!';
+const INVALID_EMAIL_INFO = 'Not valid email formal!';
+const REQUIRED_INFO = 'Required field!';
 const DONE_INFO = 'Done!';
 const YES_COLOR = '#32cd32';
 const NO_COLOR = 'lightcoral';
@@ -18,6 +20,8 @@ export default class Validate {
         } else {
             this.flag = UP;
             this.password = document.getElementById('Signup');
+            this.infoEmail = this.form.querySelector('.email-validate');
+            this.changeInfo(this.infoEmail, DEFAULT_INFO);
             this.email = document.getElementsByName('email');
         }
         this.resUp = {
@@ -42,21 +46,23 @@ export default class Validate {
             });
         }
 
-        this.info = this.form.querySelector('.password-validate');
-        this.changeInfo(DEFAULT_INFO);
+        this.infoPassword = this.form.querySelector('.password-validate');
+        this.infoEmail = this.form.querySelector('.email-validate');
+        this.infoLogin = this.form.querySelector('.login-validate');
+        this.changeInfo(this.infoPassword, DEFAULT_INFO);
 
         this.login = document.getElementsByName('login');
         this.err = this.form.querySelector('.info-text');
 
     }
 
-    changeInfo(mes) {//сделать для других полей
-        this.info.innerHTML = mes;
+    changeInfo(info, mes) {//сделать для других полей
+        info.innerHTML = mes;
     }
 
-    changeColor(color) {
-        this.info.parentElement.style.borderColor = color;
-        this.info.style.color = color;
+    changeColor(info, color) {
+        info.parentElement.style.borderColor = color;
+        info.style.color = color;
     }
 
     fieldsIsCorrect() {
@@ -73,18 +79,49 @@ export default class Validate {
     }
 
     currentHandlers() {
+        this.resX = null;
         this.form.addEventListener('input', (event) => {
-            event.preventDefault();
+            //event.preventDefault();
+            if (this.flag === UP) {
+                this.resX = this.resUp;
+                if (event.target === this.email[0] && !this.email[0].value.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)) {
+                    //if (event.target === this.email && (/[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$/).test(this.email.value) === true) {
+                    this.changeColor(this.infoEmail, NO_COLOR);
+                    this.changeInfo(this.infoEmail, INVALID_EMAIL_INFO);
+                    this.resX.email = false;
+                }
+
+                if (event.target === this.email[0] && this.email[0].value.length === 0) {
+                    this.changeColor(this.infoEmail, NO_COLOR);
+                    this.changeInfo(this.infoEmail, REQUIRED_INFO);
+                    this.resX.email = false;
+                }
+
+                if (event.target === this.email[0] && this.email[0].value.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)) {
+                //if (event.target === this.email && (/[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$/).test(this.email.value) === true) {
+                    this.changeColor(this.infoEmail, YES_COLOR);
+                    this.changeInfo(this.infoEmail, DONE_INFO);
+                    this.resX.email = true;
+
+                }
+            } else
+                this.resX = this.resIn;
             if (event.target === this.password && this.password.value.length < 4) {
-                this.changeColor(NO_COLOR);
-                this.changeInfo(TOO_SHORT_INFO);
-                this.resUp.password = false;
+                this.changeColor(this.infoPassword, NO_COLOR);
+                this.changeInfo(this.infoPassword, TOO_SHORT_INFO);
+                this.resX.password = false;
+            }
+            if (event.target === this.password && this.password.value.length === 0) {
+                this.changeColor(this.infoPassword, NO_COLOR);
+                this.changeInfo(this.infoPassword, REQUIRED_INFO);
+                this.resX.password = false;
             }
             if (event.target === this.password && this.password.value.length >= 4) {
-                this.changeColor(YES_COLOR);
-                this.changeInfo(DONE_INFO);
-                this.resUp.password = true;
+                this.changeColor(this.infoPassword, YES_COLOR);
+                this.changeInfo(this.infoPassword, DONE_INFO);
+                this.resX.password = true;
             }
+            //if (event.target === this.login && this.login.value)
         });
     }
 

@@ -57,7 +57,7 @@ export default class UserService {
                     // err.json().then((obj) => {
                     //     console.log(obj.message);
                     // });
-                    bus.emit('valid:err', err.status);
+                    //bus.emit('valid:err', err.status);
                     this.loader.hideEl();//
                     this.result.turnonInfo('Пользователь уже существует :(');
                 }
