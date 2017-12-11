@@ -9,18 +9,30 @@
 .scoreboard-view__buttons
     display flex
     justify-content space-around
-    width 20%
-
-#back:hover, #forward:hover
-    color #36324a
-    cursor pointer
+    width 13%
+#page
+    border 2px solid black
+    padding 0 5px
+#back, #forward
+    font-style italic
+    &:hover
+        color #36324a
+        cursor pointer
 #user
     border 2px solid aquamarine
     &:hover
         cursor pointer
+        font-style italic
+        //animation uptr .35s ease-in-out 1
+@keyframes uptr
+    50%
+        transform translateY(-10px)
+    100%
+        transform translateY(0px)
 table
     border-collapse collapse
     border 2px solid black
+
 //td, th
 //    padding: 5px; /* Поля вокруг текста */
 //    border: 2px solid green; /* Рамка вокруг ячеек */

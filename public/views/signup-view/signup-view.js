@@ -7,6 +7,7 @@ import Form from '../../blocks/form/form.js';
 import signupTemplate from './signup.pug';
 import bus from '../../modules/event-bus.js';
 import {validate} from '../../modules/validate.js';
+import Loader from '../../modules/loader.js';
 
 const userService = new UserService();
 
@@ -17,14 +18,17 @@ const userService = new UserService();
 */
 export default class SignupView extends BaseView {
     start() {
+        this.loader = new Loader();
         this.render();
         this.form = new Form(this.el.querySelector('.signup-form-js'), ['login', 'email', 'password']);
         validate(this.form.el, document.querySelector('.signup-form-js'));
         this.check();
         this.form.onsubmit(((formdata) => {
+            //this.loader.showEl();
             bus.emit('signup-user', formdata);
         }).bind(this));
         bus.on('user:authorized', (() => {
+            //this.loader.hideEl();
             this.form.reset();
         }).bind(this));
 
@@ -34,6 +38,7 @@ export default class SignupView extends BaseView {
             this.resume();
         }).bind(this));
         bus.on('user:unauthorized', (() => {
+            //this.loader.hideEl();
             this.user = null;
         }).bind(this));
     }
