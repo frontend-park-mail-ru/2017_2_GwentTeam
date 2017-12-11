@@ -27,13 +27,13 @@ export default class ScoreboardView extends BaseView {
            this.users = data.payload;
             console.warn('this.users', this.users);
            this.check();
-           this.render(this.users, this.user, this.flag);
+           this.render(this.users, this.user, this.flag, this.currentPage);
         });
     }
 
-    render(users, user, flag) {
+    render(users, user, flag, page) {
         console.log('ku');
-        this.el.innerHTML = scoreboardTemplate({users, user, flag});
+        this.el.innerHTML = scoreboardTemplate({users, user, flag, page});
         this.logic();
     }
 
@@ -61,6 +61,7 @@ export default class ScoreboardView extends BaseView {
                 console.log('flag, users', this.flag, this.users);
             }
         });
+        this.currentPage = (this.offset + this.limit - 1)/3;
     }
 
     logic() {
@@ -104,7 +105,7 @@ export default class ScoreboardView extends BaseView {
                     if (err.status === 404) {
                         this.info.turnonInfo('Это последняя страничка!');
                         this.check();
-                        this.render(this.users, this.user, this.flag);
+                        //this.render(this.users, this.user, this.flag);
                         buttonForward = document.getElementById('forward');
                         buttonForward.setAttribute('hidden', 'hidden');
                         this.valueofPage = 'last';
