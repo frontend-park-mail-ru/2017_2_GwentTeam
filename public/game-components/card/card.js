@@ -35,4 +35,8 @@ export default class Card {
     deleteImg() {
         this.domEl.remove();
     }
+
+    illuminate() {
+        this.domEl.setAttribute('class', 'card-img__illumination');
+    }
 }

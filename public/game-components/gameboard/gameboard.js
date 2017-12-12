@@ -19,7 +19,7 @@ export default class GameBoard {
         this.boardEl.setAttribute('class', 'game-board__board-item');
         this.el.appendChild(this.boardEl);
 
-        this.score = 0;
+        //this.score = 0;
     }
 
     clean() {
@@ -30,7 +30,9 @@ export default class GameBoard {
 
     addCard(card) {
         this.boardEl.appendChild(card.domEl);
-        this.score += card.score;
-        //this.scoreEl.innerHTML = this.score;
+        //card.illuminate();
+
+        // this.score += card.score;
+        // this.scoreEl.innerHTML = this.score;
     }
 }

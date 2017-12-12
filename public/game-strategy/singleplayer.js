@@ -104,6 +104,7 @@ export default class SinglePlayerStrategy extends Strategy {
     round() {
         this.isUserWinRound() ? this.userState.roundWin++ : this.compState.roundWin++;
         this.compState.roundScores = 0;
+        this.userState.roundScores = 0;
         bus.emit('ROUND', {
             opponentScore : this.compState.roundScores,
             opponentRounds : this.compState.roundWin,

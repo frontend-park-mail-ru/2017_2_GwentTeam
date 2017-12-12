@@ -86,7 +86,7 @@ export default class Router {
 
             // null только при первой загрузки страницы, потому что ничего перезагружать не надо
             if (this.currentView) {
-                console.log(this.currentView)
+                //console.log(this.currentView)
                 this.currentView.pause();
             }
             if (window.location.pathname !== info.route) {
@@ -104,7 +104,7 @@ export default class Router {
 
             return true;
         });
-        
+
         if (res) {
             this.callbacks.forEach((callback) => {
                 callback(route);

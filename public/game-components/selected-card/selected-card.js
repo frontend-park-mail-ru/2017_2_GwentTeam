@@ -14,12 +14,9 @@ export default class SelectedCard {
 
         bus.on('SHOWCARD', (payload) => {
             const card = payload.payload;
-            if (card.onboard === false) {   //
-                this.el.appendChild(this.createImg(card.index));
-            }
-            else {
-                card.domEl.onmouseover = null;
-            }
+            card.onboard === false
+                ? this.el.appendChild(this.createImg(card.index))
+                : card.domEl.onmouseover = null;
         });
 
         bus.on('HIDECARD', () => {
