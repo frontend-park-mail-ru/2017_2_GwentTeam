@@ -27,6 +27,7 @@ export default class ScoreboardView extends BaseView {
            this.users = data.payload;
             console.warn('this.users', this.users);
            this.check();
+           this.resume();
            this.render(this.users, this.user, this.flag, this.currentPage);
         });
     }
@@ -38,13 +39,16 @@ export default class ScoreboardView extends BaseView {
     }
 
     resume() {
-        if (!userService.isLoggedIn())
-        {//при загрузке /score в урле срабатывает быстрее
-            this.pause();
-            console.warn(userService.user);
-            this.router.go('/');
-            return;
-        }
+        //const timeAway = (() => {//TODO исправить
+            if (userService.user === null)
+            {//при загрузке /score в урле срабатывает быстрее
+                //this.pause();
+                console.warn(userService.user);
+                this.router.go('/');
+                return;
+            }
+        //});
+        //setTimeout(timeAway, 150);
         //this.user = userService.getUser(true);
         //this.check();
 
