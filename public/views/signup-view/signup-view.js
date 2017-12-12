@@ -27,7 +27,8 @@ export default class SignupView extends BaseView {
             this.printErrors(data.payload);
         });
         this.form.onsubmit(((formdata) => {
-            //this.loader.showEl();
+            //
+            this.validator.analize();
             if (this.validator.fieldsIsCorrect() === true)
                 bus.emit('signup-user', formdata);
         }).bind(this));

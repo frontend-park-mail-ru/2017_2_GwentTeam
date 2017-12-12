@@ -21,7 +21,7 @@ export default class Validate {
             this.flag = UP;
             this.password = document.getElementById('Signup');
             this.infoEmail = this.form.querySelector('.email-validate');
-            this.changeInfo(this.infoEmail, DEFAULT_INFO);
+            this.changeInfo(this.infoEmail, null);
             this.email = document.getElementsByName('email');
         }
         this.resUp = {
@@ -126,31 +126,24 @@ export default class Validate {
     }
 
     analize() {
-    //     if (this.email) {
-    //         if (this.login.value.length > 0) {
-    //             this.res *= true;
-    //         } else {
-    //             this.res *= false;
-    //             this.errors += 'Too short login!';
-    //         }
-    //         if (this.email.value.match('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$')) {
-    //             this.res *= true;
-    //         } else {
-    //             this.res *= false;
-    //             this.errors += 'Not valid email!';
-    //         }
-    //         if (this.password.value.match('^\\S{4,}$')) {
-    //             this.res *= true;
-    //         } else {
-    //             this.res *= false;
-    //             this.errors += 'Not valid password!';
-    //         }
-    //     } else {
-    //         if (this.login.value.length > 0
-    //             && (this.password.value.match('^\\S{4,}$'))) {
-    //
-    //         }
-    //     }
+        if (this.flag === UP) {
+            if (this.email[0].value.length === 0) {//TODO заменить блок в функцию
+                this.changeColor(this.infoEmail, NO_COLOR);
+                this.changeInfo(this.infoEmail, REQUIRED_INFO);
+                this.resX.email = false;
+            }
+        }
+        if (this.login[0].value.length === 0) {
+            this.changeColor(this.infoLogin, NO_COLOR);
+            this.changeInfo(this.infoLogin, REQUIRED_INFO);
+            this.resX.login = false;
+        }
+        if (this.password.value.length === 0) {
+            console
+            this.changeColor(this.infoPassword, NO_COLOR);
+            this.changeInfo(this.infoPassword, REQUIRED_INFO);
+            this.resX.password = false;
+        }
     }
 
 }
