@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- '9'
+- '8'
 script:
 - eval "$(ssh-agent -s)"
 - ssh-keyscan -H 46.101.254.200 >> ~/.ssh/known_hosts
