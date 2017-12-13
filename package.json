@@ -12,8 +12,7 @@
     "lint": "eslint .",
     "test": "jest",
     "build": "webpack",
-    "build-dev": "webpack --watch",
-    "postinstall": "npm run build"
+    "build-dev": "webpack --watch"
   },
   "author": "GwentTeam",
   "license": "ISC",

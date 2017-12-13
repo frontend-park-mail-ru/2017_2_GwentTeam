@@ -2,4 +2,12 @@ language: node_js
 node_js:
 - '9'
 script:
+- eval "$(ssh-agent -s)"
+- ssh-keyscan -H 46.101.254.200 >> ~/.ssh/known_hosts
+- chmod 600 $HOME/.ssh/tech-gwent
+- ssh-add $HOME/.ssh/tech-gwent
 - npm run build
+- scp -r ./dist root@46.101.254.200:/var/www
+before_install:
+- openssl aes-256-cbc -K $encrypted_cff8668a0280_key -iv $encrypted_cff8668a0280_iv
+  -in tech-gwent.enc -out $HOME/.ssh/tech-gwent -d
