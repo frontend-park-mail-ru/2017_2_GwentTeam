@@ -1,5 +1,7 @@
 # ТехноГвинт
 
+[![Build Status](https://travis-ci.org/frontend-park-mail-ru/2017_2_GwentTeam.svg?branch=master)](https://travis-ci.org/frontend-park-mail-ru/2017_2_GwentTeam)
+
 Реализация клиенской части игры ТехноГвинт
 
 ## Описание игры
