@@ -27,6 +27,9 @@ export default class GameBoard {
         while (this.boardEl.lastChild) {
             this.boardEl.removeChild(this.boardEl.lastChild);
         }
+        this.score = 0;
+        this.scoreEl.innerHTML = '0';
+        this.boardEl.appendChild(this.scoreEl);
     }
 
     addCard(card) {

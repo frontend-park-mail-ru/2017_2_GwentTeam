@@ -63,7 +63,7 @@ export default class GameStrategy {
         }
 
         this.cardfield = new Cardfield();
-        this.boardEl.addEl(this.cardfield);
+        this.el.appendChild(this.cardfield.el);
 
         this.compScoreField = new Scorefield();
         this.profilefield.addEl(this.compScoreField);

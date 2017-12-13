@@ -12,7 +12,7 @@ export default class Scorefield {
     }
 
     printScore(state) {
-        this.el.innerHTML = 'Очков за раунд: ' + state.score +
-            '<br/><br/>Выиграно раундов:  ' + state.rounds;
+        this.el.innerHTML = 'Points: ' + state.score +
+            '<br/><br/>Rounds:  ' + state.rounds;
     }
 }
