@@ -4,8 +4,8 @@ node_js:
 script:
 - eval "$(ssh-agent -s)"
 - ssh-keyscan -H 46.101.254.200 >> ~/.ssh/known_hosts
-- chmod 600 $HOME/.ssh/tech-gwent
-- ssh-add $HOME/.ssh/tech-gwent
+- chmod 600 $HOME/.ssh/tech-gwent-no-pass
+- ssh-add $HOME/.ssh/tech-gwent-no-pass
 - npm run build
 - scp -r ./dist root@46.101.254.200:/var/www
 before_install:
