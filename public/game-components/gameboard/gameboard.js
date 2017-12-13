@@ -10,16 +10,17 @@ export default class GameBoard {
         this.el = document.createElement('div');
         this.el.setAttribute('class', 'game-board__line');
 
-        // this.scoreEl = document.createElement('div');
-        // this.scoreEl.setAttribute('class', 'game-board__score');
-        // this.scoreEl.innerHTML = '0';
-        // this.el.appendChild(this.scoreEl);
 
         this.boardEl = document.createElement('div');
         this.boardEl.setAttribute('class', 'game-board__board-item');
         this.el.appendChild(this.boardEl);
 
-        //this.score = 0;
+        this.scoreEl = document.createElement('div');
+        this.scoreEl.setAttribute('class', 'game-board__score');
+        this.scoreEl.innerHTML = '0';
+        this.boardEl.appendChild(this.scoreEl);
+
+        this.score = 0;
     }
 
     clean() {
@@ -32,7 +33,7 @@ export default class GameBoard {
         this.boardEl.appendChild(card.domEl);
         //card.illuminate();
 
-        // this.score += card.score;
-        // this.scoreEl.innerHTML = this.score;
+        this.score += card.score;
+        this.scoreEl.innerHTML = this.score;
     }
 }
