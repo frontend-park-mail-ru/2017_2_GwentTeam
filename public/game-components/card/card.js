@@ -4,6 +4,8 @@ import './card.styl';
 
 import bus from '../../modules/event-bus.js';
 
+import './cards-new.styl';
+
 export default class Card {
     /**
      * @constructor
@@ -11,6 +13,7 @@ export default class Card {
     constructor(data) {
         this.score = data.score;
         this.type = data.type;
+        this.img = data.img;
         this.index = data.index;
 
         this.onboard = false;
@@ -25,10 +28,8 @@ export default class Card {
     }
 
     createImg() {
-        const src = './img/new-cards/' + this.index + '.png';
-        let domEl = document.createElement('img');
-        domEl.setAttribute('src', src);
-        domEl.setAttribute('class', 'cardfield__card-img');
+        let domEl = document.createElement('div');
+        domEl.setAttribute('class', 'card-sm-monster card-sm-monster-'+ this.img);
         return domEl;
     }
 

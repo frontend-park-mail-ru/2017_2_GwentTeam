@@ -3,6 +3,8 @@
 import Strategy from './strategy.js';
 
 import bus from '../modules/event-bus.js';
+
+import Monsters from './all-cards.js';
 /**
  * @module GameView
  * @extends BaseView
@@ -20,14 +22,8 @@ export default class SinglePlayerStrategy extends Strategy {
         this.roundCardsCount = 2;
         this.roundsCount = 2;
 
-        const b = 'b';
-        const c = 'c';
-        const d = 'd';
-        const types = [b, b, b, b, b, b, b, b, c, c, c, c, c, c, c, d, d, d, d, d, d, d, d, d];
-        const scores = [2, 4, 8, 8, 9, 1100, 12, 12, 1, 2, 5, 7, 9, 10, 11, 1, 2, 3, 3, 4, 5, 6, 6, 7];
-
-        this.userCards = this.createArray(types, scores);
-        this.compCards = this.createArray(types, scores);
+        this.userCards = this.createArray();
+        this.compCards = this.createArray();
 
         this.compState = {
             playerName: 'Opponent',
@@ -64,7 +60,7 @@ export default class SinglePlayerStrategy extends Strategy {
     opponentGo() {
         let opponentCard = this.opponentCard();
         this.compState.gameCards.forEach((card, cardIndex) => {
-            if (card.index === opponentCard.index) {
+            if (card.img === opponentCard.img) {   //TODO index
                 this.pushCardInState(this.compState, card);
                 this.compState.roundScores += card.score;
                 this.compState.gameCards.splice(cardIndex, 1);
@@ -128,11 +124,14 @@ export default class SinglePlayerStrategy extends Strategy {
         return (this.userState.roundWin > this.roundsCount || this.compState.roundWin > this.roundsCount);
     }
 
-    createArray(types, scores) {
+    createArray() {
         let arrayOfResult = [];
-        scores.forEach((score, index) => {
-            arrayOfResult.push({ type: types[index], score: score, index:index + 1});
-        });
+        // scores.forEach((score, index) => {
+        //     arrayOfResult.push({ type: types[index], score: score, index:index + 1});
+        // });
+        for (let key in Monsters) {
+            arrayOfResult.push(Monsters[key]);
+        }
         return arrayOfResult;
     }
 }
