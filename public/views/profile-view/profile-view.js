@@ -16,12 +16,10 @@ export default class ProfileView extends BaseView {
     start() {
         this.user = userService.user;
         bus.on('user:notauthorized', () => {//добавить сюда go
-            console.warn('what');
             this.resume();
         });
         bus.on('user:authorized', (data) => {
             this.user = data.payload;
-            //this.render();
             this.resume();
         });
         bus.on('user:unauthorized', () => {
@@ -36,9 +34,6 @@ export default class ProfileView extends BaseView {
     }
 
     resume() {
-        // if (userService.isLoggedIn()) {
-        //     this.user = userService.user;
-        // }
         if (this.user === null) {
             this.pause();
             this.router.go('/');

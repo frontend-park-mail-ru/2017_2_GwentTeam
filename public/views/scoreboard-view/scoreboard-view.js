@@ -22,7 +22,7 @@ export default class ScoreboardView extends BaseView {
             console.warn('what');
             this.resume();
         });
-        userService.getUser(true);
+        userService.getUser(true);//второй ненужный запрос
 
         bus.on('user:fetch', (data) => {
             this.user = data.payload;
@@ -34,7 +34,6 @@ export default class ScoreboardView extends BaseView {
             this.resume();
             this.render(this.users, this.user, this.flag, this.currentPage);
         });
-        //this.resume();
     }
 
     render(users, user, flag, page) {
@@ -50,7 +49,6 @@ export default class ScoreboardView extends BaseView {
     resume() {
         if (userService.user === null) {
             this.pause();
-            console.warn(userService.user);
             this.router.go('/');
             return;
         }

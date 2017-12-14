@@ -74,18 +74,16 @@ export default class Validate {
             return this.resultable;
         }
     }
-    printErrors(error) {
-
-    }
+    // printErrors(error) {
+    //
+    // }
 
     currentHandlers() {
         this.resX = null;
         this.form.addEventListener('input', (event) => {
-            //event.preventDefault();
             if (this.flag === UP) {
                 this.resX = this.resUp;
                 if (event.target === this.email[0] && !this.email[0].value.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)) {
-                    //if (event.target === this.email && (/[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$/).test(this.email.value) === true) {
                     this.changeColor(this.infoEmail, NO_COLOR);
                     this.changeInfo(this.infoEmail, INVALID_EMAIL_INFO);
                     this.resX.email = false;
@@ -98,7 +96,6 @@ export default class Validate {
                 }
 
                 if (event.target === this.email[0] && this.email[0].value.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)) {
-                //if (event.target === this.email && (/[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$/).test(this.email.value) === true) {
                     this.changeColor(this.infoEmail, YES_COLOR);
                     this.changeInfo(this.infoEmail, DONE_INFO);
                     this.resX.email = true;
@@ -139,7 +136,6 @@ export default class Validate {
             this.resX.login = false;
         }
         if (this.password.value.length === 0) {
-            console
             this.changeColor(this.infoPassword, NO_COLOR);
             this.changeInfo(this.infoPassword, REQUIRED_INFO);
             this.resX.password = false;

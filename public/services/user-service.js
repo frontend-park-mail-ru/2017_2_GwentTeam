@@ -119,7 +119,6 @@ export default class UserService {
 
         return Http.Get(url + '/auth')
             .then((userdata) => {
-                //console.warn(userdata);
                 this.user = userdata;
                 router.start();
                 bus.emit('user:authorized', this.user);
@@ -130,7 +129,6 @@ export default class UserService {
                 if (err.status === 401) {
                     this.loader.hideEl();//
                     router.start();
-                    console.warn('null');
                     bus.emit('user:notauthorized', this.user);
                 }
                 return err;
