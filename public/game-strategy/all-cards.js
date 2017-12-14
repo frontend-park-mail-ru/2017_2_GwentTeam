@@ -1,52 +1,4 @@
 module.exports = {
-    // 'eredin_commander_of_the_red_riders': {
-    //     score: -1,
-    //     index: 'eredin_commander',
-    //     faction: 'monster',
-    //     type: 3
-    // },
-    // 'eredin_bringer_of_death': {
-    //     score: -1,
-    //     index: 'eredin_bringer',
-    //     faction: 'monster',
-    //     type: 3
-    // },
-    // 'eredin_destroyer_of_worlds': {
-    //     score: -1,
-    //     index: 'eredin_destroyer',
-    //     faction: 'monster',
-    //     type: 3
-    // },
-    // 'eredin_king_of_the_wild_hunt': {
-    //     score: -1,
-    //     index: 'eredin_king',
-    //     faction: 'monster',
-    //     type: 3
-    // },
-    // 'kayran': {
-    //     score: 8,
-    //     index: 'kayran',
-    //     faction: 'monster',
-    //     type: 1
-    // },
-    // 'leshen': {
-    //     score: 10,
-    //     index: 'leshen',
-    //     faction: 'monster',
-    //     type: 'd'
-    // },
-    // 'imlerith': {
-    //     score: 10,
-    //     index: 'imlerith',
-    //     faction: 'monster',
-    //     type: 'b'
-    // },
-    // 'draug': {
-    //     score: 10,
-    //     index: 'draug',
-    //     faction: 'monster',
-    //     type: 'b'
-    // },
     'ghoul': {
         score: 1,
         index: 'ghoul1',
@@ -71,12 +23,6 @@ module.exports = {
         faction: 'monster',
         type: 'b'
     },
-    // 'celaeno_harpy': {
-    //     score: 2,
-    //     index: 'celaeno_harpy',
-    //     faction: 'monster',
-    //     type: 1
-    // },
     'gargoyle': {
         score: 2,
         index: 'gargoyle',
@@ -89,12 +35,6 @@ module.exports = {
         faction: 'monster',
         type: 'd'
     },
-    // 'harpy': {
-    //     score: 2,
-    //     index: 'harpy',
-    //     faction: 'monster',
-    //     type: 1
-    // },
     'endrega': {
         score: 2,
         index: 'endrega',
@@ -143,12 +83,6 @@ module.exports = {
         faction: 'monster',
         type: 'b'
     },
-    // 'plague_maiden': {
-    //     score: 5,
-    //     index: 'forktail',
-    //     faction: 'monster',
-    //     type: 0
-    // },
     'griffin': {
         score: 5,
         index: 'griffin',

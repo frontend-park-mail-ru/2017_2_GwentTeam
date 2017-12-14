@@ -118,7 +118,7 @@ export default class UserService {
 
         return Http.Get(url + '/auth')
             .then((userdata) => {
-                console.warn(userdata);
+                //console.warn(userdata);
                 this.user = userdata;
                 bus.emit('user:authorized', this.user);
                 this.loader.hideEl();//
@@ -134,7 +134,7 @@ export default class UserService {
     getUsers(limit, offset) {
         return Http.Get(url + `/users?limit=${limit}&offset=${offset}`)
             .then((res) =>{
-                console.warn('res', res);
+                //console.warn('res', res);
                 bus.emit('users:fetch', res);
                 return res;
             })
@@ -147,8 +147,8 @@ export default class UserService {
     getUser(hasPosition) {
         return Http.Get(url + `/auth?hasPosition=${hasPosition}`)
             .then((res) => {
-               bus.emit('user:fetch', res);
-               return res;
+                bus.emit('user:fetch', res);
+                return res;
             });
     }
 

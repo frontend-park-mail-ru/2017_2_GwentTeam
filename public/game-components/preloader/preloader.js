@@ -21,6 +21,6 @@ export default class Preloader {
     }
 
     hideIlluminate() {
-        this.el.setAttribute('class', 'game-view__preloade');
+        this.el.setAttribute('class', 'game-view__preloader');
     }
 }

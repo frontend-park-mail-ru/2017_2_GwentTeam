@@ -19,10 +19,10 @@ export default class Card {
         this.onboard = false;
 
         this.domEl = this.createImg();
-        this.domEl.onmouseover = (event) => {
+        this.domEl.onmouseover = () => {
             bus.emit('SHOWCARD', this);
         };
-        this.domEl.onmouseout = (event) => {
+        this.domEl.onmouseout = () => {
             bus.emit('HIDECARD');
         };
     }
@@ -38,6 +38,10 @@ export default class Card {
     }
 
     illuminate() {
-        this.domEl.setAttribute('class', 'card-img__illumination');
+        this.domEl.setAttribute('class', 'card-img__illumination card-sm-monster card-sm-monster-'+ this.index);
     }
+
+    // hideIlluminate() {
+    //     this.domEl.setAttribute('class', 'card-sm-monster card-sm-monster-'+ this.index);
+    // }
 }

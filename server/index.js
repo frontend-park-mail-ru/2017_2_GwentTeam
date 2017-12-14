@@ -13,26 +13,26 @@ app.use(fallback('index.html', {
 }));
 app.use(body.json());
 
-const users = {
-    'a1': {
-        login: 'a1',
-        email: 'a@mail.ru',
-        password: 1234,
-        scores: 12
-    },
-    'a2': {
-        login: 'a2',
-        email: 'a2@mail.ru',
-        password: 1234,
-        scores: 10
-    },
-    'a3': {
-        login: 'a3',
-        email: 'a3@mail.ru',
-        password: 1234,
-        scores: 11
-    }
-};
+// const users = {
+//     'a1': {
+//         login: 'a1',
+//         email: 'a@mail.ru',
+//         password: 1234,
+//         scores: 12
+//     },
+//     'a2': {
+//         login: 'a2',
+//         email: 'a2@mail.ru',
+//         password: 1234,
+//         scores: 10
+//     },
+//     'a3': {
+//         login: 'a3',
+//         email: 'a3@mail.ru',
+//         password: 1234,
+//         scores: 11
+//     }
+// };
 
 const game = new Game();
 
