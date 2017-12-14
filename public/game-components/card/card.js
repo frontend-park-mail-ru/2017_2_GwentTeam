@@ -13,8 +13,8 @@ export default class Card {
     constructor(data) {
         this.score = data.score;
         this.type = data.type;
-        this.img = data.img;
         this.index = data.index;
+
 
         this.onboard = false;
 
@@ -29,7 +29,7 @@ export default class Card {
 
     createImg() {
         let domEl = document.createElement('div');
-        domEl.setAttribute('class', 'card-sm-monster card-sm-monster-'+ this.img);
+        domEl.setAttribute('class', 'card-sm-monster card-sm-monster-'+ this.index);
         return domEl;
     }
 

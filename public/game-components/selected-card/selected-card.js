@@ -15,7 +15,7 @@ export default class SelectedCard {
         bus.on('SHOWCARD', (payload) => {
             const card = payload.payload;
             card.onboard === false
-                ? this.el.appendChild(this.createImg(card.img))
+                ? this.el.appendChild(this.createImg(card.index))
                 : card.domEl.onmouseover = null;
         });
 

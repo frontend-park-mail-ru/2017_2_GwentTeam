@@ -178,7 +178,7 @@ export default class GameStrategy {
 
     userGo(data) {
         this.userState.gameCards.forEach((card, cardIndex) => {
-            if (card.img === data.img) {  //TODO index
+            if (card.index === data.index) {  //TODO index
                 card.domEl.remove();
                 this.pushCardInLine(this.userGamefield, card);
                 this.pushCardInState(this.userState, card);
