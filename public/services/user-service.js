@@ -139,7 +139,7 @@ export default class UserService {
                 return res;
             })
             .catch((err) => {
-                console.log('errror', err);
+                //console.log('errror', err);
                 return err;
             });
     }

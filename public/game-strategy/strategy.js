@@ -63,7 +63,7 @@ export default class GameStrategy {
         }
 
         this.cardfield = new Cardfield();
-        this.boardEl.addEl(this.cardfield);
+        this.el.appendChild(this.cardfield.el);
 
         this.compScoreField = new Scorefield();
         this.profilefield.addEl(this.compScoreField);
@@ -178,7 +178,7 @@ export default class GameStrategy {
 
     userGo(data) {
         this.userState.gameCards.forEach((card, cardIndex) => {
-            if (card.index === data.index) {
+            if (card.img === data.img) {  //TODO index
                 card.domEl.remove();
                 this.pushCardInLine(this.userGamefield, card);
                 this.pushCardInState(this.userState, card);

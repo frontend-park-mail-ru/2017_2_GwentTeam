@@ -49,7 +49,7 @@ export default class ScoreboardView extends BaseView {
         //this.check();
 
         //const us = userService.getUsers();
-        console.log('2');
+        //console.log('2');
         super.resume();
     }
 
@@ -58,7 +58,7 @@ export default class ScoreboardView extends BaseView {
             if (element.login === this.user.login) {
                 this.flag = false;
                 this.users.splice(elementIndex, 1, this.user);
-                console.log('flag, users', this.flag, this.users);
+                //console.log('flag, users', this.flag, this.users);
             }
         });
         this.currentPage = (this.offset + this.limit - 1)/3;
@@ -73,7 +73,7 @@ export default class ScoreboardView extends BaseView {
         this.offset === 1
             ? buttonBack.setAttribute('hidden', 'hidden')
             : buttonBack.removeAttribute('hidden');
-        console.log('butt', buttonForward);
+        //console.log('butt', buttonForward);
         if (buttonUser !== null) {
             buttonUser.addEventListener('click', (event) => {
                 if (this.offset === this.user.position || this.offset === this.user.position - (this.user.position % 3)) {

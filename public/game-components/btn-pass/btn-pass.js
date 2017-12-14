@@ -9,8 +9,8 @@ export default class ButtonPass {
     constructor() {
         this.el = document.createElement('div');
         this.el.setAttribute('class', 'profilefield__btn-pass');
-        this.el.setAttribute('value', 'ПАС');
-        this.el.innerText = 'ПАС';
+        //this.el.setAttribute('value', 'ПАС');
+        this.el.innerText = 'PASS';
 
         this.availible = true;
     }

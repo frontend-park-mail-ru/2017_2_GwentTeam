@@ -15,6 +15,7 @@ export default class GameView extends BaseView {
         const router = new Router();
         super(parentElement, router, true);
 
+        // console.log(document.documentElement.clientWidth);
         this.strategy = new MultiPlayerStrategy(router, this.el);
     }
 
