@@ -18,7 +18,12 @@ export default class ScoreboardView extends BaseView {
         this.limit = DEFAULT_LIMIT;
         this.offset = DEFAULT_OFFSET;
         this.flag = true;
+        bus.on('user:notauthorized', () => {//добавить сюда go
+            console.warn('what');
+            this.resume();
+        });
         userService.getUser(true);
+
         bus.on('user:fetch', (data) => {
             this.user = data.payload;
             userService.getUsers(this.limit, this.offset);
@@ -26,9 +31,10 @@ export default class ScoreboardView extends BaseView {
         bus.on('users:fetch', (data) => {
             this.users = data.payload;
             this.check();
+            this.resume();
             this.render(this.users, this.user, this.flag, this.currentPage);
         });
-        this.resume();
+        //this.resume();
     }
 
     render(users, user, flag, page) {

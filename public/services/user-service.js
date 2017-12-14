@@ -111,7 +111,7 @@ export default class UserService {
      * Загружает данные о текущем пользователе
      * @param {boolean} [force=false] - игнорировать ли кэш?
      */
-    getData(force = false) {
+    getData(force = false, router) {
         this.loader.showEl();
         if (this.isLoggedIn() && !force) {
             return Promise.resolve(this.user);
@@ -121,13 +121,18 @@ export default class UserService {
             .then((userdata) => {
                 //console.warn(userdata);
                 this.user = userdata;
+                router.start();
                 bus.emit('user:authorized', this.user);
                 this.loader.hideEl();//
                 return userdata;
             })
             .catch((err) => {
-                if (err.status === 401)
+                if (err.status === 401) {
                     this.loader.hideEl();//
+                    router.start();
+                    console.warn('null');
+                    bus.emit('user:notauthorized', this.user);
+                }
                 return err;
             });
     }

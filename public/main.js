@@ -53,8 +53,16 @@ router
     .register('/score', ScoreboardView)
     .register('/signup', SignupView)
     .register('/logout', SignoutView)
-    .start();
+    //.start();
 
-userService
-    .getData(true)
-    .catch(() => {});
+
+const url = ((callback) => {
+    userService
+        .getData(true, router)
+        .catch((err) => {return err;});
+    callback();
+});
+
+url(() => {
+    //router.start();
+});
