@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+- '8'
+branches:
+  only:
+  - master
+  - develop
+  - deploy
+script:
+- eval "$(ssh-agent -s)"
+- ssh-keyscan -H 46.101.254.200 >> ~/.ssh/known_hosts
+- chmod 600 $HOME/.ssh/tech-gwent-no-pass
+- ssh-add $HOME/.ssh/tech-gwent-no-pass
+- npm run build
+- scp -r ./build/* root@46.101.254.200:/var/www/tech-gwent
+before_install:
+- openssl aes-256-cbc -K $encrypted_9a9d5bd45e88_key -iv $encrypted_9a9d5bd45e88_iv
+  -in tech-gwent-no-pass.enc -out $HOME/.ssh/tech-gwent-no-pass -d

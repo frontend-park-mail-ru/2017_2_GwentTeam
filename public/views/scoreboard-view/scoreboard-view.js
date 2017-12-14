@@ -16,7 +16,7 @@ export default class ScoreboardView extends BaseView {
         this.valueofPage = 'notlast';
         this.info = new Info();
         this.limit = 3;
-        this.offset = 0;
+        this.offset = 1;
         this.flag = true;
         userService.getUser(true);
         bus.on('user:fetch', (data) => {
@@ -27,37 +27,13 @@ export default class ScoreboardView extends BaseView {
            this.users = data.payload;
             console.warn('this.users', this.users);
            this.check();
-           this.render(this.users, this.user, this.flag);
+           this.render(this.users, this.user, this.flag, this.currentPage);
         });
-        // this.users = [{
-        //     login: 'a1',
-        //     email: 'a@mail.ru',
-        //     password: 1234,
-        //     scores: 12
-        // }, {
-        //     login: 'a2',
-        //     email: 'a2@mail.ru',
-        //     password: 1234,
-        //     scores: 10
-        // }, {
-        //     login: 'a3',
-        //     email: 'a3@mail.ru',
-        //     password: 1234,
-        //     scores: 11
-        // }];
-        // this.user = {
-        //     login: 'a4',
-        //     email: 'a@mail.ru',
-        //     password: 1234,
-        //     scores: 12
-        // };
-        //bus.on('users:fetch')
-        //bus.on('user:authorized')
     }
 
-    render(users, user, flag) {
-        //console.log('ku');
-        this.el.innerHTML = scoreboardTemplate({users, user, flag});
+    render(users, user, flag, page) {
+        console.log('ku');
+        this.el.innerHTML = scoreboardTemplate({users, user, flag, page});
         this.logic();
     }
 
@@ -85,6 +61,7 @@ export default class ScoreboardView extends BaseView {
                 //console.log('flag, users', this.flag, this.users);
             }
         });
+        this.currentPage = (this.offset + this.limit - 1)/3;
     }
 
     logic() {
@@ -93,17 +70,16 @@ export default class ScoreboardView extends BaseView {
         let buttonBack = document.getElementById('back');
         let buttonForward = document.getElementById('forward');
         //buttonUser.style.border = '2px solid black';
-        this.offset === 0
+        this.offset === 1
             ? buttonBack.setAttribute('hidden', 'hidden')
             : buttonBack.removeAttribute('hidden');
         //console.log('butt', buttonForward);
         if (buttonUser !== null) {
             buttonUser.addEventListener('click', (event) => {
                 if (this.offset === this.user.position || this.offset === this.user.position - (this.user.position % 3)) {
-                    //console.log('return');
                     return;
                 }
-                (this.user.position % 3 === 0)
+                (this.user.position % 3 === 1)
                     ? this.offset = this.user.position
                     : this.offset = this.user.position - (this.user.position % 3);
                 userService.getUsers(this.limit, this.offset);
@@ -117,18 +93,19 @@ export default class ScoreboardView extends BaseView {
             } else {
                 this.offset -= 3;
             }
-            (this.offset === 0) ? this.flag = true : false;
+            (this.offset === 1) ? this.flag = true : false;
             userService.getUsers(this.limit, this.offset);
         });
 
         buttonForward.addEventListener('click', (event) => {
+            this.flag = false;
             this.offset += 3;
             userService.getUsers(this.limit, this.offset)
                 .then((err) => {
                     if (err.status === 404) {
                         this.info.turnonInfo('Это последняя страничка!');
                         this.check();
-                        this.render(this.users, this.user, this.flag);
+                        //this.render(this.users, this.user, this.flag);
                         buttonForward = document.getElementById('forward');
                         buttonForward.setAttribute('hidden', 'hidden');
                         this.valueofPage = 'last';

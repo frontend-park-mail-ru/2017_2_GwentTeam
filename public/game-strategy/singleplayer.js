@@ -60,7 +60,7 @@ export default class SinglePlayerStrategy extends Strategy {
     opponentGo() {
         let opponentCard = this.opponentCard();
         this.compState.gameCards.forEach((card, cardIndex) => {
-            if (card.img === opponentCard.img) {   //TODO index
+            if (card.index === opponentCard.index) {   //TODO index
                 this.pushCardInState(this.compState, card);
                 this.compState.roundScores += card.score;
                 this.compState.gameCards.splice(cardIndex, 1);
