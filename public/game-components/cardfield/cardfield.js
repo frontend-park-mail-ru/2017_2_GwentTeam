@@ -20,4 +20,5 @@ export default class Cardfield {
             this.el.removeChild(this.el.lastChild);
         }
     }
+
 }

@@ -13,8 +13,10 @@ export default class SelectedCard {
         this.el.setAttribute('class', 'game-view__sel-card');
 
         bus.on('SHOWCARD', (payload) => {
-            this.clean();
-            this.el.appendChild(this.createImg(payload.payload.index));
+            const card = payload.payload;
+            card.onboard === false
+                ? this.el.appendChild(this.createImg(card.index))
+                : card.domEl.onmouseover = null;
         });
 
         bus.on('HIDECARD', () => {
@@ -28,11 +30,9 @@ export default class SelectedCard {
         }
     }
 
-    createImg(index) {
-        const src = './img/cards/' + index + '.png';
-        let domEl = document.createElement('img');
-        domEl.setAttribute('src', src);
-        domEl.setAttribute('class', 'game-view__bigimg');
+    createImg(img) {
+        let domEl = document.createElement('div');
+        domEl.setAttribute('class', 'card-lg-monster card-lg-monster-'+ img);
         return domEl;
     }
 }

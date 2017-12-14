@@ -4,6 +4,8 @@ import './card.styl';
 
 import bus from '../../modules/event-bus.js';
 
+import './cards-new.styl';
+
 export default class Card {
     /**
      * @constructor
@@ -13,24 +15,33 @@ export default class Card {
         this.type = data.type;
         this.index = data.index;
 
+
+        this.onboard = false;
+
         this.domEl = this.createImg();
-        this.domEl.onmouseover = (event) => {
+        this.domEl.onmouseover = () => {
             bus.emit('SHOWCARD', this);
         };
-        this.domEl.onmouseout = (event) => {
+        this.domEl.onmouseout = () => {
             bus.emit('HIDECARD');
         };
     }
 
     createImg() {
-        const src = './img/new-cards/' + this.index + '.png';
-        let domEl = document.createElement('img');
-        domEl.setAttribute('src', src);
-        domEl.setAttribute('class', 'cardfield__card-img');
+        let domEl = document.createElement('div');
+        domEl.setAttribute('class', 'card-sm-monster card-sm-monster-'+ this.index);
         return domEl;
     }
 
     deleteImg() {
         this.domEl.remove();
     }
+
+    illuminate() {
+        this.domEl.setAttribute('class', 'card-img__illumination card-sm-monster card-sm-monster-'+ this.index);
+    }
+
+    // hideIlluminate() {
+    //     this.domEl.setAttribute('class', 'card-sm-monster card-sm-monster-'+ this.index);
+    // }
 }

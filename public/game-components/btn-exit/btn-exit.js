@@ -11,7 +11,7 @@ export default class ButtonExit {
 
         this.el = document.createElement('div');
         this.el.setAttribute('class', 'profilefield__btn-exit');
-        this.el.innerHTML = 'В главное меню';
+        this.el.innerHTML = 'Exit';
 
         this.el.onclick = () => {
             this.router.go('/');

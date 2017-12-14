@@ -14,6 +14,11 @@ export default class GameView extends BaseView {
         const router = new Router();
         super(parentElement, router, true);
 
+        // if(document.documentElement.clientHeight < 500) { //TODO
+        //     let viewport = document.querySelector('meta[name=viewport]');
+        //     viewport.setAttribute('content', 'width=device-width, initial-scale=0.6');
+        // }
+
         this.strategy = new SinglePlayerStrategy(router, this.el);
     }
 }

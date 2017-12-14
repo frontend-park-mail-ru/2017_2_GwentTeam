@@ -1,5 +1,7 @@
 'use strict';
 
+const Monsters = require('./all-cards.js');
+
 class Game {
     constructor() {
         this.player1 = null;
@@ -9,8 +11,8 @@ class Game {
             [],
             []
         ];
-        this.createArray(this.allCards[0]);
-        this.createArray(this.allCards[1]);
+        this.allCards[0] = this.createArray();
+        this.allCards[1] = this.createArray();
 
         this.state = [{
             roundWin: 0,
@@ -103,8 +105,8 @@ class Game {
             []
         ];
 
-        this.createArray(this.allCards[0]);
-        this.createArray(this.allCards[1]);
+        this.allCards[0] = this.createArray();
+        this.allCards[1] = this.createArray();
 
 
         this.state = [{
@@ -271,58 +273,12 @@ class Game {
         });
     }
 
-    createArray(array) {
-        let ind = 1;
-        this.createCard('b', 2, ind, array);
-        ind++;
-        this.createCard('b', 4, ind, array);
-        ind++;
-        this.createCard('b', 8, ind, array);
-        ind++;
-        this.createCard('b', 8, ind, array);
-        ind++;
-        this.createCard('b', 9, ind, array);
-        ind++;
-        this.createCard('b', 1100, ind, array);
-        ind++;
-        this.createCard('b', 12, ind, array);
-        ind++;
-        this.createCard('b', 12, ind, array);
-        ind++;
-
-        this.createCard('c', 1, ind, array);
-        ind++;
-        this.createCard('c', 2, ind, array);
-        ind++;
-        this.createCard('c', 5, ind, array);
-        ind++;
-        this.createCard('c', 7, ind, array);
-        ind++;
-        this.createCard('c', 9, ind, array);
-        ind++;
-        this.createCard('c', 10, ind, array);
-        ind++;
-        this.createCard('c', 11, ind, array);
-        ind++;
-
-        this.createCard('d', 1, ind, array);
-        ind++;
-        this.createCard('d', 2, ind, array);
-        ind++;
-        this.createCard('d', 3, ind, array);
-        ind++;
-        this.createCard('d', 3, ind, array);
-        ind++;
-        this.createCard('d', 4, ind, array);
-        ind++;
-        this.createCard('d', 5, ind, array);
-        ind++;
-        this.createCard('d', 6, ind, array);
-        ind++;
-        this.createCard('d', 6, ind, array);
-        ind++;
-        this.createCard('d', 7, ind, array);
-        ind++;
+    createArray() {
+        let arrayOfResult = [];
+        for (let key in Monsters) {
+            arrayOfResult.push(Monsters[key]);
+        }
+        return arrayOfResult;
     }
 }
 module.exports = Game;
