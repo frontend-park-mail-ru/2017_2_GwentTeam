@@ -44,6 +44,7 @@ export default class SigninView extends BaseView {
             //this.loader.hideEl();
             this.user = null;
         });
+        this.resume();
     }
 
     render() {

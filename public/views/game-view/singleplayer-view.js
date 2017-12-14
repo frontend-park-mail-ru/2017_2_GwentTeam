@@ -20,5 +20,6 @@ export default class GameView extends BaseView {
         // }
 
         this.strategy = new SinglePlayerStrategy(router, this.el);
+        super.resume();
     }
 }

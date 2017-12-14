@@ -150,6 +150,9 @@ export default class UserService {
             .then((res) => {
                 bus.emit('user:fetch', res);
                 return res;
+            })
+            .catch((err) => {
+                return err;
             });
     }
 

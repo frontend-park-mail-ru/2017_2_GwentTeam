@@ -23,6 +23,7 @@ export default class ProfileView extends BaseView {
             this.user = null;
             this.resume();
         });
+        this.resume();
     }
 
     render() {

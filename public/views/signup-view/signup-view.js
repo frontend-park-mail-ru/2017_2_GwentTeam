@@ -46,6 +46,7 @@ export default class SignupView extends BaseView {
             //this.loader.hideEl();
             this.user = null;
         }).bind(this));
+        this.resume();
     }
 
     render() {
