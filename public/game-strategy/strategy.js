@@ -11,6 +11,7 @@ import GameWrapper from '../game-components/game-wrapper/game-wrapper.js';
 import Profilefield from '../game-components/profilefield/profilefield.js';
 import BoardWrapper from '../game-components/board-wrapper/board-wrapper.js';
 import SelectedCard from '../game-components/selected-card/selected-card.js';
+import Preloader from '../game-components/preloader/preloader.js';
 
 import bus from '../modules/event-bus.js';
 /**
@@ -62,6 +63,9 @@ export default class GameStrategy {
             this.boardEl.addEl(this.userGamefield[key]);
         }
 
+        this.preloader = new Preloader();
+        this.el.appendChild(this.preloader.el);
+
         this.cardfield = new Cardfield();
         this.el.appendChild(this.cardfield.el);
 
@@ -95,6 +99,7 @@ export default class GameStrategy {
         };
 
         bus.on('DEALCARDS', (payload) => {
+            console.log(payload);
             let arrayOfCards = payload.payload;
             arrayOfCards.forEach((card) => {
                 let newCard = new Card(card);
@@ -107,6 +112,7 @@ export default class GameStrategy {
                     e.target.onclick = null;
                 };
             });
+            this.preloader.hide();
         });
 
         bus.on('ROUND', (payload) => {

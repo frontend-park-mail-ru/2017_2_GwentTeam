@@ -105,8 +105,8 @@ class Game {
             []
         ];
 
-        this.createArray(this.allCards[0]);
-        this.createArray(this.allCards[1]);
+        this.allCards[0] = this.createArray();
+        this.allCards[1] = this.createArray();
 
 
         this.state = [{
