@@ -32,11 +32,15 @@ export default class MultiPlayerStrategy extends Strategy {
             if (this.canUserGo) {
                 this.ws.send('ROUND');
                 this.canUserGo = false;
+                this.preloader.hideIlluminate();
             }
         };
 
         bus.on('OPPORTUNITY_TO_GO', (payload) => {
             this.canUserGo = payload.payload;
+            this.canUserGo
+                ? this.preloader.illuminate()
+                : this.preloader.hideIlluminate();
         });
 
         bus.on('CHOOSECARD', (payload) => {
@@ -48,6 +52,7 @@ export default class MultiPlayerStrategy extends Strategy {
                     payload: card.index
                 }));
                 this.canUserGo = false;
+                this.preloader.hideIlluminate();
             }
         });
     }

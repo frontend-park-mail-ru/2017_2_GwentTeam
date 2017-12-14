@@ -20,4 +20,12 @@ export default class Cardfield {
             this.el.removeChild(this.el.lastChild);
         }
     }
+
+    // illuminate() {  //TODO
+    //     this.el.setAttribute('class', 'game-view__cardfield__illuminate game-view__cardfield');
+    // }
+    //
+    // hideIlluminate() {
+    //     this.el.setAttribute('class', 'game-view__cardfield');
+    // }
 }
