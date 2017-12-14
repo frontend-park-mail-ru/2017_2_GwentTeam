@@ -140,6 +140,7 @@ export default class GameStrategy {
                 rounds: data.score.opponentRounds
             });
             this.canUserGo = true;
+            this.preloader.illuminate();
         });
 
         bus.on('GAMEOVER', (payload) => {

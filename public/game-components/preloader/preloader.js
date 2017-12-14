@@ -12,11 +12,15 @@ export default class Preloader {
         this.el.innerHTML = 'Waiting for opponent...';
     }
 
-    show() {
-        this.el.setAttribute('hidden', 'hidden');
+    hide() {
+        this.el.innerHTML = '';
     }
 
-    hide() {
-        this.el.setAttribute('hidden', '');
+    illuminate() {
+        this.el.setAttribute('class', 'game-view__preloader__illuminate');
+    }
+
+    hideIlluminate() {
+        this.el.setAttribute('class', 'game-view__preloade');
     }
 }
