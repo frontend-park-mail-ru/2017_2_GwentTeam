@@ -18,8 +18,30 @@ const userService = new UserService();
  */
 export default class SigninView extends BaseView {
     start() {
+
+
+        bus.on('user:notauthorized', () => {//добавить сюда go
+            this.resume();
+        });
+        bus.on('user:authorized', () => {
+            //this.loader.hideEl();
+            this.form.reset();
+        });
+
+        this.user = null;
+        bus.on('user:authorized', (data) => {
+            this.user = data.payload;
+            //this.render();
+            this.resume();
+        });
+        bus.on('user:unauthorized', () => {
+            //this.loader.hideEl();
+            this.user = null;
+            //this.render();
+            this.resume();
+        });
+        this.resume();
         this.loader = new Loader();
-        this.render();
         this.form = new Form(this.el.querySelector('.signin-form-js'), ['login', 'password']);
         this.validator = new Validate(this.form.el, document.querySelector('.signin-form-js'));
         this.validator.currentHandlers();
@@ -30,21 +52,8 @@ export default class SigninView extends BaseView {
             }
 
         });
-        bus.on('user:authorized', () => {
-            //this.loader.hideEl();
-            this.form.reset();
-        });
 
-        this.user = null;
-        bus.on('user:authorized', (data) => {
-            this.user = data.payload;
-            this.resume();
-        });
-        bus.on('user:unauthorized', () => {
-            //this.loader.hideEl();
-            this.user = null;
-        });
-        this.resume();
+
     }
 
     render() {
@@ -59,6 +68,7 @@ export default class SigninView extends BaseView {
             this.router.go('/');
             return;
         }
+        this.render();
         super.resume();
     }
 }
