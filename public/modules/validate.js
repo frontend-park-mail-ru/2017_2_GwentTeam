@@ -17,10 +17,12 @@ export default class Validate {
         if (selector === document.querySelector('.signin-form-js')) {
             this.flag = IN;
             this.password = document.getElementById('Signin');
+            this.login = document.getElementById('InInput');
         } else {
             this.flag = UP;
             this.password = document.getElementById('Signup');
             this.infoEmail = this.form.querySelector('.email-validate');
+            this.login = document.getElementById('UpInput');
             this.changeInfo(this.infoEmail, null);
             this.email = document.getElementsByName('email');
         }
@@ -51,7 +53,7 @@ export default class Validate {
         this.infoLogin = this.form.querySelector('.login-validate');
         this.changeInfo(this.infoPassword, DEFAULT_INFO);
 
-        this.login = document.getElementsByName('login');
+
         this.err = this.form.querySelector('.info-text');
 
     }
@@ -130,7 +132,7 @@ export default class Validate {
                 this.resX.email = false;
             }
         }
-        if (this.login[0].value.length === 0) {
+        if (this.login.value.length === 0) {
             this.changeColor(this.infoLogin, NO_COLOR);
             this.changeInfo(this.infoLogin, REQUIRED_INFO);
             this.resX.login = false;
