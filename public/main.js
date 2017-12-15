@@ -50,14 +50,17 @@ router
     .register('/login', SigninView)
     .register('/score', ScoreboardView)
     .register('/signup', SignupView)
-    .register('/logout', SignoutView);
+    .register('/logout', SignoutView)
+    .start();
 
 
-const url = ((callback) => {
+// const url = ((callback) => {
+//     userService
+//         .getData(true, router)
+//         .catch((err) => {return err;});
+//     callback();
+//});
     userService
         .getData(true, router)
         .catch((err) => {return err;});
-    callback();
-});
-
-url(() => {});
+//url(() => {});
