@@ -19,7 +19,6 @@ export default class ScoreboardView extends BaseView {
         this.offset = DEFAULT_OFFSET;
         this.flag = true;
         bus.on('user:notauthorized', () => {//добавить сюда go
-            console.warn('what');
             this.resume();
         });
         userService.getUser(true);//второй ненужный запрос

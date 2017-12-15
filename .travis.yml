@@ -5,8 +5,8 @@ branches:
   only:
   - master
   - develop
-  - deploy
 script:
+- npm run lint
 - eval "$(ssh-agent -s)"
 - ssh-keyscan -H 46.101.254.200 >> ~/.ssh/known_hosts
 - chmod 600 $HOME/.ssh/tech-gwent-no-pass

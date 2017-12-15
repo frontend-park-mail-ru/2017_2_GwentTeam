@@ -1,18 +1,16 @@
-# ТехноГвинт
+# Тех-Гвинт
 
 [![Build Status](https://travis-ci.org/frontend-park-mail-ru/2017_2_GwentTeam.svg?branch=develop)](https://travis-ci.org/frontend-park-mail-ru/2017_2_GwentTeam)
 
-Реализация клиенской части игры ТехноГвинт
+## Играть
+
+[Tech-Gwent](https://tech-gwent.xyz)
 
 ## Описание игры
 
 Браузерная мультиплеерная карточная игра, по мотивам легендарной игры [Гвинт](https://www.playgwent.com).
-Отличительная особенность которой: героями игры являются преподаватели, менторы и студенты [Технопарка Mail.Ru](https://park.mail.ru).
 Это великолепная возможность устроить поединок в логике, стратегическом мышлении и самообладании.
-
-## Deploy
-
-Клиенская часть игры развернута на хостинге: <https://gwent-front.herokuapp.com>
+Реализована студентами [Технопарка Mail.Ru](https://park.mail.ru) в рамках курса [Frontend-разработки](https://frontend-park-mailru.firebaseapp.com).
 
 ## API
 
@@ -52,4 +50,4 @@
 
 Код реализован под [MIT License](LICENSE.md).
 
-Проект является учебным и [CD PROJEKT RED](http://en.cdprojektred.com/) не выступают в качестве партнера.
+Проект является учебным и [CD PROJEKT RED](http://en.cdprojektred.com) не выступают в качестве партнера.

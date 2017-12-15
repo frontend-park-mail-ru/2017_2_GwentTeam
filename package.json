@@ -10,7 +10,6 @@
   "scripts": {
     "start": "node server/index.js",
     "lint": "eslint .",
-    "test": "jest",
     "build": "webpack",
     "build-dev": "webpack --watch"
   },
