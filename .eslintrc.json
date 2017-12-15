@@ -6,7 +6,7 @@
     "extends": "eslint:recommended",
     "rules": {
         "no-undef": "off",
-        "no-console": "error",
+        "no-console": "off",
         "no-tabs": "error",
         "no-param-reassign": "warn",
         "no-throw-literal": "warn",
