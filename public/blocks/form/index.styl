@@ -1,3 +1,5 @@
+@import '../../constantStyles.styl';
+
 .form-section
     width: 200px
     margin: auto
@@ -5,7 +7,6 @@
 .form-field
     border: 1.5px solid #ddd
     border-radius: 5px
-    height: 51px
     margin-bottom: 10px
     padding-left: 5px
     min-width: 192px
@@ -13,13 +14,14 @@
 .form-label
     overflow: hidden
     float:left
-    margin-top: -10px
-    font-size: 14px
+    font-size: 15px;
+    font-style: italic;
+    font-family: Roboto;
     padding-right: 2px
+    color: btnColor
 
 input
     margin: 6px auto
-    box-shadow: 0 0 20px
     border-width: 0
     padding: 4px
 
@@ -32,11 +34,11 @@ input
 
 .form-input
     height: 30px
-    background-color: #595
+    background-color: btnColor
+    font-size: btnTextSize
     width: 150px
     cursor: pointer
-    opacity: 0.9
-    border-radius: 9px
+    opacity: 0.6
 
 .login__input
     height: 30px
@@ -45,8 +47,9 @@ input
     cursor: pointer
     opacity: 0.8
 
-.password-validate
-    font-size: 13px
+.password-validate, .login-validate, .email-validate
+    font-size: 14px
     font-family: KacstScreen
     font-style: italic
-    margin-top: -6px
+    padding-bottom 5px
+    color: btnColor

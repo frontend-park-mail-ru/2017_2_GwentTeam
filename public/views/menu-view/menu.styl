@@ -1,18 +1,21 @@
-.main__menu {
-    margin: auto;
-    width 400px
-}
+@import '../../constantStyles.styl';
 
-.main__menu button {
-    display: block;
-    margin: 10px auto;
-    width: 100px;
-    background-color: #595;
-    color: #111;
-    height: 50px;
-    border-width: 0;
-    opacity: 0.9;
-    box-shadow: 0 0 15px;
-    cursor: pointer;
-    border-radius: 9px;
-}
+.main__menu
+    margin: auto
+    width 400px
+    margin-top: 40px
+
+.main__menu button
+    display: block
+    margin: 10px auto
+    width: 150px
+    background-color: btnColor
+    color: btnTextColor
+    height: 40px
+    border-width: 0
+    opacity: 0.6
+    cursor: pointer
+    font-size: btnTextSize
+
+.main__menu button:hover
+    opacity: 1
