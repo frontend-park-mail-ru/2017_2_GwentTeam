@@ -78,7 +78,9 @@ export default class ScoreboardView extends BaseView {
                     return;
                 }
                 (this.user.position % DEFAULT_LIMIT === DEFAULT_OFFSET) ?
-                    this.offset = this.user.position: this.offset = this.user.position - (this.user.position % DEFAULT_LIMIT);
+                    this.offset = this.user.position :
+                    this.offset = this.user.position - (this.user.position % DEFAULT_LIMIT);
+                this.offset = Math.floor(this.offset);
                 userService.getUsers(this.limit, this.offset);
             });
         }
