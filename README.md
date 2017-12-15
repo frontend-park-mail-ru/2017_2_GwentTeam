@@ -4,7 +4,7 @@
 
 ## Играть
 
-[Tech-Gwent](https://tech-gwent.xyz)
+[tech-gwent.xyz](https://tech-gwent.xyz)
 
 ## Описание игры
 
@@ -14,7 +14,7 @@
 
 ## API
 
-Репозиторий c реализацией API игры: <https://github.com/java-park-mail-ru/Gwent-09-2017>
+[Репозиторий](<https://github.com/java-park-mail-ru/Gwent-09-2017>) c реализацией API игры.
 
 ## Команда
 
