@@ -2,7 +2,7 @@
 
 import Http from '../modules/http.js';
 import bus from '../modules/event-bus.js';
-import Info from  '../modules/info.js';
+import Info from '../modules/info.js';
 import Loader from '../modules/loader.js';
 
 const url = 'https://technogwent-api-012.herokuapp.com/api';
@@ -20,12 +20,10 @@ export default class UserService {
         }
         this.user = null;
         bus.on('signup-user', ((data) => {
-            //this.loader.showEl();
             const user = data.payload;
             this.signup(user.login, user.email, user.password);
         }));
         bus.on('signin-user', ((data) => {
-            //this.loader.showEl();
             const user = data.payload;
             this.signin(user.login, user.password);
         }));
@@ -54,10 +52,6 @@ export default class UserService {
             })
             .catch((err) => {
                 if (err.status === 409) {
-                    // err.json().then((obj) => {
-                    //     console.log(obj.message);
-                    // });
-                    //bus.emit('valid:err', err.status);
                     this.loader.hideEl();//
                     this.result.turnonInfo('Пользователь уже существует :(');
                 }
@@ -85,6 +79,7 @@ export default class UserService {
                 }
             });
     }
+
     /**
      * Логаут пользователя
      */
@@ -111,7 +106,7 @@ export default class UserService {
      * Загружает данные о текущем пользователе
      * @param {boolean} [force=false] - игнорировать ли кэш?
      */
-    getData(force = false, router) {
+    getData(force = false) {
         this.loader.showEl();
         if (this.isLoggedIn() && !force) {
             return Promise.resolve(this.user);
@@ -120,16 +115,13 @@ export default class UserService {
         return Http.Get(url + '/auth')
             .then((userdata) => {
                 this.user = userdata;
-                //router.start();
                 bus.emit('user:authorized', this.user);
                 this.loader.hideEl();//
                 return userdata;
             })
             .catch((err) => {
                 if (err.status === 401) {
-                    this.loader.hideEl();//
-                    //router.start();
-                    //bus.emit('user:notauthorized', this.user);
+                    this.loader.hideEl();
                 }
                 return err;
             });
@@ -137,13 +129,11 @@ export default class UserService {
 
     getUsers(limit, offset) {
         return Http.Get(url + `/users?limit=${limit}&offset=${offset}`)
-            .then((res) =>{
-                //console.warn('res', res);
+            .then((res) => {
                 bus.emit('users:fetch', res);
                 return res;
             })
             .catch((err) => {
-                //console.log('errror', err);
                 return err;
             });
     }
