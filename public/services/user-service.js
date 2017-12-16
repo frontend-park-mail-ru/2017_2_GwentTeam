@@ -2,7 +2,7 @@
 
 import Http from '../modules/http.js';
 import bus from '../modules/event-bus.js';
-import Info from  '../modules/info.js';
+import Info from '../modules/info.js';
 import Loader from '../modules/loader.js';
 
 const url = 'https://technogwent-api-012.herokuapp.com/api';
@@ -20,12 +20,10 @@ export default class UserService {
         }
         this.user = null;
         bus.on('signup-user', ((data) => {
-            //this.loader.showEl();
             const user = data.payload;
             this.signup(user.login, user.email, user.password);
         }));
         bus.on('signin-user', ((data) => {
-            //this.loader.showEl();
             const user = data.payload;
             this.signin(user.login, user.password);
         }));
@@ -54,9 +52,6 @@ export default class UserService {
             })
             .catch((err) => {
                 if (err.status === 409) {
-                    // err.json().then((obj) => {
-                    //     console.log(obj.message);
-                    // });
                     this.loader.hideEl();//
                     this.result.turnonInfo('Пользователь уже существует :(');
                 }
@@ -84,6 +79,7 @@ export default class UserService {
                 }
             });
     }
+
     /**
      * Логаут пользователя
      */
@@ -118,28 +114,26 @@ export default class UserService {
 
         return Http.Get(url + '/auth')
             .then((userdata) => {
-                console.warn(userdata);
                 this.user = userdata;
                 bus.emit('user:authorized', this.user);
                 this.loader.hideEl();//
                 return userdata;
             })
             .catch((err) => {
-                if (err.status === 401)
-                    this.loader.hideEl();//
+                if (err.status === 401) {
+                    this.loader.hideEl();
+                }
                 return err;
             });
     }
 
     getUsers(limit, offset) {
         return Http.Get(url + `/users?limit=${limit}&offset=${offset}`)
-            .then((res) =>{
-                console.warn('res', res);
+            .then((res) => {
                 bus.emit('users:fetch', res);
                 return res;
             })
             .catch((err) => {
-                //console.log('errror', err);
                 return err;
             });
     }
@@ -147,8 +141,11 @@ export default class UserService {
     getUser(hasPosition) {
         return Http.Get(url + `/auth?hasPosition=${hasPosition}`)
             .then((res) => {
-               bus.emit('user:fetch', res);
-               return res;
+                bus.emit('user:fetch', res);
+                return res;
+            })
+            .catch((err) => {
+                return err;
             });
     }
 

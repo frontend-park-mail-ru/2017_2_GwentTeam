@@ -21,11 +21,4 @@ export default class Cardfield {
         }
     }
 
-    // illuminate() {  //TODO
-    //     this.el.setAttribute('class', 'game-view__cardfield__illuminate game-view__cardfield');
-    // }
-    //
-    // hideIlluminate() {
-    //     this.el.setAttribute('class', 'game-view__cardfield');
-    // }
 }

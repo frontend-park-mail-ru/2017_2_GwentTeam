@@ -42,7 +42,7 @@ export default class GameStrategy {
         this.selectedCardEl = new SelectedCard();
         this.gameEl.addEl(this.selectedCardEl);
 
-        let b = new GameBoard(); //TODO ?
+        let b = new GameBoard();
         let c = new GameBoard();
         let d = new GameBoard();
 
@@ -99,7 +99,6 @@ export default class GameStrategy {
         };
 
         bus.on('DEALCARDS', (payload) => {
-            console.log(payload);
             let arrayOfCards = payload.payload;
             arrayOfCards.forEach((card) => {
                 let newCard = new Card(card);
@@ -140,7 +139,9 @@ export default class GameStrategy {
                 rounds: data.score.opponentRounds
             });
             this.canUserGo = true;
-            this.preloader.illuminate();
+            if (this.gameType === 'multiplayer') {
+                this.preloader.illuminate();
+            }
         });
 
         bus.on('GAMEOVER', (payload) => {
@@ -162,6 +163,7 @@ export default class GameStrategy {
     pushCardInLine(arrayOfLines, card) {
         arrayOfLines[card.type].addCard(card);
         card.onboard = true;
+        //card.illuminate();
     }
 
     pushCardInState(playerState, card) {
@@ -185,7 +187,7 @@ export default class GameStrategy {
 
     userGo(data) {
         this.userState.gameCards.forEach((card, cardIndex) => {
-            if (card.index === data.index) {  //TODO index
+            if (card.index === data.index) {
                 card.domEl.remove();
                 this.pushCardInLine(this.userGamefield, card);
                 this.pushCardInState(this.userState, card);

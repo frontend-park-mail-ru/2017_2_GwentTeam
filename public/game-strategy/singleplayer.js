@@ -22,6 +22,8 @@ export default class SinglePlayerStrategy extends Strategy {
         this.roundCardsCount = 2;
         this.roundsCount = 2;
 
+        this.gameType = 'singleplayer';
+
         this.userCards = this.createArray();
         this.compCards = this.createArray();
 
@@ -39,8 +41,10 @@ export default class SinglePlayerStrategy extends Strategy {
 
         this.dealCards(this.startCardsCount);
 
+
         bus.on('CHOOSECARD', (payload) => {
             const data = payload.payload.card;
+            bus.emit('HIDECARD');
             this.userGo(data);
             this.opponentGo();
             this.isRound() ? this.round() : {};
@@ -60,7 +64,7 @@ export default class SinglePlayerStrategy extends Strategy {
     opponentGo() {
         let opponentCard = this.opponentCard();
         this.compState.gameCards.forEach((card, cardIndex) => {
-            if (card.index === opponentCard.index) {   //TODO index
+            if (card.index === opponentCard.index) {
                 this.pushCardInState(this.compState, card);
                 this.compState.roundScores += card.score;
                 this.compState.gameCards.splice(cardIndex, 1);
@@ -118,6 +122,7 @@ export default class SinglePlayerStrategy extends Strategy {
         this.createArrayOfDealCards(this.compCards, cardsCount).forEach((card) => {
             this.compState.gameCards.push(card);
         });
+        //this.preloader.illuminate();
     }
 
     isGameOver() {
@@ -126,9 +131,6 @@ export default class SinglePlayerStrategy extends Strategy {
 
     createArray() {
         let arrayOfResult = [];
-        // scores.forEach((score, index) => {
-        //     arrayOfResult.push({ type: types[index], score: score, index:index + 1});
-        // });
         for (let key in Monsters) {
             arrayOfResult.push(Monsters[key]);
         }

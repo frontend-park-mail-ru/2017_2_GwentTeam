@@ -2,13 +2,13 @@ mixin item(title, href)
     button.main__menu(href=href)= title
 
 .main__menu
-    +item('Об игре', '/about')
+    +item('About', '/about')
     if authorized
-        +item('Играть', '/game')
-        +item('Посмотреть мой профиль', '/profile')
-        +item('Лидеры', '/score')
-        +item('Выйти', '/logout')
+        +item('Play', '/game')
+        +item('Profile', '/profile')
+        +item('Scoreboard', '/score')
+        +item('Sign out', '/logout')
     unless authorized
-        +item('Вход','/login')
-        +item('Регистрация','/signup')
-        +item('Играть','/singleplayer')
+        +item('Sign in','/login')
+        +item('Sign up','/signup')
+        +item('Play','/singleplayer')

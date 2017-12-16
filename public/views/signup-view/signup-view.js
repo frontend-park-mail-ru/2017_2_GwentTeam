@@ -6,8 +6,8 @@ import UserService from '../../services/user-service.js';
 import Form from '../../blocks/form/form.js';
 import signupTemplate from './signup.pug';
 import bus from '../../modules/event-bus.js';
-import {validate} from '../../modules/validate.js';
 import Loader from '../../modules/loader.js';
+import Validate from '../../modules/validate.js';
 
 const userService = new UserService();
 
@@ -21,11 +21,17 @@ export default class SignupView extends BaseView {
         this.loader = new Loader();
         this.render();
         this.form = new Form(this.el.querySelector('.signup-form-js'), ['login', 'email', 'password']);
-        validate(this.form.el, document.querySelector('.signup-form-js'));
-        this.check();
+        this.validator = new Validate(this.form.el, document.querySelector('.signup-form-js'));
+        this.validator.currentHandlers();
+        bus.on('valid:err', (data) => {
+            this.printErrors(data.payload);
+        });
         this.form.onsubmit(((formdata) => {
-            //this.loader.showEl();
-            bus.emit('signup-user', formdata);
+            //
+            this.validator.analize();
+            if (this.validator.fieldsIsCorrect() === true) {
+                bus.emit('signup-user', formdata);
+            }
         }).bind(this));
         bus.on('user:authorized', (() => {
             //this.loader.hideEl();
@@ -41,6 +47,7 @@ export default class SignupView extends BaseView {
             //this.loader.hideEl();
             this.user = null;
         }).bind(this));
+        this.resume();
     }
 
     render() {
@@ -56,18 +63,5 @@ export default class SignupView extends BaseView {
             return;
         }
         super.resume();
-    }
-
-    check() {
-        document.querySelector('.form-check').addEventListener('mouseover', (event) => {
-            event.preventDefault();
-            //if (event.target === document.querySelector('.form-check'))
-            document.getElementById('Signup').setAttribute('type', 'text');
-        });
-        document.querySelector('.form-check').addEventListener('mouseout', (event) => {
-            event.preventDefault();
-            //if (event.target === document.querySelector('.form-check'))
-            document.getElementById('Signup').setAttribute('type', 'password');
-        });
     }
 }

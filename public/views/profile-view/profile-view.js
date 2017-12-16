@@ -15,6 +15,9 @@ const userService = new UserService();
 export default class ProfileView extends BaseView {
     start() {
         this.user = null;
+        // bus.on('user:notauthorized', () => {//добавить сюда go
+        //     //this.resume();
+        // });
         bus.on('user:authorized', (data) => {
             this.user = data.payload;
             this.render();
@@ -23,6 +26,7 @@ export default class ProfileView extends BaseView {
             this.user = null;
             this.resume();
         });
+        //this.resume();
     }
 
     render() {

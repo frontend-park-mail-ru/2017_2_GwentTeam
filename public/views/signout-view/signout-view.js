@@ -8,6 +8,7 @@ export default class SignoutView extends BaseView {
     start() {
         this.loader = new Loader();
         this.user = null;
+        this.resume();
     }
 
     resume() {

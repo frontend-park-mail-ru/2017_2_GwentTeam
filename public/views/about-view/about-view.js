@@ -12,6 +12,7 @@ import './about.styl';
 export default class AboutView extends BaseView {
     start() {
         this.render();
+        super.resume();
     }
 
     render() {
