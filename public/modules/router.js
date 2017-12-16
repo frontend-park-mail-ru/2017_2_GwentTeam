@@ -100,7 +100,7 @@ export default class Router {
             info.view.start();
             this.currentView = info.view;
 
-            //info.view.resume();
+            info.view.resume();
 
             return true;
         });

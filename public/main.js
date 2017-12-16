@@ -24,12 +24,6 @@ document.body.appendChild(Background);
 const userService = new UserService();
 const application = new ApplicationView(document.body);
 
-// if ('serviceWorker' in navigator) {
-//
-//     navigator.serviceWorker.register('./service-worker.js', {scope: '/'});
-//
-// }
-
 const router = new Router(application.getElement(), application.getViewsContainerElement());
 
 router.addCallback((route) => {
@@ -50,14 +44,11 @@ router
     .register('/login', SigninView)
     .register('/score', ScoreboardView)
     .register('/signup', SignupView)
-    .register('/logout', SignoutView);
+    .register('/logout', SignoutView)
+    .start();
 
-
-const url = ((callback) => {
-    userService
-        .getData(true, router)
-        .catch((err) => {return err;});
-    callback();
-});
-
-url(() => {});
+userService
+    .getData(true, router)
+    .catch((err) => {
+        return err;
+    });

@@ -12,7 +12,6 @@ const IN = 'in';
 
 export default class Validate {
     constructor(form, selector) {
-        //this.res = true;
         this.form = form;
         if (selector === document.querySelector('.signin-form-js')) {
             this.flag = IN;
@@ -103,8 +102,9 @@ export default class Validate {
                     this.resX.email = true;
 
                 }
-            } else
+            } else {
                 this.resX = this.resIn;
+            }
             if (event.target === this.password && this.password.value.length < 4) {
                 this.changeColor(this.infoPassword, NO_COLOR);
                 this.changeInfo(this.infoPassword, TOO_SHORT_INFO);

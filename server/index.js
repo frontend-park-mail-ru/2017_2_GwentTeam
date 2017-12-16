@@ -18,7 +18,8 @@ let clients = {};
 const port = process.env.PORT || 8000;
 
 const server = app.listen(port, () => {
-    // console.log(`Server listening port ${port}`);
+    // eslint-disable-next-line no-console
+    console.log(`Server listening port ${port}`);
 });
 
 const WebSocketServer = new require('ws');

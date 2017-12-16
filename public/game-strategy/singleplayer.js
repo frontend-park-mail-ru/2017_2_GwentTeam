@@ -44,7 +44,7 @@ export default class SinglePlayerStrategy extends Strategy {
 
         bus.on('CHOOSECARD', (payload) => {
             const data = payload.payload.card;
-            bus.emit('HIDECARD');  //incrImg
+            bus.emit('HIDECARD');
             this.userGo(data);
             this.opponentGo();
             this.isRound() ? this.round() : {};

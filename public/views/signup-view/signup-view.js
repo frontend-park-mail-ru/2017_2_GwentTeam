@@ -29,8 +29,9 @@ export default class SignupView extends BaseView {
         this.form.onsubmit(((formdata) => {
             //
             this.validator.analize();
-            if (this.validator.fieldsIsCorrect() === true)
+            if (this.validator.fieldsIsCorrect() === true) {
                 bus.emit('signup-user', formdata);
+            }
         }).bind(this));
         bus.on('user:authorized', (() => {
             //this.loader.hideEl();

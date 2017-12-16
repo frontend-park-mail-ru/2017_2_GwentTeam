@@ -12,6 +12,12 @@
         "no-throw-literal": "warn",
         "prefer-arrow-callback": "warn",
         "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1 }],
+        "curly": "error",
+        "no-use-before-define": "warn",
+        "no-multi-spaces": "error",
+        "no-extra-semi": "warn",
+        "no-unused-vars": "error",
+        "quote-props": ["error", "as-needed"],
         "indent": [
             "error",
             4,
