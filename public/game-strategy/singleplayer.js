@@ -136,4 +136,13 @@ export default class SinglePlayerStrategy extends Strategy {
         }
         return arrayOfResult;
     }
+
+    destroy() {
+        // this.cleanState(this.userState);
+        // this.cleanState(this.compState);
+        // this.cleanBoard();
+        while (this.el.lastChild) {
+            this.el.removeChild(this.el.lastChild);
+        }
+    }
 }

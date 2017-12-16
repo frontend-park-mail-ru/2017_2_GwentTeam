@@ -21,7 +21,8 @@ import bus from '../modules/event-bus.js';
  */
 export default class GameStrategy {
     constructor(router, el) {
-
+        //console.log('strategy-constr');
+        //console.log(el);
         this.router = router;
         this.el = el;
 
@@ -200,4 +201,9 @@ export default class GameStrategy {
             rounds: this.userState.roundWin
         });
     }
+
+    destroy() {
+        
+    }
+
 }
