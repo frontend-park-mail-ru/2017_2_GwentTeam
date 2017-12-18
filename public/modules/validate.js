@@ -3,7 +3,9 @@
 const DEFAULT_INFO = 'Must be more than 4 symbols';
 const TOO_SHORT_INFO = 'Too short!';
 const INVALID_EMAIL_INFO = 'Not valid email formal!';
+const WRONG_DATA = 'Wrong data!';
 const REQUIRED_INFO = 'Required field!';
+const ALREADY_IS_INFO = 'User already exist!';
 const DONE_INFO = 'Done!';
 const YES_COLOR = '#32cd32';
 const NO_COLOR = 'lightcoral';
@@ -12,29 +14,29 @@ const IN = 'in';
 
 export default class Validate {
     constructor(form, selector) {
-        this.form = form;
-        if (selector === document.querySelector('.signin-form-js')) {
+        this.el = form;
+        if (selector === this.el.parentNode.querySelector('.signin-form-js')) {
             this.flag = IN;
             this.password = document.getElementById('Signin');
             this.login = document.getElementById('InInput');
         } else {
             this.flag = UP;
             this.password = document.getElementById('Signup');
-            this.infoEmail = this.form.querySelector('.email-validate');
+            this.infoEmail = this.el.querySelector('.email-validate');
             this.login = document.getElementById('UpInput');
             this.changeInfo(this.infoEmail, null);
             this.email = document.getElementsByName('email');
         }
         this.resUp = {
-            login: true,
+            login: false,
             password: false,
-            email: true
+            email: false
         };
         this.resIn = {
-            login: true,
+            login: false,
             password: false,
         };
-        this.eye = document.querySelector('.form-check');
+        this.eye = this.el.querySelector('.form-check');
 
 
         if (this.eye !== null) {
@@ -47,14 +49,10 @@ export default class Validate {
             });
         }
 
-        this.infoPassword = this.form.querySelector('.password-validate');
-        this.infoEmail = this.form.querySelector('.email-validate');
-        this.infoLogin = this.form.querySelector('.login-validate');
+        this.infoPassword = this.el.querySelector('.password-validate');
+        this.infoEmail = this.el.querySelector('.email-validate');
+        this.infoLogin = this.el.querySelector('.login-validate');
         this.changeInfo(this.infoPassword, DEFAULT_INFO);
-
-
-        this.err = this.form.querySelector('.info-text');
-
     }
 
     changeInfo(info, mes) {//сделать для других полей
@@ -75,15 +73,14 @@ export default class Validate {
             return this.resultable;
         }
     }
-    // printErrors(error) {
-    //
-    // }
 
     currentHandlers() {
         this.resX = null;
-        this.form.addEventListener('input', (event) => {
+        (this.flag === UP) //TODO поставить раньше
+            ? this.resX = this.resUp
+            : this.resX = this.resIn;
+        this.el.addEventListener('input', (event) => {
             if (this.flag === UP) {
-                this.resX = this.resUp;
                 if (event.target === this.email[0] && !this.email[0].value.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)) {
                     this.changeColor(this.infoEmail, NO_COLOR);
                     this.changeInfo(this.infoEmail, INVALID_EMAIL_INFO);
@@ -102,9 +99,8 @@ export default class Validate {
                     this.resX.email = true;
 
                 }
-            } else {
-                this.resX = this.resIn;
             }
+
             if (event.target === this.password && this.password.value.length < 4) {
                 this.changeColor(this.infoPassword, NO_COLOR);
                 this.changeInfo(this.infoPassword, TOO_SHORT_INFO);
@@ -120,13 +116,25 @@ export default class Validate {
                 this.changeInfo(this.infoPassword, DONE_INFO);
                 this.resX.password = true;
             }
-            //if (event.target === this.login && this.login.value)
+
+            if (event.target === this.login && this.login.value.length === 0) {
+                this.changeColor(this.infoLogin, NO_COLOR);
+                this.changeInfo(this.infoLogin, REQUIRED_INFO);
+                this.resX.login = false;
+            }
+            if (event.target === this.login && this.login.value.length > 0) {
+                this.changeColor(this.infoLogin, YES_COLOR);
+                this.changeInfo(this.infoLogin, DONE_INFO);
+                this.resX.login = true;
+            }
         });
     }
 
     analize() {
+        console.log(this.resX);
         if (this.flag === UP) {
             if (this.email[0].value.length === 0) {//TODO заменить блок в функцию
+                console.log(this.resX);
                 this.changeColor(this.infoEmail, NO_COLOR);
                 this.changeInfo(this.infoEmail, REQUIRED_INFO);
                 this.resX.email = false;
@@ -144,4 +152,17 @@ export default class Validate {
         }
     }
 
+    alreadyIs() {
+        this.resX.login = false;
+        this.changeColor(this.infoLogin, NO_COLOR);
+        this.changeInfo(this.infoLogin, ALREADY_IS_INFO);
+    }
+    unrealData() {
+        this.resX.login = false;
+        this.changeColor(this.infoLogin, NO_COLOR);
+        this.changeInfo(this.infoLogin, WRONG_DATA);
+        this.resX.password = false;
+        this.changeColor(this.infoPassword, NO_COLOR);
+        this.changeInfo(this.infoPassword, WRONG_DATA);
+    }
 }

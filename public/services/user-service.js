@@ -53,7 +53,7 @@ export default class UserService {
             .catch((err) => {
                 if (err.status === 409) {
                     this.loader.hideEl();//
-                    this.result.turnonInfo('Пользователь уже существует :(');
+                    bus.emit('user:alreadyis', null);
                 }
             });
     }
@@ -75,7 +75,7 @@ export default class UserService {
             .catch((err) => {
                 if (err.status === 403) {
                     this.loader.hideEl();//
-                    this.result.turnonInfo('Неверные данные :(');
+                    bus.emit('user:unrealdata', null);
                 }
             });
     }
