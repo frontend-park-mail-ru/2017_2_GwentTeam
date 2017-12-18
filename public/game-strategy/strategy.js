@@ -21,10 +21,14 @@ import bus from '../modules/event-bus.js';
  */
 export default class GameStrategy {
     constructor(router, el) {
-        //console.log('strategy-constr');
-        //console.log(el);
+
+        this.busCallbacks = [];
+
         this.router = router;
         this.el = el;
+
+        let img = new Image();
+        img.src = './img/cards-lg-monster.png';
 
         this.infoWindow = new Info();
 
@@ -99,7 +103,7 @@ export default class GameStrategy {
             gameCards: []
         };
 
-        bus.on('DEALCARDS', (payload) => {
+        let cb = bus.on('DEALCARDS', (payload) => {
             let arrayOfCards = payload.payload;
             arrayOfCards.forEach((card) => {
                 let newCard = new Card(card);
@@ -114,8 +118,9 @@ export default class GameStrategy {
             });
             this.preloader.hide();
         });
+        this.busCallbacks.push(cb);
 
-        bus.on('ROUND', (payload) => {
+        cb = bus.on('ROUND', (payload) => {
             const data = payload.payload;
             this.compScoreField.printScore({
                 score: data.opponentScore,
@@ -130,8 +135,9 @@ export default class GameStrategy {
             this.cleanBoard();
             this.cleanState(this.userState);
         });
+        this.busCallbacks.push(cb);
 
-        bus.on('OPPONENTGO', (payload) => {
+        cb = bus.on('OPPONENTGO', (payload) => {
             const data = payload.payload;
             const newCard = new Card(data.card);
             this.pushCardInLine(this.opponentGamefield, newCard);
@@ -144,13 +150,15 @@ export default class GameStrategy {
                 this.preloader.illuminate();
             }
         });
+        this.busCallbacks.push(cb);
 
-        bus.on('GAMEOVER', (payload) => {
+        cb = bus.on('GAMEOVER', (payload) => {
             const data = payload.payload;
             this.cleanBoard();
             this.cardfield.clean();
             this.showResult(data);
         });
+        this.busCallbacks.push(cb);
     }
 
     showResult(isUserWin) {
@@ -203,7 +211,13 @@ export default class GameStrategy {
     }
 
     destroy() {
-        
+        this.busCallbacks.forEach((f) => {
+            f();
+        })
+        this.selectedCardEl.destroy();
+        while (this.el.lastChild) {
+            this.el.removeChild(this.el.lastChild);
+        }
     }
 
 }

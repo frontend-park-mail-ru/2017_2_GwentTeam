@@ -17,6 +17,8 @@ export default class SinglePlayerStrategy extends Strategy {
         this.btnPassEl.el.onclick = () => {
             this.round();
         };
+        //console.log(bus);
+        //this.canUserGo = true;
 
         this.startCardsCount = 8;
         this.roundCardsCount = 2;
@@ -32,23 +34,29 @@ export default class SinglePlayerStrategy extends Strategy {
             roundWin: 0,
             roundScores: 0,
             lines: {
-                b:[],
-                c:[],
-                d:[]
+                b: [],
+                c: [],
+                d: []
             },
             gameCards: []
         };
 
         this.dealCards(this.startCardsCount);
 
-
-        bus.on('CHOOSECARD', (payload) => {
-            const data = payload.payload.card;
-            bus.emit('HIDECARD');
-            this.userGo(data);
-            this.opponentGo();
-            this.isRound() ? this.round() : {};
+        let cb = bus.on('CHOOSECARD', (payload) => {
+            //if(this.canUserGo) {
+                //this.canUserGo = false;
+                const data = payload.payload.card;
+                bus.emit('HIDECARD');
+                this.userGo(data);
+                setTimeout(() => {
+                    this.opponentGo();
+                    this.isRound() ? this.round() : {};
+                    //this.canUserGo = true;
+                }, 2300);
+            //}
         });
+        this.busCallbacks.push(cb);
     }
 
     opponentCard() {
@@ -106,10 +114,10 @@ export default class SinglePlayerStrategy extends Strategy {
         this.compState.roundScores = 0;
         this.userState.roundScores = 0;
         bus.emit('ROUND', {
-            opponentScore : this.compState.roundScores,
-            opponentRounds : this.compState.roundWin,
-            userScore : this.userState.roundScores,
-            userRounds : this.userState.roundWin
+            opponentScore: this.compState.roundScores,
+            opponentRounds: this.compState.roundWin,
+            userScore: this.userState.roundScores,
+            userRounds: this.userState.roundWin
         });
 
         this.cleanState(this.compState);
@@ -135,14 +143,5 @@ export default class SinglePlayerStrategy extends Strategy {
             arrayOfResult.push(Monsters[key]);
         }
         return arrayOfResult;
-    }
-
-    destroy() {
-        // this.cleanState(this.userState);
-        // this.cleanState(this.compState);
-        // this.cleanBoard();
-        while (this.el.lastChild) {
-            this.el.removeChild(this.el.lastChild);
-        }
     }
 }

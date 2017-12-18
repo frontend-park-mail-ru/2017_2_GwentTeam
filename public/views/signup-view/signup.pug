@@ -2,17 +2,14 @@
     form.signup-view__form.signup-form-js
         ul.info-text
         div.form-field
-            label.form-label Login
-            input(type="text", required="required", oninvalid="setCustomValidity(' ')", name="login", id="UpInput" placeholder="Example")
+            input(type="text", required="required", oninvalid="setCustomValidity(' ')", name="login", id="UpInput" placeholder="login").signup-input
             div.login-validate
         div.form-field
-            label.form-label Email
-            input(type="email", required="required", oninvalid="setCustomValidity(' ')", name="email", placeholder="example@mail.ru", pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")
+            input(type="email", required="required", oninvalid="setCustomValidity(' ')", name="email", placeholder="email", pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$").signup-input
             div.email-validate
         div.form-inline
             div.form-field
-                label.form-label Password
-                input(type="password", required="required", oninvalid="setCustomValidity(' ')", name="password", placeholder="****", id="Signup", pattern="^\\S{4,}$")
+                input(type="password", required="required", oninvalid="setCustomValidity(' ')", name="password", placeholder="password", id="Signup", pattern="^\\S{4,}$").signup-input
                 div.password-validate
             div.form-check
         input(type="submit", value="Sign up").form-input
