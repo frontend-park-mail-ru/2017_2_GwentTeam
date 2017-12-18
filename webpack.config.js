@@ -4,6 +4,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const PreloadCSSPlugin = require('preload-css-webpack-plugin');
 const SRC_DIR = 'public';
 const BUILD_DIR = 'build';
 
@@ -23,6 +24,10 @@ let webpackPlugins = [
         template: path.resolve(__dirname, SRC_DIR, 'index.html'),
     }),
     new ExtractTextPlugin('[name].css'),
+    new PreloadCSSPlugin({
+        blacklist: [/\.map/],
+        noscript: true
+    }),
 
     new CopyWebpackPlugin([{
         from: path.join(__dirname, 'public', 'images'),
@@ -63,7 +68,8 @@ const clientConfig = {
                 test: /\.js/,
                 loader: 'babel-loader',
                 exclude: [/node_modules/],
-            }, {
+            },
+            {
                 test: /\.styl$/,
                 loader: ExtractTextPlugin.extract({
                     fallback: 'style-loader',

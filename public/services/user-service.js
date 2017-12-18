@@ -13,6 +13,7 @@ const url = 'https://technogwent-api-012.herokuapp.com/api';
  */
 export default class UserService {
     constructor() {
+        this.first = true;
         this.loader = new Loader();//
         this.result = new Info();
         if (UserService.__instance) {
@@ -107,7 +108,12 @@ export default class UserService {
      * @param {boolean} [force=false] - игнорировать ли кэш?
      */
     getData(force = false) {
-        this.loader.showEl();
+        if (this.first === true) {
+            this.first = false;
+        } else {
+            this.loader.showEl();
+        }
+
         if (this.isLoggedIn() && !force) {
             return Promise.resolve(this.user);
         }
@@ -128,23 +134,29 @@ export default class UserService {
     }
 
     getUsers(limit, offset) {
+        this.loader.showEl();
         return Http.Get(url + `/users?limit=${limit}&offset=${offset}`)
             .then((res) => {
                 bus.emit('users:fetch', res);
+                this.loader.hideEl();
                 return res;
             })
             .catch((err) => {
+                this.loader.hideEl();
                 return err;
             });
     }
 
     getUser(hasPosition) {
+        this.loader.showEl();
         return Http.Get(url + `/auth?hasPosition=${hasPosition}`)
             .then((res) => {
+                this.loader.hideEl();
                 bus.emit('user:fetch', res);
                 return res;
             })
             .catch((err) => {
+                this.loader.hideEl();
                 return err;
             });
     }
