@@ -43,6 +43,6 @@ export default class SelectedCard {
     destroy() {
         this.busCallbacks.forEach((f) => {
             f();
-        })
+        });
     }
 }

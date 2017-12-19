@@ -13,6 +13,8 @@ import BoardWrapper from '../game-components/board-wrapper/board-wrapper.js';
 import SelectedCard from '../game-components/selected-card/selected-card.js';
 import Preloader from '../game-components/preloader/preloader.js';
 
+import { EVENTS } from './events.js';
+
 import bus from '../modules/event-bus.js';
 /**
  * GameStrategy
@@ -102,15 +104,16 @@ export default class GameStrategy {
             },
             gameCards: []
         };
+        //console.log(EVENTS);
 
-        let cb = bus.on('DEALCARDS', (payload) => {
+        let cb = bus.on(EVENTS.CARD.DEAL, (payload) => {
             let arrayOfCards = payload.payload;
             arrayOfCards.forEach((card) => {
                 let newCard = new Card(card);
                 this.userState.gameCards.push(newCard);
                 this.cardfield.addCard(newCard);
                 newCard.domEl.onclick = (e) => {
-                    bus.emit('CHOOSECARD', {
+                    bus.emit(EVENTS.CARD.CHOOSE, {
                         card: newCard
                     });
                     e.target.onclick = null;
@@ -120,7 +123,7 @@ export default class GameStrategy {
         });
         this.busCallbacks.push(cb);
 
-        cb = bus.on('ROUND', (payload) => {
+        cb = bus.on(EVENTS.GAME.ROUND, (payload) => {
             const data = payload.payload;
             this.compScoreField.printScore({
                 score: data.opponentScore,
@@ -137,7 +140,7 @@ export default class GameStrategy {
         });
         this.busCallbacks.push(cb);
 
-        cb = bus.on('OPPONENTGO', (payload) => {
+        cb = bus.on(EVENTS.GAME.OPPONENTGO, (payload) => {
             const data = payload.payload;
             const newCard = new Card(data.card);
             this.pushCardInLine(this.opponentGamefield, newCard);
@@ -152,7 +155,7 @@ export default class GameStrategy {
         });
         this.busCallbacks.push(cb);
 
-        cb = bus.on('GAMEOVER', (payload) => {
+        cb = bus.on(EVENTS.GAME.GAMEOVER, (payload) => {
             const data = payload.payload;
             this.cleanBoard();
             this.cardfield.clean();
@@ -204,6 +207,7 @@ export default class GameStrategy {
                 this.userState.gameCards.splice(cardIndex, 1);
             }
         });
+        //console.log(this.userState);
         this.userScoreField.printScore({
             score: this.userState.roundScores,
             rounds: this.userState.roundWin
@@ -213,7 +217,7 @@ export default class GameStrategy {
     destroy() {
         this.busCallbacks.forEach((f) => {
             f();
-        })
+        });
         this.selectedCardEl.destroy();
         while (this.el.lastChild) {
             this.el.removeChild(this.el.lastChild);
