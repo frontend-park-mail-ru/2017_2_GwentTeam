@@ -4,7 +4,9 @@ import Strategy from './strategy.js';
 
 import bus from '../modules/event-bus.js';
 
-import { EVENTS } from './events.js';
+import {
+    EVENTS
+} from './events.js';
 /**
  * @module GameView
  * @extends BaseView
@@ -40,21 +42,21 @@ export default class MultiPlayerStrategy extends Strategy {
 
         bus.on(EVENTS.GAME.OPPORTUNITY_TO_GO, (payload) => {
             this.canUserGo = payload.payload;
-            this.canUserGo
-                ? this.preloader.illuminate()
-                : this.preloader.hideIlluminate();
+            this.canUserGo ?
+                this.preloader.illuminate() :
+                this.preloader.hideIlluminate();
         });
 
         bus.on(EVENTS.CARD.CHOOSE, (payload) => {
             const card = payload.payload.card;
             //if (this.canUserGo) {
-                this.userGo(card);
-                this.ws.send(JSON.stringify({
-                    event: EVENTS.GAME.USERGO,
-                    payload: card.index
-                }));
+            this.userGo(card);
+            this.ws.send(JSON.stringify({
+                event: EVENTS.GAME.USERGO,
+                payload: card.index
+            }));
             //    this.canUserGo = false;
-                this.preloader.hideIlluminate();
+            this.preloader.hideIlluminate();
             //}
         });
     }
