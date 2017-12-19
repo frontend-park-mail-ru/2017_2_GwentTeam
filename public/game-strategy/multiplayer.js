@@ -47,15 +47,15 @@ export default class MultiPlayerStrategy extends Strategy {
 
         bus.on(EVENTS.CARD.CHOOSE, (payload) => {
             const card = payload.payload.card;
-            if (this.canUserGo) {
+            //if (this.canUserGo) {
                 this.userGo(card);
                 this.ws.send(JSON.stringify({
                     event: EVENTS.GAME.USERGO,
                     payload: card.index
                 }));
-                this.canUserGo = false;
+            //    this.canUserGo = false;
                 this.preloader.hideIlluminate();
-            }
+            //}
         });
     }
 }

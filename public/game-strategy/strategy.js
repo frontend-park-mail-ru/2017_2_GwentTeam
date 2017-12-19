@@ -106,6 +106,7 @@ export default class GameStrategy {
         };
         //console.log(EVENTS);
 
+
         let cb = bus.on(EVENTS.CARD.DEAL, (payload) => {
             let arrayOfCards = payload.payload;
             arrayOfCards.forEach((card) => {
@@ -113,10 +114,13 @@ export default class GameStrategy {
                 this.userState.gameCards.push(newCard);
                 this.cardfield.addCard(newCard);
                 newCard.domEl.onclick = (e) => {
-                    bus.emit(EVENTS.CARD.CHOOSE, {
-                        card: newCard
-                    });
-                    e.target.onclick = null;
+                    if (this.canUserGo) {
+                        this.canUserGo = false;
+                        bus.emit(EVENTS.CARD.CHOOSE, {
+                            card: newCard
+                        });
+                        e.target.onclick = null;
+                    }
                 };
             });
             this.preloader.hide();
@@ -148,10 +152,10 @@ export default class GameStrategy {
                 score: data.score.opponentScore,
                 rounds: data.score.opponentRounds
             });
-            this.canUserGo = true;
             if (this.gameType === 'multiplayer') {
                 this.preloader.illuminate();
             }
+            this.canUserGo = true;
         });
         this.busCallbacks.push(cb);
 

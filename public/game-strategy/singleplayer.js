@@ -22,7 +22,7 @@ export default class SinglePlayerStrategy extends Strategy {
             this.round();
         };
         //console.log(bus);
-        //this.canUserGo = true;
+        this.canUserGo = true;
 
         this.startCardsCount = 8;
         this.roundCardsCount = 2;
