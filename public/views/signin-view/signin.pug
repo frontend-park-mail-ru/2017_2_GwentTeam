@@ -1,11 +1,9 @@
 .form-section
     form.signin-view__form.signin-form-js
         div.form-field
-            label.form-label Login
-            input(type="text", required="required", oninvalid="setCustomValidity(' ')", name="login", id= "InInput" placeholder="Example")
+            input(type="text", required="required", oninvalid="setCustomValidity(' ')", name="login", id= "InInput" placeholder="login")
             div.login-validate
         div.form-field
-            label.form-label Password
-            input(type="password", required="required", oninvalid="setCustomValidity(' ')", name="password", id="Signin" placeholder="****")
+            input(type="password", required="required", oninvalid="setCustomValidity(' ')", name="password", id="Signin" placeholder="password")
             div.password-validate
         input(type="submit", value="Sign in").form-input

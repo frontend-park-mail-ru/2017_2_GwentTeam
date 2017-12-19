@@ -5,8 +5,8 @@ const TOO_SHORT_INFO = 'Too short!';
 const INVALID_EMAIL_INFO = 'Not valid email formal!';
 const REQUIRED_INFO = 'Required field!';
 const DONE_INFO = 'Done!';
-const YES_COLOR = '#32cd32';
-const NO_COLOR = 'lightcoral';
+const YES_COLOR = '#669266';
+const NO_COLOR = '#965d5d';
 const UP = 'up';
 const IN = 'in';
 

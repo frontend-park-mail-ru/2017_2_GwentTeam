@@ -1,7 +1,17 @@
+@keyframes shadow
+    from
+        box-shadow: 0 0 15px black
+    50%
+        box-shadow: 0 0 15px yellow
+    to
+        box-shadow: 0 0 15px black
+
 .card-img
     &__illumination
-        box-shadow: 0 0 15px yellow
-        transition: 5s
+        box-shadow: 0 0 15px black
+        animation-name: shadow
+        animation-duration: 1s
+        animation-iteration-count: 2
 
 .cardfield
     &__card-img

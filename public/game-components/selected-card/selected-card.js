@@ -12,16 +12,20 @@ export default class SelectedCard {
         this.el = document.createElement('div');
         this.el.setAttribute('class', 'game-view__sel-card');
 
-        bus.on('SHOWCARD', (payload) => {
+        this.busCallbacks = [];
+
+        let cb = bus.on('SHOWCARD', (payload) => {
             const card = payload.payload;
             card.onboard === false
                 ? this.el.appendChild(this.createImg(card.index))
                 : card.domEl.onmouseover = null;
         });
+        this.busCallbacks.push(cb);
 
-        bus.on('HIDECARD', () => {
+        cb = bus.on('HIDECARD', () => {
             this.clean();
         });
+        this.busCallbacks.push(cb);
     }
 
     clean() {
@@ -34,5 +38,11 @@ export default class SelectedCard {
         let domEl = document.createElement('div');
         domEl.setAttribute('class', 'card-lg-monster card-lg-monster-'+ img);
         return domEl;
+    }
+
+    destroy() {
+        this.busCallbacks.forEach((f) => {
+            f();
+        });
     }
 }

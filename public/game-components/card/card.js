@@ -40,8 +40,4 @@ export default class Card {
     illuminate() {
         this.domEl.setAttribute('class', 'card-img__illumination card-sm-monster card-sm-monster-'+ this.index);
     }
-
-    // hideIlluminate() {
-    //     this.domEl.setAttribute('class', 'card-sm-monster card-sm-monster-'+ this.index);
-    // }
 }
