@@ -34,7 +34,7 @@ export default class GameBoard {
 
     addCard(card) {
         this.boardEl.appendChild(card.domEl);
-        //card.illuminate();
+        card.illuminate();
 
         this.score += card.score;
         this.scoreEl.innerHTML = this.score;

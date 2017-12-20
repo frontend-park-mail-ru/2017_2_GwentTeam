@@ -7,8 +7,8 @@ const WRONG_DATA = 'Wrong data!';
 const REQUIRED_INFO = 'Required field!';
 const ALREADY_IS_INFO = 'User already exist!';
 const DONE_INFO = 'Done!';
-const YES_COLOR = '#32cd32';
-const NO_COLOR = 'lightcoral';
+const YES_COLOR = '#669266';
+const NO_COLOR = '#965d5d';
 const UP = 'up';
 const IN = 'in';
 

@@ -30,9 +30,9 @@ let webpackPlugins = [
     }),
 
     new CopyWebpackPlugin([{
-        from: path.join(__dirname, 'public', 'images'),
-        to: path.join(__dirname, 'build', 'img')
-    }, {
+    //     from: path.join(__dirname, 'public', 'images'),
+    //     to: path.join(__dirname, 'build', 'img')
+    // }, {
         from: path.join(__dirname, 'public', 'service-worker.js'),
         to: path.join(__dirname, 'build', 'service-worker.js')
     }])
@@ -81,7 +81,7 @@ const clientConfig = {
             }, {
             }, {
                 test: /\.(jp?g|png|gif|svg|)$/i,
-                loader: 'file-loader?name=img/[name].[hash].[ext]'
+                loader: 'file-loader?name=img/[name].[ext]'
             }, {
                 test: /\.html/,
                 loader: 'html-loader',

@@ -35,12 +35,10 @@ export default class BaseView {
             this.el.classList.add('application__view', `application__${name}-view`);
         }
         this.router = router;
-        this.pause();
         parentElement.appendChild(this.el);
     }
 
     render() {
-
     }
 
     start() {
@@ -48,7 +46,6 @@ export default class BaseView {
     }
 
     destroy() {
-
     }
 
     resume() {

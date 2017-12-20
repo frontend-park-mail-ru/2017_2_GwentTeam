@@ -5,6 +5,10 @@ import Strategy from './strategy.js';
 import bus from '../modules/event-bus.js';
 
 import Monsters from './all-cards.js';
+
+import {
+    EVENTS
+} from './events.js';
 /**
  * @module GameView
  * @extends BaseView
@@ -17,6 +21,8 @@ export default class SinglePlayerStrategy extends Strategy {
         this.btnPassEl.el.onclick = () => {
             this.round();
         };
+        //console.log(bus);
+        this.canUserGo = true;
 
         this.startCardsCount = 8;
         this.roundCardsCount = 2;
@@ -32,23 +38,29 @@ export default class SinglePlayerStrategy extends Strategy {
             roundWin: 0,
             roundScores: 0,
             lines: {
-                b:[],
-                c:[],
-                d:[]
+                b: [],
+                c: [],
+                d: []
             },
             gameCards: []
         };
 
         this.dealCards(this.startCardsCount);
 
-
-        bus.on('CHOOSECARD', (payload) => {
+        let cb = bus.on(EVENTS.CARD.CHOOSE, (payload) => {
+            //if(this.canUserGo) {
+            //this.canUserGo = false;
             const data = payload.payload.card;
-            bus.emit('HIDECARD');
+            bus.emit(EVENTS.CARD.HIDE);
             this.userGo(data);
-            this.opponentGo();
-            this.isRound() ? this.round() : {};
+            setTimeout(() => {
+                this.opponentGo();
+                this.isRound() ? this.round() : {};
+                //this.canUserGo = true;
+            }, 2300);
+            //}
         });
+        this.busCallbacks.push(cb);
     }
 
     opponentCard() {
@@ -70,7 +82,7 @@ export default class SinglePlayerStrategy extends Strategy {
                 this.compState.gameCards.splice(cardIndex, 1);
             }
         });
-        bus.emit('OPPONENTGO', {
+        bus.emit(EVENTS.GAME.OPPONENTGO, {
             card: opponentCard,
             score: {
                 opponentScore: this.compState.roundScores,
@@ -105,20 +117,20 @@ export default class SinglePlayerStrategy extends Strategy {
         this.isUserWinRound() ? this.userState.roundWin++ : this.compState.roundWin++;
         this.compState.roundScores = 0;
         this.userState.roundScores = 0;
-        bus.emit('ROUND', {
-            opponentScore : this.compState.roundScores,
-            opponentRounds : this.compState.roundWin,
-            userScore : this.userState.roundScores,
-            userRounds : this.userState.roundWin
+        bus.emit(EVENTS.GAME.ROUND, {
+            opponentScore: this.compState.roundScores,
+            opponentRounds: this.compState.roundWin,
+            userScore: this.userState.roundScores,
+            userRounds: this.userState.roundWin
         });
 
         this.cleanState(this.compState);
-        this.isGameOver() ? bus.emit('GAMEOVER', this.isUserWin()) : this.dealCards(this.roundCardsCount);
+        this.isGameOver() ? bus.emit(EVENTS.GAME.GAMEOVER, this.isUserWin()) : this.dealCards(this.roundCardsCount);
     }
 
     dealCards(cardsCount) {
         let arrayOfUserCards = this.createArrayOfDealCards(this.userCards, cardsCount);
-        bus.emit('DEALCARDS', arrayOfUserCards);
+        bus.emit(EVENTS.CARD.DEAL, arrayOfUserCards);
         this.createArrayOfDealCards(this.compCards, cardsCount).forEach((card) => {
             this.compState.gameCards.push(card);
         });
