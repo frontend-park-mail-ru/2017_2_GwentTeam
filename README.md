@@ -76,7 +76,7 @@ npm start
 - Spring Boot
 - PostgreSQL
 
-#### Common
+### Common
 
 - WebSocket
 - CI [TRAVIS]
