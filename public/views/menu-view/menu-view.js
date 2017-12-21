@@ -47,8 +47,11 @@ export default class MenuView extends BaseView {
         if (userService.isLoggedIn()) {
             this.user = userService.user;
         }
+        if (userService.user === null) {
+            console.log('ku');
+            this.initPopUp();
+        }
         this.render();
-        this.initPopUp();
         super.resume();
     }
 
@@ -59,21 +62,23 @@ export default class MenuView extends BaseView {
         this.deck.addEl(this.btnDeck);
         document.body.appendChild(this.deck.el);
         this.deck.hide();
-        this.popup.onclick = (() => {
-            this.deck.el.removeAttribute('hidden');
-            this.deck.el.setAttribute('class', 'deck_active');
-            this.deck.show();
-            this.btnDeck.el.onclick = (() => {
-                // this.deck.el.addEventListener('onchange', () => {
-                //     alert('ku');
+        if (this.popup !== null) {
+            this.popup.onclick = (() => {
+                this.deck.el.removeAttribute('hidden');
+                this.deck.el.setAttribute('class', 'deck_active');
+                this.deck.show();
+                this.btnDeck.el.onclick = (() => {
+                    // this.deck.el.addEventListener('onchange', () => {
+                    //     alert('ku');
 
-                // });
-                let currentValue = document.getElementById('deck').value;
-               // let result = currentValue.options[currentValue.selectedIndex].value;//значение, т.е. либо teachers либо students
-                console.log('cur', currentValue);//чтобы получить сообщение(либо Нечисть либо Чуваки) надо currentValue.options[currentValue.selectedIndex].text
-                this.deck.hide();
-                this.router.go('/singleplayer');
+                    // });
+                    let currentValue = document.getElementById('deck').value;
+                    // let result = currentValue.options[currentValue.selectedIndex].value;//значение, т.е. либо teachers либо students
+                    console.log('cur', currentValue);//чтобы получить сообщение(либо Нечисть либо Чуваки) надо currentValue.options[currentValue.selectedIndex].text
+                    this.deck.hide();
+                    this.router.go('/singleplayer');
+                });
             });
-        });
+        }
     }
 }
