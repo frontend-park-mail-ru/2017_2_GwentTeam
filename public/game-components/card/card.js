@@ -29,7 +29,7 @@ export default class Card {
 
     createImg() {
         let domEl = document.createElement('div');
-        domEl.setAttribute('class', 'card-sm-monster card-sm-monster-'+ this.index);
+        domEl.setAttribute('class', 'card-img card-sm-monster card-sm-monster-'+ this.index);
         return domEl;
     }
 
