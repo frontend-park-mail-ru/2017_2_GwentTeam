@@ -7,4 +7,5 @@ import GameView from './game-view.js';
 * @extends GameView
 */
 export default class SinglePlayerView extends GameView {
+
 }

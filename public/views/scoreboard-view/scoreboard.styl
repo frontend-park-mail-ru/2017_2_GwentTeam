@@ -7,13 +7,24 @@
 
 
 .scoreboard-view__buttons
-    display flex
-    justify-content space-aroun
-#page
-    border 2px solid black
-    padding 0 5px
+    display inline-flex
+    justify-content space-around
+#forward, #back, #page
+    background: #44697e;
+    border none
+    color #fff
+    margin 10px 10px
+    height: 45px;
+    line-height: 45px;
+    border-radius: 5px;
+    text-align center
+    width: 40px;
+    font-size: 18px;
+    font-family open_sansregular
 #back, #forward
-    font-style italic
+    background: #9f407e;
+    border-radius: 0;
+    width: 70px;
     &:hover
         color #36324a
         cursor pointer
@@ -28,9 +39,38 @@
         transform translateY(-10px)
     100%
         transform translateY(0px)
-table
-    border-collapse collapse
-    border 2px solid black
+//table
+//    border-collapse collapse
+//    border 2px solid black
+    
+#t01 {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 40%;
+}
+
+#t01 td, #t01 thead {
+    border: 1px solid #a9a9a9;
+    padding: 8px;
+}
+
+#t01 tbody tr:nth-child(even)
+    background-color #f2f2f2
+
+#t01 tbody tr:nth-child(odd)
+    background-color #ddd
+
+
+#t01 thead {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+
 
 //td, th
 //    padding: 5px; /* Поля вокруг текста */

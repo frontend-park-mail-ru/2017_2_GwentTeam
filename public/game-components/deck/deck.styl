@@ -1,0 +1,60 @@
+.deck
+  background-color transparent
+  top 0
+  left 0
+  position fixed
+  width 100%
+  height 100%
+  z-index 1000
+  &__rect
+    margin-left auto
+    margin-right auto
+    box-shadow 0 0 14px #ffff30
+    background-color #070e33
+    height 300px
+    display: flex;
+    flex-direction: row;
+    border-radius: 12px;
+    &__wrapperMan, &__wrapperMonster
+      transform scale(.4)
+
+.deck__rect
+  .form-input
+    width 100px
+
+.deck_active
+  display flex
+  flex-direction row
+  align-items center
+  background-color transparent
+  top 0
+  left 0
+  position fixed
+  width 100%
+  height 100%
+  z-index 1000
+  backdrop-filter blur(5px)
+  animation popup .6s linear
+
+.card-lg-monster-arachas1_transform, .card-lg-monster-arachas2_transform
+  background-image: url('../../images/cards/monsters/cards-lg-monster.png')
+  width: 238px
+  height: 450px
+  background-position: -238px -0px
+  cursor pointer
+
+.card-lg-monster-arachas2_transform
+  background-position: -1666px -0px
+
+@keyframes popup
+  0%
+    opacity 0
+  25%
+    opacity 0.25
+  50%
+    opacity 0.5
+  75%
+    opacity 0.75
+  100%
+    opacity 1
+
