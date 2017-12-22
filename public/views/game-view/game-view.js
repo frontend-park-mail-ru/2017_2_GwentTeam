@@ -3,19 +3,28 @@
 import './game.styl';
 import BaseView from '../../modules/view.js';
 import Router from '../../modules/router.js';
-import MultiPlayerStrategy from '../../game-strategy/multiplayer.js';
+import SinglePlayerStrategy from '../../game-strategy/singleplayer.js';
 
 /**
-* @module GameView
+* @module SinglePlayerView
 * @extends BaseView
 */
-
 export default class GameView extends BaseView {
     constructor(parentElement) {
         const router = new Router();
         super(parentElement, router, true);
+        this.router = router;
+        this.Strategy = SinglePlayerStrategy;
+    }
 
-        this.strategy = new MultiPlayerStrategy(router, this.el);
+    resume() {
+        this.strategy = new this.Strategy(this.router, this.el);
         super.resume();
+    }
+
+    pause() {
+        this.strategy.destroy();
+        this.strategy = null;
+        super.pause();
     }
 }

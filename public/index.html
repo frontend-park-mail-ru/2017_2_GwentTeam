@@ -2,6 +2,14 @@
 <html lang="ru">
     <head>
         <style>
+            @keyframes spinner {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
             .background-loader {
                 background-color: rgba(245, 245, 245, 0.5);
                 top: 0;
@@ -25,7 +33,7 @@
             }
         </style>
         <link rel="icon" href="/img/favicon.png" type="image/png">
-        <link rel="prerender" href="https://tech-gwent.xyz/">
+        <!-- <link rel="prerender" href="https://tech-gwent.xyz/"> -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Gwent</title>

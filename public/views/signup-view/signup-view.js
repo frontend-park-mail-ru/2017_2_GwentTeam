@@ -6,7 +6,6 @@ import UserService from '../../services/user-service.js';
 import Form from '../../blocks/form/form.js';
 import signupTemplate from './signup.pug';
 import bus from '../../modules/event-bus.js';
-import Loader from '../../modules/loader.js';
 import Validate from '../../modules/validate.js';
 
 const userService = new UserService();

@@ -4,14 +4,11 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const PreloadCSSPlugin = require('preload-css-webpack-plugin');
 const SRC_DIR = 'public';
 const BUILD_DIR = 'build';
 
-const ENV = {
-    NODE_ENV: process.env.NODE_ENV || 'production'
-};
-const IS_PROD = ENV.NODE_ENV === 'production';
+const ENV = process.env.NODE_ENV || 'production';
+const IS_PROD = ENV === 'production';
 
 const CSS_LOADER_CONFIG = IS_PROD ? 'css-loader?minimize' : 'css-loader';
 
@@ -24,15 +21,8 @@ let webpackPlugins = [
         template: path.resolve(__dirname, SRC_DIR, 'index.html'),
     }),
     new ExtractTextPlugin('[name].css'),
-    new PreloadCSSPlugin({
-        blacklist: [/\.map/],
-        noscript: true
-    }),
 
     new CopyWebpackPlugin([{
-    //     from: path.join(__dirname, 'public', 'images'),
-    //     to: path.join(__dirname, 'build', 'img')
-    // }, {
         from: path.join(__dirname, 'public', 'service-worker.js'),
         to: path.join(__dirname, 'build', 'service-worker.js')
     }])
@@ -53,7 +43,6 @@ if (IS_PROD) {
 }
 
 const clientConfig = {
-    target: 'web',
     entry: {
         client: path.resolve(__dirname, SRC_DIR, 'main.js')
     },

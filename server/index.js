@@ -5,15 +5,11 @@ const fallback = require('express-history-api-fallback');
 
 const Game = require('./game');
 
-const game = new Game();
-
 const app = express();
 app.use(express.static('build'));
 app.use(fallback('index.html', {
     root: 'build'
 }));
-
-let clients = {};
 
 const port = process.env.PORT || 8000;
 
@@ -27,10 +23,17 @@ const WebSocketServer = new require('ws');
 const webSocketServer = new WebSocketServer.Server({
     server: server
 });
+
+let firstPlayer = null;
 webSocketServer.on('connection', (ws) => {
+    if (firstPlayer) {
+        let game = new Game();
+        game.addPlayer(firstPlayer);
+        game.addPlayer(ws);
 
-    let id = Math.random();
-    clients[id] = ws;
-
-    game.addPlayer(ws);
+        firstPlayer = null;
+    }
+    else {
+        firstPlayer = ws;
+    }
 });
