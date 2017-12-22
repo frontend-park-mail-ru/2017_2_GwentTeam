@@ -31,6 +31,7 @@ export default class GameStrategy {
 
         let img1 = new Image();
         let img = new Image();
+
         img1.src = './img/cards-sm-monster.png';
         img.src = './img/cards-lg-monster.png';
 
