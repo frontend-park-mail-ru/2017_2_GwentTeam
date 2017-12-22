@@ -48,7 +48,7 @@ router
     .start();
 
 userService
-    .getData(true, router)
+    .getData(true)
     .catch((err) => {
         return err;
     });

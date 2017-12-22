@@ -2,15 +2,8 @@ import '../styles.styl';
 
 export default class Loader {
     constructor() {
-        this.el = document.createElement('div');
-        document.body.appendChild(this.el);
-        this.back = document.createElement('div');
-        this.back.setAttribute('class', 'background-loader');
-        this.loader = document.createElement('div');
-        this.loader.setAttribute('class', 'loader');
-
-        this.el.appendChild(this.back);
-        this.back.appendChild(this.loader);
+        this.back = document.querySelector('.background-loader');
+        this.loader = document.querySelector('.loader');
         this.hideEl();
     }
 

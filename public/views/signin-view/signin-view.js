@@ -18,30 +18,30 @@ const userService = new UserService();
  */
 export default class SigninView extends BaseView {
     start() {
-        this.loader = new Loader();
         this.render();
         this.form = new Form(this.el.querySelector('.signin-form-js'), ['login', 'password']);
         this.validator = new Validate(this.form.el, document.querySelector('.signin-form-js'));
         this.validator.currentHandlers();
         this.form.onsubmit((formdata) => {
-            //this.loader.showEl();
+            this.validator.analize();
             if (this.validator.fieldsIsCorrect() === true){
                 bus.emit('signin-user', formdata);
             }
 
         });
+
         bus.on('user:authorized', () => {
-            //this.loader.hideEl();
             this.form.reset();
         });
-
+        bus.on('user:unrealdata', (() => {
+            this.validator.unrealData();
+        }));
         this.user = null;
         bus.on('user:authorized', (data) => {
             this.user = data.payload;
             this.resume();
         });
         bus.on('user:unauthorized', () => {
-            //this.loader.hideEl();
             this.user = null;
         });
         this.resume();

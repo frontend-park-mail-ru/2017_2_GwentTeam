@@ -1,4 +1,4 @@
-# Тех-Гвинт
+# Gwent
 
 [![Build Status](https://travis-ci.org/frontend-park-mail-ru/2017_2_GwentTeam.svg?branch=develop)](https://travis-ci.org/frontend-park-mail-ru/2017_2_GwentTeam)
 
@@ -6,15 +6,16 @@
 
 [tech-gwent.xyz](https://tech-gwent.xyz)
 
-## Описание игры
+## Описание
 
 Браузерная мультиплеерная карточная игра, по мотивам легендарной игры [Гвинт](https://www.playgwent.com).
-Это великолепная возможность устроить поединок в логике, стратегическом мышлении и самообладании.
 Реализована студентами [Технопарка Mail.Ru](https://park.mail.ru) в рамках курса [Frontend-разработки](https://frontend-park-mailru.firebaseapp.com).
 
-## API
+## Backend
 
-[Репозиторий](<https://github.com/java-park-mail-ru/Gwent-09-2017>) c реализацией API игры.
+[Репозиторий](<https://github.com/java-park-mail-ru/Gwent-09-2017>) c реализацией серверного API игры.
+
+Описание API приводится на [Swagger](https://app.swaggerhub.com/apis/GwentTeam/TechnoGwentAPI/0.1.2)
 
 ## Команда
 
@@ -46,8 +47,43 @@
 
 * <https://github.com/aorel>
 
+## Установка и запуск
+
+```
+npm install
+```
+```
+npm run build
+```
+```
+npm start
+```
+
+## Средства разработки
+
+### Frontend
+
+- JavaScript
+- Webpack
+- Stylus
+- Babel
+- Pug
+- ESLint
+
+### Backend
+
+- Java
+- Spring Boot
+- PostgreSQL
+
+### Common
+
+- WebSocket
+- CI [TRAVIS]
+- CORS
+
 ## Лицензия
 
-Код реализован под [MIT License](LICENSE.md).
+Проект реализован под [MIT License](LICENSE.md).
 
 Проект является учебным и [CD PROJEKT RED](http://en.cdprojektred.com) не выступают в качестве партнера.

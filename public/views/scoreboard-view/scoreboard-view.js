@@ -13,14 +13,14 @@ const DEFAULT_LIMIT = 3;
 export default class ScoreboardView extends BaseView {
 
     start() {
+        if (!userService.user) {
+            this.resume();
+        }
         this.valueofPage = 'notlast';
         this.info = new Info();
         this.limit = DEFAULT_LIMIT;
         this.offset = DEFAULT_OFFSET;
         this.flag = true;
-        bus.on('user:notauthorized', () => {//добавить сюда go
-            this.resume();
-        });
         userService.getUser(true);//второй ненужный запрос
 
         bus.on('user:fetch', (data) => {
@@ -47,7 +47,7 @@ export default class ScoreboardView extends BaseView {
 
     resume() {
         if (userService.user === null) {
-            this.pause();
+            //this.pause();
             this.router.go('/');
             return;
         }
@@ -74,13 +74,14 @@ export default class ScoreboardView extends BaseView {
             buttonBack.removeAttribute('hidden');
         if (buttonUser !== null) {
             buttonUser.addEventListener('click', () => {
-                if (this.offset === this.user.position || this.offset === this.user.position - (this.user.position % 3)) {
+                if (this.offset === this.user.position || this.offset === this.user.position - (this.user.position % DEFAULT_LIMIT - 1)) {
                     return;
                 }
                 (this.user.position % DEFAULT_LIMIT === DEFAULT_OFFSET) ?
                     this.offset = this.user.position :
-                    this.offset = this.user.position - (this.user.position % DEFAULT_LIMIT);
-                this.offset = Math.floor(this.offset);
+                    this.offset = this.user.position - (this.user.position % DEFAULT_LIMIT - 1);
+                //this.offset = Math.floor(this.offset);
+                console.log(this.offset);
                 userService.getUsers(this.limit, this.offset);
             });
         }
