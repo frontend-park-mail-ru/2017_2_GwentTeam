@@ -20,7 +20,6 @@ export default class ProfileView extends BaseView {
         // });
         bus.on('user:authorized', (data) => {
             this.user = data.payload;
-            console.log('ren')
             //this.render();
             this.resume();
         });
