@@ -9,11 +9,9 @@
   &__rect
     box-shadow 0 0 14px #ffff30
     background-color white
-    width 200px
-    height 200px
-    position absolute
-    left 41%
-    top 35%
+    width 300px
+    height 300px
+    margin 12% auto
     border-radius: 12px;
 
 .deck__rect
@@ -31,6 +29,19 @@
   backdrop-filter blur(5px)
   animation popup .6s linear
 
+.card-lg-monster-arachas1_transform, .card-lg-monster-arachas2_transform
+  background-image: url('../../images/cards/monsters/cards-lg-monster.png')
+  width: 238px
+  height: 450px
+  background-position: -238px -0px
+  cursor pointer
+  transform scale(.4)
+
+.card-lg-monster-arachas2_transform
+  background-position: -1666px -0px
+  top 0
+  left 0
+  position absolute
 
 @keyframes popup
   0%
