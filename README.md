@@ -74,6 +74,7 @@ npm start
 
 - Java
 - Spring Boot
+- Maven
 - PostgreSQL
 
 ### Common
