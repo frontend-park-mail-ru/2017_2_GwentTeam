@@ -1,6 +1,7 @@
 'use strict';
 
-const Monsters = require('./all-cards.js');
+const Monsters = require('./monster-cards.js');
+//const Nilfgaardian = require('./nilfgaardian-cards.js');
 
 class Game {
     constructor() {

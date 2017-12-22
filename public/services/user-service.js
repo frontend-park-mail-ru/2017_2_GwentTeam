@@ -162,4 +162,18 @@ export default class UserService {
             });
     }
 
+    postResult() {
+        return Http.Post(url + '/users')
+            .then((response) => {
+                //this.loader.hideEl();
+                return response;
+            })
+            .catch((err) => {
+                if (err.status === 401) {
+                    //this.loader.hideEl();//
+                    //bus.emit('user:unrealdata', null);
+                }
+            });
+    }
+
 }

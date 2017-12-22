@@ -17,7 +17,7 @@ export default class SelectedCard {
         let cb = bus.on('SHOWCARD', (payload) => {
             const card = payload.payload;
             card.onboard === false
-                ? this.el.appendChild(this.createImg(card.index))
+                ? this.el.appendChild(this.createImg(card))
                 : card.domEl.onmouseover = null;
         });
         this.busCallbacks.push(cb);
@@ -34,9 +34,10 @@ export default class SelectedCard {
         }
     }
 
-    createImg(img) {
+    createImg(card) {
         let domEl = document.createElement('div');
-        domEl.setAttribute('class', 'game-view__bigimg card-lg-monster card-lg-monster-'+ img);
+        let cl = 'game-view__bigimg card-lg-' + card.faction + ' card-lg-' + card.faction + '-'+ card.index;
+        domEl.setAttribute('class', cl);
         return domEl;
     }
 

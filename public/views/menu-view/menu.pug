@@ -9,8 +9,7 @@ mixin item(title, href)
         +item('About', '/about')
         +item('Sign out', '/logout')
     unless authorized
-        button.main__menu#popup Play
+        +item('Play','/singleplayer')
         +item('Sign in','/login')
         +item('Sign up','/signup')
         +item('About', '/about')
-

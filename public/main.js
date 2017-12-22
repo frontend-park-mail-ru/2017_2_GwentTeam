@@ -35,6 +35,15 @@ router.addCallback((route) => {
     }
 });
 
+let imgSmMonstr = new Image();
+let imgLgMonstr = new Image();
+let imgSmNilf = new Image();
+let imgLgNilf = new Image();
+imgSmMonstr.src = './img/cards-sm-monster.png';
+imgLgMonstr.src = './img/cards-lg-monster.png';
+imgSmNilf.src = './img/cards-sm-nilfgaardian.png';
+imgLgNilf.src = './img/cards-lg-nilfgaardian.png';
+
 router
     .register('/', MenuView)
     .register('/about', AboutView)

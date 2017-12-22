@@ -10,6 +10,7 @@ export const EVENTS = {
         CHOOSE: 'CHOOSECARD',
         HIDE: 'HIDECARD',
         SHOW: 'SHOWCARD',
-        DEAL: 'DEALCARDS'
+        DEAL: 'DEALCARDS',
+        DECK: 'DECK'
     }
 };
