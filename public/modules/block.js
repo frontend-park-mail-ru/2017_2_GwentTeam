@@ -16,6 +16,7 @@ export default class Block {
         this.el.classList.add.apply(this.el.classList, options.classList || []);
         const attrs = options.attrs || {};
         for (const attr in attrs) {
+
             this.el.setAttribute(attr, attrs[attr]);
         }
         if (options.textContent) {
@@ -52,6 +53,9 @@ export default class Block {
         this.el.removeAttribute('hidden');
     }
 
+    addEl(el) {
+        this.el.appendChild(el.el);
+    }
     /**
     * Позволяет подписаться на событие
     * @param {string} event

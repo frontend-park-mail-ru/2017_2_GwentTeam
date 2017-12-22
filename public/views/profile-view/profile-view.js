@@ -21,7 +21,6 @@ export default class ProfileView extends BaseView {
         //userService.isLoggedIn();
         this.onAuthorized = (data) => {
             this.user = data.payload;
-            //console.log('ren');
             //this.render();
             this.user = userService.user;
             this.render();

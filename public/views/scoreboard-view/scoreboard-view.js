@@ -8,7 +8,7 @@ import bus from '../../modules/event-bus.js';
 const userService = new UserService();
 
 const DEFAULT_OFFSET = 1;
-const DEFAULT_LIMIT = 3;
+const DEFAULT_LIMIT = 7;
 
 export default class ScoreboardView extends BaseView {
 
