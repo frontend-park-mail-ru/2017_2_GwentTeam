@@ -36,7 +36,7 @@ export default class SelectedCard {
 
     createImg(img) {
         let domEl = document.createElement('div');
-        domEl.setAttribute('class', 'card-lg-monster card-lg-monster-'+ img);
+        domEl.setAttribute('class', 'game-view__bigimg card-lg-monster card-lg-monster-'+ img);
         return domEl;
     }
 
