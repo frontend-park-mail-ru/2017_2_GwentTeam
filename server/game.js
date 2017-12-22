@@ -1,6 +1,7 @@
 'use strict';
 
-const Monsters = require('./all-cards.js');
+const Monsters = require('./monster-cards.js');
+const Nilfgaardian = require('./nilfgaardian-cards.js');
 
 class Game {
     constructor() {
@@ -280,8 +281,11 @@ class Game {
 
     createArray() {
         let arrayOfResult = [];
-        for (let key in Monsters) {
-            arrayOfResult.push(Monsters[key]);
+        // for (let key in Monsters) {
+        //     arrayOfResult.push(Monsters[key]);
+        // }
+        for (let key in Nilfgaardian) {
+            arrayOfResult.push(Nilfgaardian[key]);
         }
         return arrayOfResult;
     }

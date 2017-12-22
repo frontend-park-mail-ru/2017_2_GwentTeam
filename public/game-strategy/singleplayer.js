@@ -4,7 +4,8 @@ import Strategy from './strategy.js';
 
 import bus from '../modules/event-bus.js';
 
-import Monsters from './all-cards.js';
+import Monsters from './monster-cards.js';
+import Nilfgaardian from './nilfgaardian-cards.js';
 
 import {
     EVENTS
@@ -143,8 +144,11 @@ export default class SinglePlayerStrategy extends Strategy {
 
     createArray() {
         let arrayOfResult = [];
-        for (let key in Monsters) {
-            arrayOfResult.push(Monsters[key]);
+        // for (let key in Monsters) {
+        //     arrayOfResult.push(Monsters[key]);
+        // }
+        for (let key in Nilfgaardian) {
+            arrayOfResult.push(Nilfgaardian[key]);
         }
         return arrayOfResult;
     }
