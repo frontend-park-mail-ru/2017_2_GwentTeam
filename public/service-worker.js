@@ -1,7 +1,6 @@
-const CACHE_VERSION = 'app_sw_v1';
+const CACHE_VERSION = 'app_sw_v3';
 
 const cacheUrls = [
-
     '/client.bundle.js',
     '/img/',
     '/index.html'

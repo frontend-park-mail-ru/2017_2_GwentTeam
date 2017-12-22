@@ -1,11 +1,10 @@
 .scoreboard-view
-    h2.scoreboard-view__header Таблица лидеров
     table#t01
         thead
             tr
-                td Место
-                td Игрок
-                td Очки
+                td Place
+                td Player
+                td Score
         tbody
             if flag
                 tr#user
@@ -26,6 +25,6 @@
                             td #{gamer.login}
                             td #{gamer.wins}
     div.scoreboard-view__buttons
-        div#back Назад
+        div#back Previous
         div#page #{page}
-        div#forward Вперед
+        div#forward Next
