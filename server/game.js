@@ -61,14 +61,19 @@ class Game {
             }
             if (msg === 'ROUND') {
                 oppon.send(JSON.stringify({
-                    event: 'OPPORTUNITY_TO_GO',
+                    event: 'OPPORTUNITY_TO_GO',//TODO
                     payload: true
                 }));
                 this.round(player, oppon);
-            } else {
+            }
+            else {
                 const message = JSON.parse(msg);
                 if (message.event === 'userGo') {
                     this.userGo(player, oppon, message.payload);
+                }
+                else if (message.event === 'LALALA') {
+                    //console.log(message.payload);
+                    //TODO
                 }
             }
         });

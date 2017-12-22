@@ -5,7 +5,7 @@ import MenuView from './views/menu-view/menu-view.js';
 import AboutView from './views/about-view/about-view.js';
 import ScoreboardView from './views/scoreboard-view/scoreboard-view.js';
 import ProfileView from './views/profile-view/profile-view.js';
-import GameView from './views/game-view/game-view.js';
+import MultiPlayerView from './views/game-view/multiplayer-view.js';
 import SingleplayerView from './views/game-view/singleplayer-view.js';
 import SignupView from './views/signup-view/signup-view.js';
 import SigninView from './views/signin-view/signin-view.js';
@@ -28,7 +28,7 @@ const router = new Router(application.getElement(), application.getViewsContaine
 
 router.addCallback((route) => {
     const logo = document.getElementById('logo');
-    if (route === '/game' || route === '/singleplayer') {
+    if (route === '/multiplayer' || route === '/singleplayer') {
         logo.style.display = 'none';
     } else {
         logo.style.display = 'block';
@@ -38,14 +38,14 @@ router.addCallback((route) => {
 router
     .register('/', MenuView)
     .register('/about', AboutView)
-    .register('/game', GameView)
     .register('/profile', ProfileView)
+    .register('/multiplayer', MultiPlayerView)
     .register('/singleplayer', SingleplayerView)
     .register('/login', SigninView)
     .register('/score', ScoreboardView)
     .register('/signup', SignupView)
-    .register('/logout', SignoutView)
-    .start();
+    .register('/logout', SignoutView);
+// .start();
 
 userService
     .getData(true)

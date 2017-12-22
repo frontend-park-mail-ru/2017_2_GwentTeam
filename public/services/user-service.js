@@ -121,6 +121,7 @@ export default class UserService {
         return Http.Get(url + '/auth')
             .then((userdata) => {
                 this.user = userdata;
+                //console.log('&',this.user);
                 bus.emit('user:authorized', this.user);
                 this.loader.hideEl();//
                 return userdata;

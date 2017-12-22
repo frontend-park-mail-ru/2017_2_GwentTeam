@@ -45,14 +45,14 @@ export default class ScoreboardView extends BaseView {
         this.logic();
     }
 
-    resume() {
-        if (userService.user === null) {
-            //this.pause();
-            this.router.go('/');
-            return;
-        }
-        super.resume();
-    }
+    // resume() {
+    //     if (userService.user === null) {
+    //         //this.pause();
+    //         this.router.go('/');
+    //         return;
+    //     }
+    //     super.resume();
+    // }
 
     check() {
         Object.values(this.users).forEach((element, elementIndex) => {
@@ -81,7 +81,7 @@ export default class ScoreboardView extends BaseView {
                     this.offset = this.user.position :
                     this.offset = this.user.position - (this.user.position % DEFAULT_LIMIT - 1);
                 //this.offset = Math.floor(this.offset);
-                console.log(this.offset);
+                //console.log(this.offset);
                 userService.getUsers(this.limit, this.offset);
             });
         }

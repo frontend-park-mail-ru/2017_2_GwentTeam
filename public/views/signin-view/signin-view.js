@@ -7,7 +7,6 @@ import Form from '../../blocks/form/form.js';
 import signinTemplate from './signin.pug';
 import Validate from '../../modules/validate.js';
 import bus from '../../modules/event-bus.js';
-import Loader from '../../modules/loader.js';
 
 const userService = new UserService();
 

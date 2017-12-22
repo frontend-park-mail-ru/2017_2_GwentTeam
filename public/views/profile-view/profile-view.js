@@ -18,16 +18,25 @@ export default class ProfileView extends BaseView {
         // bus.on('user:notauthorized', () => {//добавить сюда go
         //     //this.resume();
         // });
-        bus.on('user:authorized', (data) => {
+        //userService.isLoggedIn();
+        this.onAuthorized = (data) => {
             this.user = data.payload;
-            console.log('ren')
+            //console.log('ren');
             //this.render();
+            this.user = userService.user;
+            this.render();
+
             this.resume();
-        });
-        bus.on('user:unauthorized', () => {
+            //super.resume();
+        };
+        this.onUnauthorized = () => {
             this.user = null;
-            this.resume();
-        });
+            this.pause();
+            this.router.go('/');
+        };
+
+        bus.on('user:authorized', this.onAuthorized);
+        bus.on('user:unauthorized', this.onUnauthorized);
         //this.resume();
     }
 
@@ -36,15 +45,24 @@ export default class ProfileView extends BaseView {
     }
 
     resume() {
-        if (userService.isLoggedIn()) {
-            this.user = userService.user;
+        //console.log('profile resume');
+        if (!this.user) {
+            if (userService.isLoggedIn()) {
+                this.onAuthorized(userService.user);
+            } else {
+                return;
+            }
         }
-        if (this.user === null) {
-            this.pause();
-            this.router.go('/');
-            return;
-        }
-        this.render();
+
+        // if (userService.isLoggedIn()) {
+        //     this.user = userService.user;
+        // }
+        // if (this.user === null) {
+        //     this.pause();
+        //     this.router.go('/');
+        //     return;
+        // }
+        // this.render();
         super.resume();
     }
 }

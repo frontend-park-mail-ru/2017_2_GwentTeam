@@ -1,5 +1,6 @@
 'use strict';
 
+import bus from './event-bus.js';
 /**
 * Роутер
 * @module Router
@@ -22,6 +23,12 @@ export default class Router {
         Router.__instance = this;
 
         this.callbacks = [];
+
+        this.started = false;
+        bus.on('router:start', () => {
+            this.started = true;
+            this.start();
+        });
     }
 
     /**
@@ -69,11 +76,18 @@ export default class Router {
         this.go(window.location.pathname);
     }
 
+    go(route) {
+        if (this.started) {
+            this.go_(route);
+        }
+    }
+
     /**
     * Перейти на страницу
     * @param {string} route - адрес
     */
-    go(route) {
+    go_(route) {
+        //console.log('route -> ', route);
         const res = this.routes.find((info) => {
             // идет по массиву, если pathname не равен текущему индексу сбрасывает значение и идет дальше
             if (route !== info.route) {
