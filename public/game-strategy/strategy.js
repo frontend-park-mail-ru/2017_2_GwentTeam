@@ -16,6 +16,9 @@ import Deck from '../game-components/deck/deck.js';
 import Block from '../modules/block.js';
 import Monsters from './monster-cards.js';
 import Nilfgaardian from './nilfgaardian-cards.js';
+import UserService from '../services/user-service.js';
+
+const userService = new UserService();
 
 import { EVENTS } from './events.js';
 
@@ -175,6 +178,9 @@ export default class GameStrategy {
 
     showResult(isUserWin) {
         isUserWin ? this.showMessage('Вы выиграли!') : this.showMessage('Вы проиграли:(');
+        if (isUserWin & this.gameType === 'multiplayer') {
+            userService.postResult();
+        }
     }
 
     showMessage(msg) {
