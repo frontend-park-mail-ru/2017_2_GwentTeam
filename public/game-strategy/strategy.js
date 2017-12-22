@@ -33,7 +33,7 @@ export default class GameStrategy {
         this.router = router;
         this.el = el;
 
-        this.initialDeck();
+        //this.initialDeck();
 
         this.infoWindow = new Info();
 
@@ -230,6 +230,7 @@ export default class GameStrategy {
             this.el.removeChild(this.el.lastChild);
         }
     }
+
     initialDeck() {
         this.deck = new Deck();
         this.wrapperMan = new Block(null, {
@@ -268,7 +269,6 @@ export default class GameStrategy {
         this.imageMonster.el.onclick = (() => {
             this.deck.hide();
             this.deck.hideEl();
-            console.log(Monsters);
             bus.emit(EVENTS.CARD.DECK, Monsters);
         });
     }

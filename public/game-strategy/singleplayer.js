@@ -19,7 +19,8 @@ export default class SinglePlayerStrategy extends Strategy {
         this.btnPassEl.el.onclick = () => {
             this.round();
         };
-        //console.log(bus);
+
+        this.initialDeck();
         this.canUserGo = true;
 
         this.startCardsCount = 8;
@@ -27,9 +28,6 @@ export default class SinglePlayerStrategy extends Strategy {
         this.roundsCount = 2;
 
         this.gameType = 'singleplayer';
-
-        // this.userCards = this.createArray();
-        // this.compCards = this.createArray();
 
         this.compState = {
             playerName: 'Opponent',
@@ -57,10 +55,9 @@ export default class SinglePlayerStrategy extends Strategy {
 
         cb = bus.on(EVENTS.CARD.DECK, (payload) => {
             this.userCards = this.createArray(payload.payload);
-            console.log(this.userCards);
             this.compCards = this.createArray(payload.payload);
             this.dealCards(this.startCardsCount);
-        })
+        });
         this.busCallbacks.push(cb);
     }
 

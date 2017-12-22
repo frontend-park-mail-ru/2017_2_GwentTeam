@@ -17,7 +17,6 @@ export default class MultiPlayerStrategy extends Strategy {
 
         super(router, el);
 
-
         const address = ['https', 'https:'].includes(location.protocol) ?
             `wss://${location.host}/ws` :
             `ws://${location.host}/ws`;
@@ -33,7 +32,6 @@ export default class MultiPlayerStrategy extends Strategy {
         };
 
         this.ws.onopen = () => {
-            //console.log(userService);
             const message = JSON.stringify({
                 event: 'LALALA',
                 payload: userService.user.email
@@ -44,8 +42,6 @@ export default class MultiPlayerStrategy extends Strategy {
         this.ws.onclose = () => {
             this.showMessage('Игра оборвалась');
         };
-
-        //console.log();
 
         this.btnPassEl.el.onclick = () => {
             if (this.canUserGo) {
@@ -64,15 +60,19 @@ export default class MultiPlayerStrategy extends Strategy {
 
         bus.on(EVENTS.CARD.CHOOSE, (payload) => {
             const card = payload.payload.card;
-            //if (this.canUserGo) {
             this.userGo(card);
             this.ws.send(JSON.stringify({
                 event: EVENTS.GAME.USERGO,
                 payload: card.index
             }));
-            //    this.canUserGo = false;
             this.preloader.hideIlluminate();
-            //}
+        });
+
+        bus.on(EVENTS.CARD.DECK, (payload) => {
+            this.ws.send(JSON.stringify({
+                event: EVENTS.CARD.DECK,
+                payload: payload.payload
+            }));
         });
     }
 }

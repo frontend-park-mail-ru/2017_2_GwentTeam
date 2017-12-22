@@ -6,8 +6,6 @@ import BaseView from '../../modules/view.js';
 import menuTemplate from './menu.pug';
 import bus from '../../modules/event-bus.js';
 import Loader from '../../modules/loader.js';
-import Deck from '../../game-components/deck/deck.js';
-import Block from '../../modules/block.js';
 
 const userService = new UserService();
 
