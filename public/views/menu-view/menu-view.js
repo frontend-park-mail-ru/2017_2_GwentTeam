@@ -49,43 +49,43 @@ export default class MenuView extends BaseView {
         }
         this.render();
         if (userService.user === null) {
-            this.initPopUp();
+            //this.initPopUp();
         }
         super.resume();
     }
 
     initPopUp(){
-        this.popup = document.getElementById('popup');
-        this.deck = new Deck();
-        this.wrapperMan = new Block(null, {attrs: {class: 'deck__rect__wrapperMan'}});
-        this.wrapperMonster = new Block(null, {attrs: {class: 'deck__rect__wrapperMonster'}});
-
-        this.imageMan = new Block(null, {attrs: {class: 'card-lg-monster-arachas1_transform'}});
-        this.imageMonster = new Block(null, {attrs: {class: 'card-lg-monster-arachas2_transform'}});
-        this.wrapperMan.addEl(this.imageMan);
-        this.wrapperMonster.addEl(this.imageMonster);
-
-        this.deck.addEl(this.wrapperMan);
-        this.deck.addEl(this.wrapperMonster);
-
-        this.deck.addToDocument();
-        this.deck.hide();
-        this.popup.onclick = (() => {
-            this.deck.show();
-            this.imageMan.el.onclick = (() => {
-                //bus.//TODO вброс в шину
-                this.deck.hide();
-                this.deck.hideEl();
-                this.router.go('/singleplayer');
-                this.popup.onclick = null;
-            });
-            this.imageMonster.el.onclick = (() => {
-                //bus.//TODO вброс в шину
-                this.deck.hide();
-                this.deck.hideEl();
-                this.router.go('/singleplayer');
-                this.popup.onclick = null;
-            });
-        });
+    //     this.popup = document.getElementById('popup');
+    //     this.deck = new Deck();
+    //     this.wrapperMan = new Block(null, {attrs: {class: 'deck__rect__wrapperMan'}});
+    //     this.wrapperMonster = new Block(null, {attrs: {class: 'deck__rect__wrapperMonster'}});
+    //
+    //     this.imageMan = new Block(null, {attrs: {class: 'card-lg-monster-arachas1_transform'}});
+    //     this.imageMonster = new Block(null, {attrs: {class: 'card-lg-monster-arachas2_transform'}});
+    //     this.wrapperMan.addEl(this.imageMan);
+    //     this.wrapperMonster.addEl(this.imageMonster);
+    //
+    //     this.deck.addEl(this.wrapperMan);
+    //     this.deck.addEl(this.wrapperMonster);
+    //
+    //     this.deck.addToDocument();
+    //     this.deck.hide();
+    //     this.popup.onclick = (() => {
+    //         this.deck.show();
+    //         this.imageMan.el.onclick = (() => {
+    //             //bus.//TODO вброс в шину
+    //             this.deck.hide();
+    //             this.deck.hideEl();
+    //             this.router.go('/singleplayer');
+    //             this.popup.onclick = null;
+    //         });
+    //         this.imageMonster.el.onclick = (() => {
+    //             //bus.//TODO вброс в шину
+    //             this.deck.hide();
+    //             this.deck.hideEl();
+    //             this.router.go('/singleplayer');
+    //             this.popup.onclick = null;
+    //         });
+    //     });
     }
 }

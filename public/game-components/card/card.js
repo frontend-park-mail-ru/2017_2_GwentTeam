@@ -15,7 +15,7 @@ export default class Card {
         this.score = data.score;
         this.type = data.type;
         this.index = data.index;
-
+        this.faction = data.faction;
 
         this.onboard = false;
 
@@ -30,8 +30,8 @@ export default class Card {
 
     createImg() {
         let domEl = document.createElement('div');
-        //domEl.setAttribute('class', 'card-img card-sm-monster card-sm-monster-'+ this.index);
-        domEl.setAttribute('class', 'card-img card-sm-nilfgaardian card-sm-nilfgaardian-'+ this.index);
+        let cl = 'card-img card-sm-' + this.faction + ' card-sm-' + this.faction + '-' + this.index;
+        domEl.setAttribute('class', cl);
         return domEl;
     }
 
@@ -40,7 +40,7 @@ export default class Card {
     }
 
     illuminate() {
-        //this.domEl.setAttribute('class', 'card-img__illumination card-sm-monster card-sm-monster-'+ this.index);
-        this.domEl.setAttribute('class', 'card-img__illumination card-sm-nilfgaardian card-sm-nilfgaardian-'+ this.index);
+        let cl = 'card-img__illumination card-sm-' + this.faction + ' card-sm-' + this.faction + '-'+ this.index;
+        this.domEl.setAttribute('class', cl);
     }
 }

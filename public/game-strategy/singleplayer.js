@@ -4,9 +4,6 @@ import Strategy from './strategy.js';
 
 import bus from '../modules/event-bus.js';
 
-import Monsters from './monster-cards.js';
-import Nilfgaardian from './nilfgaardian-cards.js';
-
 import {
     EVENTS
 } from './events.js';
@@ -31,8 +28,8 @@ export default class SinglePlayerStrategy extends Strategy {
 
         this.gameType = 'singleplayer';
 
-        this.userCards = this.createArray();
-        this.compCards = this.createArray();
+        // this.userCards = this.createArray();
+        // this.compCards = this.createArray();
 
         this.compState = {
             playerName: 'Opponent',
@@ -46,21 +43,24 @@ export default class SinglePlayerStrategy extends Strategy {
             gameCards: []
         };
 
-        this.dealCards(this.startCardsCount);
 
         let cb = bus.on(EVENTS.CARD.CHOOSE, (payload) => {
-            //if(this.canUserGo) {
-            //this.canUserGo = false;
             const data = payload.payload.card;
             bus.emit(EVENTS.CARD.HIDE);
             this.userGo(data);
             setTimeout(() => {
                 this.opponentGo();
                 this.isRound() ? this.round() : {};
-                //this.canUserGo = true;
             }, 2300);
-            //}
         });
+        this.busCallbacks.push(cb);
+
+        cb = bus.on(EVENTS.CARD.DECK, (payload) => {
+            this.userCards = this.createArray(payload.payload);
+            console.log(this.userCards);
+            this.compCards = this.createArray(payload.payload);
+            this.dealCards(this.startCardsCount);
+        })
         this.busCallbacks.push(cb);
     }
 
@@ -135,20 +135,16 @@ export default class SinglePlayerStrategy extends Strategy {
         this.createArrayOfDealCards(this.compCards, cardsCount).forEach((card) => {
             this.compState.gameCards.push(card);
         });
-        //this.preloader.illuminate();
     }
 
     isGameOver() {
         return (this.userState.roundWin > this.roundsCount || this.compState.roundWin > this.roundsCount);
     }
 
-    createArray() {
+    createArray(deck) {
         let arrayOfResult = [];
-        // for (let key in Monsters) {
-        //     arrayOfResult.push(Monsters[key]);
-        // }
-        for (let key in Nilfgaardian) {
-            arrayOfResult.push(Nilfgaardian[key]);
+        for (let key in deck) {
+            arrayOfResult.push(deck[key]);
         }
         return arrayOfResult;
     }

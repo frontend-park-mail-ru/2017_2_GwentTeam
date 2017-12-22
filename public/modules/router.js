@@ -87,7 +87,6 @@ export default class Router {
     * @param {string} route - адрес
     */
     go_(route) {
-        //console.log('route -> ', route);
         const res = this.routes.find((info) => {
             // идет по массиву, если pathname не равен текущему индексу сбрасывает значение и идет дальше
             if (route !== info.route) {
@@ -100,7 +99,6 @@ export default class Router {
 
             // null только при первой загрузки страницы, потому что ничего перезагружать не надо
             if (this.currentView) {
-                //console.log(this.currentView)
                 this.currentView.pause();
             }
             if (window.location.pathname !== info.route) {

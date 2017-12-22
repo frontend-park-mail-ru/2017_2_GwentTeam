@@ -12,6 +12,10 @@ import Profilefield from '../game-components/profilefield/profilefield.js';
 import BoardWrapper from '../game-components/board-wrapper/board-wrapper.js';
 import SelectedCard from '../game-components/selected-card/selected-card.js';
 import Preloader from '../game-components/preloader/preloader.js';
+import Deck from '../game-components/deck/deck.js';
+import Block from '../modules/block.js';
+import Monsters from './monster-cards.js';
+import Nilfgaardian from './nilfgaardian-cards.js';
 
 import { EVENTS } from './events.js';
 
@@ -29,10 +33,7 @@ export default class GameStrategy {
         this.router = router;
         this.el = el;
 
-        // let img1 = new Image();
-        // let img = new Image();
-        // img1.src = './img/cards-sm-monster.png';
-        // img.src = './img/cards-lg-monster.png';
+        this.initialDeck();
 
         this.infoWindow = new Info();
 
@@ -56,13 +57,17 @@ export default class GameStrategy {
         let d = new GameBoard();
 
         this.userGamefield = {
-            b, c, d
+            b,
+            c,
+            d
         };
         b = new GameBoard();
         c = new GameBoard();
         d = new GameBoard();
         this.opponentGamefield = {
-            d, c, b
+            d,
+            c,
+            b
         };
 
         for (let key in this.opponentGamefield) {
@@ -106,8 +111,6 @@ export default class GameStrategy {
             },
             gameCards: []
         };
-        //console.log(EVENTS);
-
 
         let cb = bus.on(EVENTS.CARD.DEAL, (payload) => {
             let arrayOfCards = payload.payload;
@@ -181,7 +184,6 @@ export default class GameStrategy {
     pushCardInLine(arrayOfLines, card) {
         arrayOfLines[card.type].addCard(card);
         card.onboard = true;
-        //card.illuminate();
     }
 
     pushCardInState(playerState, card) {
@@ -213,7 +215,6 @@ export default class GameStrategy {
                 this.userState.gameCards.splice(cardIndex, 1);
             }
         });
-        //console.log(this.userState);
         this.userScoreField.printScore({
             score: this.userState.roundScores,
             rounds: this.userState.roundWin
@@ -229,5 +230,46 @@ export default class GameStrategy {
             this.el.removeChild(this.el.lastChild);
         }
     }
+    initialDeck() {
+        this.deck = new Deck();
+        this.wrapperMan = new Block(null, {
+            attrs: {
+                class: 'deck__rect__wrapperMan'
+            }
+        });
+        this.wrapperMonster = new Block(null, {
+            attrs: {
+                class: 'deck__rect__wrapperMonster'
+            }
+        });
 
+        this.imageMan = new Block(null, {
+            attrs: {
+                class: 'card-lg-nilfgaardian-albrich'
+            }
+        });
+        this.imageMonster = new Block(null, {
+            attrs: {
+                class: 'card-lg-monster-arachas2_transform'
+            }
+        });
+        this.wrapperMan.addEl(this.imageMan);
+        this.wrapperMonster.addEl(this.imageMonster);
+
+        this.deck.addEl(this.wrapperMan);
+        this.deck.addEl(this.wrapperMonster);
+        this.el.appendChild(this.deck.el);
+        this.deck.show();
+        this.wrapperMan.el.onclick = (() => {
+            this.deck.hide();
+            this.deck.hideEl();
+            bus.emit(EVENTS.CARD.DECK, Nilfgaardian);
+        });
+        this.imageMonster.el.onclick = (() => {
+            this.deck.hide();
+            this.deck.hideEl();
+            console.log(Monsters);
+            bus.emit(EVENTS.CARD.DECK, Monsters);
+        });
+    }
 }
