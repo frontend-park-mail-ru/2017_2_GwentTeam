@@ -54,6 +54,9 @@ export default class Block {
         this.el.removeAttribute('hidden');
     }
 
+    addEl(el) {
+        this.el.appendChild(el.el);
+    }
     /**
     * Позволяет подписаться на событие
     * @param {string} event

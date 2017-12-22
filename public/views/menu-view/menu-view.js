@@ -59,12 +59,16 @@ export default class MenuView extends BaseView {
     initPopUp(){
         this.popup = document.getElementById('popup');
         this.deck = new Deck();
+        this.wrapperMan = new Block(null, {attrs: {class: 'deck__rect__wrapperMan'}});
+        this.wrapperMonster = new Block(null, {attrs: {class: 'deck__rect__wrapperMonster'}});
         //this.btnDeck = new ButtonDeck();
         this.imageMan = new Block(null, {attrs: {class: 'card-lg-monster-arachas1_transform'}});
         this.imageMonster = new Block(null, {attrs: {class: 'card-lg-monster-arachas2_transform'}});
+        this.wrapperMan.addEl(this.imageMan);
+        this.wrapperMonster.addEl(this.imageMonster);
 
-        this.deck.addEl(this.imageMan);
-        this.deck.addEl(this.imageMonster);
+        this.deck.addEl(this.wrapperMan);
+        this.deck.addEl(this.wrapperMonster);
 
         console.log(this.imageMan.el, this.imageMonster.el);
         //this.deck.addEl(this.btnDeck);
@@ -78,12 +82,14 @@ export default class MenuView extends BaseView {
             this.imageMan.el.onclick = (() => {
                 //bus.//TODO вброс в шину
                 this.deck.hide();
+                this.deck.hideEl();
                 this.router.go('/singleplayer');
                 this.popup.onclick = null;
             });
             this.imageMonster.el.onclick = (() => {
                 //bus.//TODO вброс в шину
                 this.deck.hide();
+                this.deck.hideEl();
                 this.router.go('/singleplayer');
                 this.popup.onclick = null;
             });

@@ -7,18 +7,25 @@
   height 100%
   z-index 1000
   &__rect
+    margin-left auto
+    margin-right auto
     box-shadow 0 0 14px #ffff30
-    background-color white
-    width 300px
+    background-color #070e33
     height 300px
-    margin 12% auto
+    display: flex;
+    flex-direction: row;
     border-radius: 12px;
+    &__wrapperMan, &__wrapperMonster
+      transform scale(.4)
 
 .deck__rect
   .form-input
     width 100px
 
 .deck_active
+  display flex
+  flex-direction row
+  align-items center
   background-color transparent
   top 0
   left 0
@@ -35,13 +42,9 @@
   height: 450px
   background-position: -238px -0px
   cursor pointer
-  transform scale(.4)
 
 .card-lg-monster-arachas2_transform
   background-position: -1666px -0px
-  top 0
-  left 0
-  position absolute
 
 @keyframes popup
   0%

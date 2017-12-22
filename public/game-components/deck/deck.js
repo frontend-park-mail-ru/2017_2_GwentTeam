@@ -36,4 +36,8 @@ export default class Deck {
         this.el.setAttribute('class', 'deck_active');
         this.el.style.opacity = '1';
     }
+
+    hideEl() {
+        this.el.style.display = 'none';
+    }
 }
