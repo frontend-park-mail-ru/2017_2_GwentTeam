@@ -30,7 +30,9 @@ export default class GameStrategy {
         this.el = el;
 
         let img = new Image();
+        let img1 = new Image();
         img.src = './img/cards-lg-monster.png';
+        img1.src = './img/cards-sm-monster.png';
 
         this.infoWindow = new Info();
 
