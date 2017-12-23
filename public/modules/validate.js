@@ -131,7 +131,7 @@ export default class Validate {
     }
 
     analize() {
-        //console.log(this.resX);
+        console.log(this.resX);
         if (this.flag === UP) {
             if (this.email[0].value.length === 0) {//TODO заменить блок в функцию
                 //console.log(this.resX);

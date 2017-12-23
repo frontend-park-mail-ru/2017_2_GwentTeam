@@ -1,14 +1,14 @@
 .form-section
     form.signup-view__form.signup-form-js
         div.form-field
-            input(type="text", oninvalid="setCustomValidity(' ')", name="login", id="UpInput" placeholder="login").sign-input
+            input(type="text", name="login", id="UpInput", placeholder="login").sign-input
             div.login-validate
         div.form-field
-            input(type="email", oninvalid="setCustomValidity(' ')", name="email", placeholder="email", pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$").sign-input
+            input(type="email", name="email", placeholder="email", pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$").sign-input
             div.email-validate
         div.form-inline
             div.form-field
-                input(type="password", oninvalid="setCustomValidity(' ')", name="password", placeholder="password", id="Signup", pattern="^\\S{4,}$").sign-input
+                input(type="password", name="password", placeholder="password", id="Signup", pattern="^\\S{4,}$").sign-input
                 div.password-validate
             div.formcheck
         input(type="submit", value="Sign up").form-input
