@@ -9,7 +9,7 @@ export default class Preloader {
     constructor() {
         this.el = document.createElement('div');
         this.el.setAttribute('class', 'game-view__preloader');
-        this.el.innerHTML = 'Waiting for opponent...';
+        this.el.innerHTML = 'Waiting...';
     }
 
     hide() {
