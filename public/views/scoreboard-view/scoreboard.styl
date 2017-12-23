@@ -1,3 +1,5 @@
+@import '../../constantStyles.styl';
+
 .scoreboard-view
     display flex;
     flex-direction column
@@ -22,12 +24,14 @@
     font-size: 18px;
     font-family open_sansregular
 #back, #forward
-    background: #9f407e;
+    background: btnColor
     border-radius: 0;
-    width: 70px;
+    width: 80px;
+    color: btnTextColor
+    opacity: 0.6
     &:hover
-        color #36324a
         cursor pointer
+        opacity: 1
 #user
     border 2px solid aquamarine
     &:hover
@@ -42,7 +46,7 @@
 //table
 //    border-collapse collapse
 //    border 2px solid black
-    
+
 #t01 {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -65,7 +69,7 @@
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #4CAF50;
+    background-color: #44697e;
     color: white;
 }
 
