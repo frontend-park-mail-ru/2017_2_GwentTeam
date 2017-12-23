@@ -47,6 +47,12 @@ export default class GameStrategy {
         this.gameEl.addEl(this.profilefield);
 
         this.btnExitEl = new ButtonExit(this.router);
+        this.btnExitEl.el.onclick = () => {
+            this.router.go('/');
+            if (this.gameType === 'multiplayer') {
+                bus.emit('CLOSE');
+            }
+        };
         this.profilefield.addEl(this.btnExitEl);
 
         this.boardEl = new BoardWrapper();
@@ -180,6 +186,7 @@ export default class GameStrategy {
         isUserWin ? this.showMessage('Вы выиграли!') : this.showMessage('Вы проиграли:(');
         if (isUserWin & this.gameType === 'multiplayer') {
             userService.postResult();
+            this.isGameStart = false;
         }
     }
 

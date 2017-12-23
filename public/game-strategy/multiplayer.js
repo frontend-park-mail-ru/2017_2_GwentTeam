@@ -17,6 +17,8 @@ export default class MultiPlayerStrategy extends Strategy {
 
         super(router, el);
 
+        this.isGameStart = false;
+
         const address = ['https', 'https:'].includes(location.protocol) ?
             `wss://${location.host}/ws` :
             `ws://${location.host}/ws`;
@@ -32,15 +34,20 @@ export default class MultiPlayerStrategy extends Strategy {
         };
 
         this.ws.onopen = () => {
-            const message = JSON.stringify({
-                event: 'LALALA',
-                payload: userService.user.email
-            });
-            this.ws.send(message);
+            this.isGameStart = true;
+            //this.ws.send(message);
         };
 
+        bus.on('CLOSE', () => {
+            if (this.ws) {
+                this.isGameStart = false;
+                this.ws.close();
+            }
+        })
+
         this.ws.onclose = () => {
-            this.showMessage('Игра оборвалась');
+            this.isGameStart ? this.showMessage('Игра оборвалась')
+            : {};
         };
 
         this.btnPassEl.el.onclick = () => {
