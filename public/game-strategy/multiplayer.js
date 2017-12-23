@@ -3,10 +3,8 @@
 import Strategy from './strategy.js';
 
 import bus from '../modules/event-bus.js';
-import UserService from '../services/user-service.js';
 import { EVENTS } from './events.js';
 
-const userService = new UserService();
 
 /**
  * @module GameView
@@ -16,6 +14,8 @@ export default class MultiPlayerStrategy extends Strategy {
     constructor(router, el) {
 
         super(router, el);
+
+        this.isGameStart = false;
 
         const address = ['https', 'https:'].includes(location.protocol) ?
             `wss://${location.host}/ws` :
@@ -32,15 +32,20 @@ export default class MultiPlayerStrategy extends Strategy {
         };
 
         this.ws.onopen = () => {
-            const message = JSON.stringify({
-                event: 'LALALA',
-                payload: userService.user.email
-            });
-            this.ws.send(message);
+            this.isGameStart = true;
+            //this.ws.send(message);
         };
 
+        bus.on('CLOSE', () => {
+            if (this.ws) {
+                this.isGameStart = false;
+                this.ws.close();
+            }
+        });
+
         this.ws.onclose = () => {
-            this.showMessage('Игра оборвалась');
+            this.isGameStart ? this.showMessage('Игра оборвалась')
+                : {};
         };
 
         this.btnPassEl.el.onclick = () => {

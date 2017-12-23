@@ -14,18 +14,18 @@ export default class BaseView {
      * @param {boolean} [root=false]
      */
     constructor(parentElement, router, root) {
-        // if(document.documentElement.clientWidth < 600) { //TODO
-        //     let viewport = document.querySelector('meta[name=viewport]');
-        //     viewport.setAttribute('content', 'width=device-width, initial-scale=0.4');
-        // }
-        // else if(document.documentElement.clientWidth < 700) {
-        //     let viewport = document.querySelector('meta[name=viewport]');
-        //     viewport.setAttribute('content', 'width=device-width, initial-scale=0.5');
-        // }
-        // else if(document.documentElement.clientWidth < 800) {
-        //     let viewport = document.querySelector('meta[name=viewport]');
-        //     viewport.setAttribute('content', 'width=device-width, initial-scale=0.6');
-        // }
+        if(document.documentElement.clientWidth < 600) { //TODO
+            let viewport = document.querySelector('meta[name=viewport]');
+            viewport.setAttribute('content', 'width=device-width, initial-scale=0.4');
+        }
+        else if(document.documentElement.clientWidth < 700) {
+            let viewport = document.querySelector('meta[name=viewport]');
+            viewport.setAttribute('content', 'width=device-width, initial-scale=0.5');
+        }
+        else if(document.documentElement.clientWidth < 800) {
+            let viewport = document.querySelector('meta[name=viewport]');
+            viewport.setAttribute('content', 'width=device-width, initial-scale=0.6');
+        }
 
         const name = this.constructor.name.slice(0, -4).toLowerCase() || `view-${count++}`;
         this.el = document.createElement('section');

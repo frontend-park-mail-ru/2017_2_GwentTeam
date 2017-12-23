@@ -1,8 +1,5 @@
 'use strict';
-import bus from './event-bus.js';
 
-
-let routStarted = false;
 /**
  * Модуль, предоставляющий методы для выполнения HTTP-запросов
  * @module Http
@@ -18,10 +15,10 @@ export default class Http {
             mode: 'cors',
             credentials: 'include'
         }).then((response) => {
-            if (!routStarted) {
-                bus.emit('router:start');
-                routStarted = true;
-            }
+            // if (!routStarted) {
+            //     bus.emit('router:start');
+            //     routStarted = true;
+            // }
             if (response.status >= 400) {
                 throw response;
             }

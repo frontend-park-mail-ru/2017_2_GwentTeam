@@ -21,7 +21,6 @@ export default class Form extends Block {
     onsubmit(callback) {
         this.el.addEventListener('submit',(event) => {
             event.preventDefault();
-
             const elements = this.el.elements;
             const formdata = Object.create(null);
 
@@ -30,8 +29,7 @@ export default class Form extends Block {
             });
             callback(formdata);
         });
-        this.el.addEventListener('oninvalid', (e) => {
-            e.preventDefault();
+        this.el.addEventListener('oninvalid', () => {
         });
     }
 
