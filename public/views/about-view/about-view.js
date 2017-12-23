@@ -1,6 +1,5 @@
 'use strict';
 
-import {text} from './rules.js';
 import BaseView from '../../modules/view.js';
 import aboutTemplate from './about.pug';
 import './about.styl';

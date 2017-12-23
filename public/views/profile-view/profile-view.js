@@ -23,9 +23,9 @@ export default class ProfileView extends BaseView {
             this.user = data.payload;
             //this.render();
             this.user = userService.user;
-            this.render();
+            //this.render();
 
-            this.resume();
+            //this.resume();
             //super.resume();
         };
         this.onUnauthorized = () => {
@@ -44,10 +44,10 @@ export default class ProfileView extends BaseView {
     }
 
     resume() {
-        //console.log('profile resume');
         if (!this.user) {
             if (userService.isLoggedIn()) {
                 this.onAuthorized(userService.user);
+                this.render();
             } else {
                 return;
             }

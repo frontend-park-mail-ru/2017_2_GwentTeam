@@ -22,7 +22,6 @@ export default class SignupView extends BaseView {
         this.validator = new Validate(this.form.el, document.querySelector('.signup-form-js'));
         this.validator.currentHandlers();
         this.form.onsubmit(((formdata) => {
-            //
             this.validator.analize();
             if (this.validator.fieldsIsCorrect() === true) {
                 bus.emit('signup-user', formdata);

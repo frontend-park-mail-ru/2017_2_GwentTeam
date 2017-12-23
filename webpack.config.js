@@ -21,7 +21,6 @@ let webpackPlugins = [
         template: path.resolve(__dirname, SRC_DIR, 'index.html'),
     }),
     new ExtractTextPlugin('[name].css'),
-
     new CopyWebpackPlugin([{
         from: path.join(__dirname, 'public', 'service-worker.js'),
         to: path.join(__dirname, 'build', 'service-worker.js')

@@ -4,7 +4,7 @@ import Http from '../modules/http.js';
 import bus from '../modules/event-bus.js';
 import Info from '../modules/info.js';
 import Loader from '../modules/loader.js';
-
+let routStarted = false;
 const url = 'https://technogwent-api-012.herokuapp.com/api';
 
 /**
@@ -121,13 +121,22 @@ export default class UserService {
         return Http.Get(url + '/auth')
             .then((userdata) => {
                 this.user = userdata;
-                //console.log('&',this.user);
+                if (!routStarted) {
+                    bus.emit('router:start');
+                    routStarted = true;
+                }
                 bus.emit('user:authorized', this.user);
                 this.loader.hideEl();//
                 return userdata;
             })
             .catch((err) => {
                 if (err.status === 401) {
+                    this.user = null;
+                    if (!routStarted) {
+                        bus.emit('router:start');
+                        routStarted = true;
+                    }
+                    bus.emit('user:unauthorized', this.user);
                     this.loader.hideEl();
                 }
                 return err;
