@@ -13,8 +13,8 @@ export default class ButtonExit {
         this.el.setAttribute('class', 'profilefield__btn-exit');
         this.el.innerHTML = 'Exit';
 
-        this.el.onclick = () => {
-            this.router.go('/');
-        };
+        // this.el.onclick = () => {
+        //     this.router.go('/');
+        // };
     }
 }
