@@ -2,7 +2,6 @@
 
 import BaseView from '../../modules/view.js';
 import bus from '../../modules/event-bus.js';
-import Loader from '../../modules/loader.js';
 
 export default class SignoutView extends BaseView {
     start() {

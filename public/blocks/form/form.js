@@ -29,7 +29,7 @@ export default class Form extends Block {
             });
             callback(formdata);
         });
-        this.el.addEventListener('oninvalid', (e) => {
+        this.el.addEventListener('oninvalid', () => {
         });
     }
 

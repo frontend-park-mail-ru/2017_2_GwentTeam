@@ -131,10 +131,8 @@ export default class Validate {
     }
 
     analize() {
-        console.log(this.resX);
         if (this.flag === UP) {
             if (this.email[0].value.length === 0) {//TODO заменить блок в функцию
-                //console.log(this.resX);
                 this.changeColor(this.infoEmail, NO_COLOR);
                 this.changeInfo(this.infoEmail, REQUIRED_INFO);
                 this.resX.email = false;

@@ -1,8 +1,5 @@
 'use strict';
-import bus from './event-bus.js';
 
-
-let routStarted = false;
 /**
  * Модуль, предоставляющий методы для выполнения HTTP-запросов
  * @module Http

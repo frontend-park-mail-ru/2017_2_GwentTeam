@@ -3,10 +3,8 @@
 import Strategy from './strategy.js';
 
 import bus from '../modules/event-bus.js';
-import UserService from '../services/user-service.js';
 import { EVENTS } from './events.js';
 
-const userService = new UserService();
 
 /**
  * @module GameView
@@ -43,11 +41,11 @@ export default class MultiPlayerStrategy extends Strategy {
                 this.isGameStart = false;
                 this.ws.close();
             }
-        })
+        });
 
         this.ws.onclose = () => {
             this.isGameStart ? this.showMessage('Игра оборвалась')
-            : {};
+                : {};
         };
 
         this.btnPassEl.el.onclick = () => {
